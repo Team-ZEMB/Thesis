@@ -1,9 +1,10 @@
 import React from 'react';
 import { Route, IndexRedirect } from 'react-router';
-// import Container from './Container'
-// import Home from './pages/Profile'
+import Profile from './pages/Profile'
 import Login from './pages/Login';
 import config from '../environment';
+import App from './components/App'
+import AuthService from './utils/AuthService'
 
 const auth = new AuthService(config.AUTH_ID, config.AUTH_CLIENT);
 
@@ -14,10 +15,10 @@ const requireAuth = (nextState, replace) => {
   }
 };
 
-export const createRoutes = () => (
+const createRoutes = () => (
   <Route path="/" component={App} auth={auth}>
     <IndexRedirect to="/profile" />
-    <Route path="home" component={Home} onEnter={requireAuth} />
+    <Route path="profile" component={Profile} onEnter={requireAuth} />
     <Route path="login" component={Login} />
   </Route>
   );

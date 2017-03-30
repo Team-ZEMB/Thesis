@@ -5,6 +5,7 @@ const DEV = path.resolve(__dirname, 'client');
 const OUTPUT = path.resolve(__dirname, 'output');
 
 const config = {
+  devtool: 'eval',
   entry: `${DEV}/index.jsx`,
   output: {
     path: OUTPUT,
@@ -18,7 +19,7 @@ const config = {
       include: DEV,
       query: {
         presets: ['react', 'es2015'],
-        plugins: ['transform-runtime', 'transform-decorators-legacy', 'transform-class-properties'],
+        plugins: ['transform-runtime', 'transform-decorators-legacy', 'transform-class-properties', 'transform-object-rest-spread'],
       },
     }],
   },
