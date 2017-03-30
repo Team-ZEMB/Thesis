@@ -1,15 +1,17 @@
 const myRouter = require('express').Router();
 const controller = require('./controller');
-const fs = require('fs');
-const db = require('./schema');
-
+const db = require('./db');
 
 myRouter.route('/users')
   .get((req, res) => {
-    controller.someFunction(req, res);
-  })
-  .post((req, res) => {
-    controller.anotherFunction(req, res);
+    db.User.findAll({ where: { unique: req.query.unique } })
+    .then((result) => {
+      if (result.length === 0) {
+        controller.createUser(req, res);
+      } else {
+        controller.returnUserData(req, res);
+      }
+    });
   });
 
 
