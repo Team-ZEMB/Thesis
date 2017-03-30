@@ -14,5 +14,12 @@ myRouter.route('/users')
     });
   });
 
+myRouter.route('/packs')
+  .get((req, res) => {
+    controller.getPacks(req, res);
+  })
+  .post((req, res) => {
+    controller.createPack(req, res);
+  });
 
 module.exports = myRouter;
