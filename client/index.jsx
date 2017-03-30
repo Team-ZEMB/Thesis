@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+import reducers from './reducers/index'
 import { Router, Route, Link, IndexRoute } from 'react-router';
 import thunk from 'redux-thunk';
 import App from './components/App';
@@ -15,7 +16,6 @@ const hashHistory = createHistory();
 
 
 ReactDOM.render(
-
   <Provider store={createStore(reducers, applyMiddleware(thunk))} >
     <Router history={hashHistory} routes={makeRoutes()} />
   </Provider>

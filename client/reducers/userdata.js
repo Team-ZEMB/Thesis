@@ -14,3 +14,7 @@ export default function groups(state = initialState, action) {
         signedIn: true,
         username: action.username,
       };
+    default:
+      return state;
+  }
+}
