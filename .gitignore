@@ -1,3 +1,4 @@
 node_modules
 .env
 environment.js
+bundle.js
