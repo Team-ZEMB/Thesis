@@ -12506,18 +12506,21 @@ var _Login = __webpack_require__(148);
 
 var _Login2 = _interopRequireDefault(_Login);
 
+var _routes = __webpack_require__(529);
+
+var _routes2 = _interopRequireDefault(_routes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var createHistory = __webpack_require__(150).createHashHistory;
 //import Profile from './pages/Profile';
-
+var createHistory = __webpack_require__(150).createHashHistory;
 
 var hashHistory = createHistory();
 
 _reactDom2.default.render(_react2.default.createElement(
-  'div',
-  null,
-  _react2.default.createElement(_Login2.default, null)
+  _reactRedux.Provider,
+  { store: (0, _redux.createStore)(reducers, (0, _redux.applyMiddleware)(_reduxThunk2.default)) },
+  _react2.default.createElement(_reactRouter.Router, { history: hashHistory, routes: (0, _routes2.default)() })
 ), document.getElementById('app'));
 
 /***/ }),
@@ -59078,6 +59081,58 @@ module.exports = function isBuffer(arg) {
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
+
+/***/ }),
+/* 528 */,
+/* 529 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.createRoutes = undefined;
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = __webpack_require__(153);
+
+var _Login = __webpack_require__(148);
+
+var _Login2 = _interopRequireDefault(_Login);
+
+var _environment = __webpack_require__(410);
+
+var _environment2 = _interopRequireDefault(_environment);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import Container from './Container'
+// import Home from './pages/Profile'
+var auth = new AuthService(_environment2.default.AUTH_ID, _environment2.default.AUTH_CLIENT);
+
+// validate authentication for private routes
+var requireAuth = function requireAuth(nextState, replace) {
+  if (!auth.loggedIn()) {
+    replace({ pathname: '/login' });
+  }
+};
+
+var createRoutes = exports.createRoutes = function createRoutes() {
+  return _react2.default.createElement(
+    _reactRouter.Route,
+    { path: '/', component: App, auth: auth },
+    _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/profile' }),
+    _react2.default.createElement(_reactRouter.Route, { path: 'home', component: Home, onEnter: requireAuth }),
+    _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _Login2.default })
+  );
+};
+
+exports.default = createRoutes;
 
 /***/ })
 /******/ ]);
