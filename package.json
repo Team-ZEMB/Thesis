@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "build": "webpack --watch"
+
   },
   "repository": {
     "type": "git",
@@ -18,7 +20,7 @@
   },
   "homepage": "https://github.com/BrandonKleiman/Thesis#readme",
   "dependencies": {
-    "auth0-lock": "^10.12.3",
+    "auth0-lock": "^10.14.0",
     "axios": "^0.15.3",
     "body-parser": "^1.17.1",
     "classnames": "^2.2.5",
@@ -32,6 +34,7 @@
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",
+    "react-router": "^4.0.0",
     "redux": "^3.6.0",
     "redux-axios-middleware": "^3.1.2",
     "redux-thunk": "^2.2.0",

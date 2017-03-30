@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 
-const DEV = path.resolve(__dirname, 'src');
+const DEV = path.resolve(__dirname, 'client');
 const OUTPUT = path.resolve(__dirname, 'output');
 
 const config = {
