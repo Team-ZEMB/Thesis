@@ -22,3 +22,47 @@ exports.signIn = function (req, res) {
     res.send(results);
   });
 };
+
+exports.getPacks = function (req, res) {
+
+};
+
+exports.createPack = function (req, res) {
+  const newPack = db.Packs.build({
+    name: req.query.name,
+    image: req.query.img,
+    totalDistance: 0,
+  })
+};
+
+exports.acceptRequest = function (req, res) {
+  const requestID = req.body.id;
+  db.Users_Pending_Packs.find({ where: { id: requestID } })
+    .then((result) => {
+      const newMember = db.Users_Packs.build({
+        UserID: result.UserID,
+        PackID: result.PackID,
+      });
+      newMember.save()
+      .then((record) => {
+        db.Users_Pending_Packs.destroy({ where: { id: requestID } });
+        res.send(record);
+      })
+      .catch((err) => {
+        res.sendStatus(500);
+        res.send(err);
+      });
+    });
+};
+
+exports.declineRequest = function (req, res) {
+  const requestID = req.body.id;
+  db.Users_Pending_Packs.destroy({ where: { id: requestID } })
+  .then(() => {
+    res.send('Successfully Deleted');
+  })
+  .catch((err) => {
+    res.sendStatus(500);
+    res.send(err);
+  });
+};
