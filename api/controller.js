@@ -32,7 +32,12 @@ exports.createPack = function (req, res) {
     name: req.query.name,
     image: req.query.img,
     totalDistance: 0,
+  });
+newPack.save().then((result) => {
+  const newUserPack = db.Users_Packs.build({
+    PackId: result.id,
   })
+})
 };
 
 exports.acceptRequest = function (req, res) {

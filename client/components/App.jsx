@@ -1,18 +1,18 @@
 import React from 'react';
+import { Route } from 'react-router';
+import Profile from '../pages/Profile';
+import Login from '../pages/Login';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+export default class App extends React.Component {
 
   render() {
     return (
       <div>
-        {this.props.children}
+        <Route exact path="/" component={Login} />
+        <Route path="/profile" component={Profile} />
+        <Route path="/login" component={Login} />
       </div>
     );
   }
 }
 
-export default App;
