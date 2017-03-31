@@ -20,7 +20,7 @@ export default class AuthService {
     // Saves the user token
     this.setToken(authResult.idToken)
     // navigate to the home route
-    browserHistory.replace('/home')
+    window.location.href = '/#/profile/';
   }
 
   login() {

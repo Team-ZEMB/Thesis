@@ -1,21 +1,21 @@
 import React, { PropTypes as T } from 'react'
 import AuthService from '../utils/AuthService'
+import config from '../../environment';
 
-class Login extends React.Component {
+
+export default class Login extends React.Component {
   static propTypes = {
     location: T.object,
     auth: T.instanceOf(AuthService)
   }
 
   render() {
-    const { auth } = this.props
+    this.auth = new AuthService(config.AUTH_ID, config.AUTH_CLIENT);
     return (
       <div>
         <h2>Login</h2>
-        <button onClick={auth.login.bind(this)}>Login</button>
+        <button onClick={this.auth.login}>Login</button>
       </div>
     )
   }
 }
-
-export default Login;

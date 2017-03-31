@@ -5,7 +5,7 @@ const DEV = path.resolve(__dirname, 'client');
 const OUTPUT = path.resolve(__dirname, 'output');
 
 const config = {
-  devtool: 'eval',
+  devtool: '#eval-source-map',
   entry: `${DEV}/index.jsx`,
   output: {
     path: OUTPUT,
