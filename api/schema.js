@@ -8,6 +8,7 @@ const Users = db.define('Users', {
   lastName: Sequelize.STRING,
   profileImage: Sequelize.STRING,
   points: Sequelize.INTEGER,
+  authID: Sequelize.STRING,
 });
 
 const Badges = db.define('Badges', {
@@ -64,6 +65,7 @@ Badges.sync();
 Users_Badges.sync();
 RunHistories.sync();
 Challenges.sync();
+
 
 exports.Users = Users;
 exports.Packs = Packs;

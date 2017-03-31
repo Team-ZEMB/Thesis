@@ -2,13 +2,22 @@ const request = require('request');
 const db = require('./schema');
 
 exports.createUser = function (req, res) {
-  const newuser = db.User.build({
-    username: req.query.username,
-    email: req.query.email,
-    firstName: req.query.firstName,
-    lastName: req.query.lastName,
-    profileImage: req.query.profileImage,
+  var profile = req.body.params.profile;
+  var names = profile.nickname.split(' ');
+  var firstName = names[0];
+  var lastName;
+  names[1] !== undefined ? lastName = names[1] : lastName = '';
+  if (profile.username === undefined) {
+    profile.username = profile.nickname;
+  }
+  const newuser = db.Users.build({
+    username: profile.username,
+    email: profile.email,
+    firstName,
+    lastName,
+    profileImage: profile.picture,
     points: 0,
+    authID: req.body.params.userID,
   });
   newuser.save()
   .then((record) => {
@@ -16,8 +25,9 @@ exports.createUser = function (req, res) {
   });
 };
 
-exports.signIn = function (req, res) {
-  db.User.findOne({ where: { unique: req.query.unique } })
+exports.returnUserData = function (req, res, id) {
+  console.log(id)
+  db.Users.findOne({ where: { id } })
   .then((results) => {
     res.send(results);
   });
