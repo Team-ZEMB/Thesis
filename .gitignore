@@ -1,4 +1,4 @@
 node_modules
 .env
 environment.js
-./output/bundle.js
+output/bundle.js

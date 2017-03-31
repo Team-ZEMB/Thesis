@@ -1,5 +1,7 @@
 import Auth0Lock from 'auth0-lock'
 import config from '../../environment';
+import { connect } from 'react-redux';
+
 
 class AuthService {
   constructor(clientId, domain) {
@@ -10,34 +12,28 @@ class AuthService {
     var self = this;
     this.lock.on("authenticated", (authResult) => {
       // Use the token in authResult to getUserInfo() and save it to localStorage
-      console.log(authResult)
-      console.log(window.location);
       self.lock.getUserInfo(authResult.accessToken, function(error, profile) {
         if (error) {
           // Handle error
           return;
         }
-        console.log(profile);
         localStorage.setItem('accessToken', authResult.accessToken);
         localStorage.setItem('profile', JSON.stringify(profile));
+        window.location.href = '/#/profile/';
+
       });
     });
 
-    // this.lock.on('authenticated', this._doAuthentication.bind(this))
-    // binds login functions to keep this context
     this.login = this.login.bind(this)
   }
 
   _doAuthentication(authResult) {
-    // Saves the user token
     this.setItem('token', "JSON.stringify(authResult.idToken)")
     localStorage.setItem('profile', JSON.stringify(authResult.profile))
-    // navigate to the home route
     window.location.href = '/#/profile/';
   }
 
   login() {
-    // Call the show method to display the widget.
     this.lock.show((err, profile, token) => {
       alert('here')
       if (err) {
