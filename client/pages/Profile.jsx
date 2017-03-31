@@ -1,8 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+@connect((store) => {
+  return {
+    userdata: store.userdata,
+  };
+})
+
 
 export default class Profile extends React.Component {
-
   render() {
+
+    
     return (
       <div>
         <h1>Profile Page</h1>

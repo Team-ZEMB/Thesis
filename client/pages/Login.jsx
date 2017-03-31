@@ -8,13 +8,14 @@ export default class Login extends React.Component {
     location: T.object,
     auth: T.instanceOf(AuthService)
   }
-
+  constructor() {
+    super()
+  }
   render() {
-    this.auth = new AuthService(config.AUTH_ID, config.AUTH_CLIENT);
     return (
       <div>
         <h2>Login</h2>
-        <button onClick={this.auth.login}>Login</button>
+        <button onClick={AuthService.login}>Login</button>
       </div>
     )
   }

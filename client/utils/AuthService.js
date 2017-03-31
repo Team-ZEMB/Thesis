@@ -1,31 +1,51 @@
 import Auth0Lock from 'auth0-lock'
 import config from '../../environment';
 
-export default class AuthService {
+class AuthService {
   constructor(clientId, domain) {
     // Configure Auth0
-    this.lock = new Auth0Lock(config.AUTH_ID, config.AUTH_CLIENT, {
-      auth: {
-        redirectUrl: 'http://localhost:8000/login',
-        responseType: 'token'
-      }
-    })
+    this.lock = new Auth0Lock(config.AUTH_ID, config.AUTH_CLIENT)
+  
     // Add callback for lock `authenticated` event
-    this.lock.on('authenticated', this._doAuthentication.bind(this))
+    var self = this;
+    this.lock.on("authenticated", (authResult) => {
+      // Use the token in authResult to getUserInfo() and save it to localStorage
+      console.log(authResult)
+      console.log(window.location);
+      self.lock.getUserInfo(authResult.accessToken, function(error, profile) {
+        if (error) {
+          // Handle error
+          return;
+        }
+        console.log(profile);
+        localStorage.setItem('accessToken', authResult.accessToken);
+        localStorage.setItem('profile', JSON.stringify(profile));
+      });
+    });
+
+    // this.lock.on('authenticated', this._doAuthentication.bind(this))
     // binds login functions to keep this context
     this.login = this.login.bind(this)
   }
 
   _doAuthentication(authResult) {
     // Saves the user token
-    this.setToken(authResult.idToken)
+    this.setItem('token', "JSON.stringify(authResult.idToken)")
+    localStorage.setItem('profile', JSON.stringify(authResult.profile))
     // navigate to the home route
     window.location.href = '/#/profile/';
   }
 
   login() {
     // Call the show method to display the widget.
-    this.lock.show()
+    this.lock.show((err, profile, token) => {
+      alert('here')
+      if (err) {
+        lockError(err);
+      }
+      console.log('eyyyyy')
+      console.log(profile)
+    })
   }
 
   loggedIn() {
@@ -48,3 +68,5 @@ export default class AuthService {
     localStorage.removeItem('id_token');
   }
 }
+
+export default new AuthService(config.AUTH_ID, config.AUTH_CLIENT)
