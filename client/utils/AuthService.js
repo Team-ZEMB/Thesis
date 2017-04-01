@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 class AuthService {
   constructor(clientId, domain) {
-    super()
     // Configure Auth0
     this.lock = new Auth0Lock(config.AUTH_ID, config.AUTH_CLIENT)
   

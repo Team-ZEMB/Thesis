@@ -1,5 +1,9 @@
-import React from 'react'
-import { Line } from 'react-chartjs'
+import React from 'react';
+import { Line } from 'react-chartjs';
+import regression from 'regression';
+import moment from 'moment';
+
+//var result = regression('linear', input);
 
 class MyChart extends React.Component {
     constructor(data, options) {

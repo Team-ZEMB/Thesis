@@ -3,9 +3,26 @@ import { connect } from 'react-redux';
 import * as UserActions from '../actions';
 import MyChart from '../components/MyChart';
 import regression from 'regression';
+import moment from 'moment';
 
-var xArray = ["Run 1", "Run 2", "Run 3", "Run 4", "Run 5"]
-var yArray = [10, 11, 8, 9, 7]
+//trying distance in miles / time in minutes
+var input = [[1,9],[1.5,15],[2,20],[0.5,4],[2.5, null]];
+
+var sorted = []//input sorted by miles
+
+var result = regression('linear', sorted);
+
+var unzip = function(array, index) {
+  var output = [];
+  for (var i = 0; i < array.length; i++) {
+    output.push(array[i][index]);
+  }
+  console.log("output: ", output)
+  return output;
+}
+
+var xArray = unzip(result.points, 0);
+var yArray = unzip(result.points, 1);
 
 var data = {
     labels: xArray,
@@ -57,6 +74,7 @@ export default class Profile extends React.Component {
       return false;
     } else {
       console.log(this.props)
+      console.log("result", result)
 
       return (
         <div>
