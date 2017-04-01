@@ -1,10 +1,11 @@
-import Auth0Lock from 'auth0-lock'
+import Auth0Lock from 'auth0-lock';
 import config from '../../environment';
 import { connect } from 'react-redux';
 
 
 class AuthService {
   constructor(clientId, domain) {
+    super()
     // Configure Auth0
     this.lock = new Auth0Lock(config.AUTH_ID, config.AUTH_CLIENT)
   
@@ -39,7 +40,6 @@ class AuthService {
       if (err) {
         lockError(err);
       }
-      console.log('eyyyyy')
       console.log(profile)
     })
   }
