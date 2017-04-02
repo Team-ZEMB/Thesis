@@ -6,9 +6,12 @@ import regression from 'regression';
 import moment from 'moment';
 
 //trying distance in miles / time in minutes
-var input = [[1,9],[1.5,15],[2,20],[0.5,4],[2.5, null]];
+var input = [[1,4],[1.5,null],[2,26],[0.5,2],[2.5, null],[3, null]];
 
-var sorted = []//input sorted by miles
+
+var sorted = input.sort(function(a,b) {
+  return a[0] - b[0];
+});
 
 var result = regression('linear', sorted);
 
@@ -28,10 +31,12 @@ var data = {
     labels: xArray,
     datasets: [
         {
-            label: "My First dataset",
-            fill: false,
-            lineTension: 0.1,
-            backgroundColor: "rgba(75,192,192,0.4)",
+            label: "Run time regression",
+            fill: true,
+            xAxisID: "Miles",
+            yAxisID: "Minutes",
+            lineTension: 0.9,
+            backgroundColor: "rgba(63, 63, 191, 1)",
             borderColor: "rgba(75,192,192,1)",
             borderCapStyle: 'butt',
             borderDash: [],
@@ -74,7 +79,7 @@ export default class Profile extends React.Component {
       return false;
     } else {
       console.log(this.props)
-      console.log("result", result)
+      console.log("data", data)
 
       return (
         <div>

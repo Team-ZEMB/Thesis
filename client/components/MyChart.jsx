@@ -12,7 +12,7 @@ class MyChart extends React.Component {
     render() {
         return (
             <div>
-                <h3>My Run History & Projections</h3>
+                <h3>sorted mile time regression (not actual mile times)</h3>
                 <Line data={this.props.data} options={this.props.options} width="600" height="250"/>
             </div>
         )
