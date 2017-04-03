@@ -12,7 +12,6 @@ const createHistory = require('history').createHashHistory;
 const hashHistory = createHistory();
 
 // validate authentication for private routes
-
 ReactDOM.render(
   <Provider store={createStore(reducers, applyMiddleware(thunk))} >
     <Router history={hashHistory}>
@@ -20,3 +19,7 @@ ReactDOM.render(
     </Router>
   </Provider>
   , document.getElementById('app'));
+
+  // Provider store={createStore(reducers, applyMiddleware(thunk))} >
+  //   <Router history={hashHistory} routes={createRoutes()} />
+  // </Provider>

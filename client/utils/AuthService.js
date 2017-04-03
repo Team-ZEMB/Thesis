@@ -1,4 +1,4 @@
-import Auth0Lock from 'auth0-lock'
+import Auth0Lock from 'auth0-lock';
 import config from '../../environment';
 import { connect } from 'react-redux';
 
@@ -39,7 +39,6 @@ class AuthService {
       if (err) {
         lockError(err);
       }
-      console.log('eyyyyy')
       console.log(profile)
     })
   }
