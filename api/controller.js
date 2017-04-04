@@ -36,6 +36,11 @@ exports.returnUserData = function (req, res, id) {
 exports.getPacks = function (req, res) {
 
 };
+exports.addRunToHistory = function (req, res) {
+  console.log(req.body);
+  console.log(req.params);
+  
+};
 
 exports.createPack = function (req, res) {
   const newPack = db.Packs.build({
