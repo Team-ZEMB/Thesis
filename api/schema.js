@@ -24,12 +24,13 @@ const RunHistories = db.define('RunHistories', {
   distance: Sequelize.FLOAT,
   duration: Sequelize.INTEGER, // in seconds
   date: Sequelize.DATE,
-  route: Sequelize.TEXT, 
+  route: Sequelize.TEXT,
 });
 
 const Challenges = db.define('Challenges', {
   description: Sequelize.STRING, // limit to 30 chars
-  status: Sequelize.STRING,
+  status: Sequelize.STRING, // completed, pending, etc
+  source: Sequelize.INTEGER, // source user id of challenge .. null for goals
 });
 
 const Packs = db.define('Packs', {
