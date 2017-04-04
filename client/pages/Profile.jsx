@@ -28,15 +28,9 @@ export default class Profile extends React.Component {
 
       return (
         <div>
-          <h1>Profile</h1>
           <img src={this.props.userdata.profileImage} alt="no profile picture" />
           <StatsCard />
-          <h3>Run history</h3>
-          <h3>Analytics</h3>
-          <Analytics />
-          <h3>Packs</h3>
           <PacksCard />
-          <h3>Challenges</h3>
         </div>
         );
     }
