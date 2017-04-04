@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as UserActions from '../actions';
 import Analytics from './Analytics';
+import StatsCard from '../components/StatsCard';
 
 @connect((store) => {
   return {
@@ -28,6 +29,7 @@ export default class Profile extends React.Component {
         <div>
           <h1>Profile Page</h1>
           <img src={this.props.userdata.profileImage} alt="no profile picture" />
+          <StatsCard picture={this.props.userdata.profileImage}/>
           <h3>Run history</h3>
           <h3>Analytics</h3>
           <Analytics />
