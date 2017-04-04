@@ -37,9 +37,13 @@ exports.getPacks = function (req, res) {
 
 };
 exports.addRunToHistory = function (req, res) {
-  console.log(req.body);
-  console.log(req.params);
-  
+  var entry = req.body.params.runHistoryEntry;
+  console.log(entry.initialPosition.longitude);
+  console.log(entry.initialPosition.latitude);
+  console.log(JSON.stringify(entry.coordinates));
+  // const newHistoryItem = db.RunHistories.build({
+
+  // })
 };
 
 exports.createPack = function (req, res) {
