@@ -39,7 +39,7 @@ exports.getPacks = function (req, res) {
 exports.addRunToHistory = function (req, res) {
   const entry = req.body.params.runHistoryEntry;
   const coords = JSON.stringify(entry.coordinates);
-  db.Users.findOne({ where: { authID: req.body.params.userID } })
+  db.Users.findOne({ where: { authID: entry.userID } })
     .then((result) => {
       const newHistoryItem = db.RunHistories.build({
         startLong: entry.initialPosition.longitude,
