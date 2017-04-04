@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as UserActions from '../actions';
 import Analytics from './Analytics';
 import StatsCard from '../components/StatsCard';
+import PacksCard from '../components/PacksCard';
 
 @connect((store) => {
   return {
@@ -34,6 +35,7 @@ export default class Profile extends React.Component {
           <h3>Analytics</h3>
           <Analytics />
           <h3>Packs</h3>
+          <PacksCard />
           <h3>Challenges</h3>
         </div>
         );
