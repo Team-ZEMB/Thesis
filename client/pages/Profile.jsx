@@ -28,9 +28,9 @@ export default class Profile extends React.Component {
 
       return (
         <div>
-          <h1>Profile Page</h1>
+          <h1>Profile</h1>
           <img src={this.props.userdata.profileImage} alt="no profile picture" />
-          <StatsCard picture={this.props.userdata.profileImage}/>
+          <StatsCard />
           <h3>Run history</h3>
           <h3>Analytics</h3>
           <Analytics />

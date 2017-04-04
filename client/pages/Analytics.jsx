@@ -18,7 +18,6 @@ var unzip = function(array, index) {
   for (var i = 0; i < array.length; i++) {
     output.push(array[i][index]);
   }
-  console.log("output: ", output)
   return output;
 }
 
