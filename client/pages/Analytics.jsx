@@ -1,7 +1,8 @@
-import React from 'react'
-import regression from 'regression'
-import Charts from 'chart.js'
+import React from 'react';
+import regression from 'regression';
+import Charts from 'chart.js';
 import moment from 'moment';
+import LineChart from '../components/LineChart';
 
 //trying distance in miles / time in minutes
 var input = [[1,4],[1.5,null],[2,26],[0.5,2],[2.5, null],[3, null]];
@@ -57,13 +58,13 @@ var mileTimeRegression = {
 //rate by date, size representing distance
 //bubble chart
 var progressData = {
-    labels: xArray2,
+    labels: xArray,
     datasets: [
         {
             label: "Run time regression",
             fill: true,
             xAxisID: "Date",
-            yAxisID: "",
+            yAxisID: "Rate",
             lineTension: 0.9,
             backgroundColor: "rgba(63, 63, 191, 1)",
             borderColor: "rgba(75,192,192,1)",
@@ -80,7 +81,7 @@ var progressData = {
             pointHoverBorderWidth: 2,
             pointRadius: 1,
             pointHitRadius: 10,
-            data: yArray2,
+            data: yArray,
             spanGaps: false,
         }
     ]
@@ -96,9 +97,9 @@ class Analytics extends React.Component {
         return (
             <div>
                 <p>sorted time regression per mile (not actual mile times)</p>
-                <MyChart data={mileTimeRegression} options={options} />
-                <p>progress by date</p>
-                <MyChart data ={progressData} options={options} />
+                <LineChart data={mileTimeRegression} options={options} />
+                <p>progress by date (rate by date, emphasized by distance)</p>
+                <LineChart data ={progressData} options={options} />
             </div>
         )
     }
