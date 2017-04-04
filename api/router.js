@@ -14,6 +14,11 @@ myRouter.route('/users')
     });
   });
 
+myRouter.route('/runHistory')
+  .post((req, res) => {
+    controller.addRunToHistory(req, res);
+  });
+
 myRouter.route('/packs')
   .get((req, res) => {
     controller.getPacks(req, res);

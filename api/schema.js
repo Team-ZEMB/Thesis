@@ -24,7 +24,7 @@ const RunHistories = db.define('RunHistories', {
   distance: Sequelize.FLOAT,
   duration: Sequelize.INTEGER, // in seconds
   date: Sequelize.DATE,
-  route: Sequelize.TEXT,
+  route: Sequelize.TEXT, 
 });
 
 const Challenges = db.define('Challenges', {
@@ -47,7 +47,7 @@ const Users_Badges = db.define('Users_Badges');
 Users.belongsToMany(Packs, { through: Users_Packs });
 Packs.belongsToMany(Users, { through: Users_Packs });
 Users_Pending_Packs.belongsTo(Users);
-Users_Pending_Packs.belongsTo(Packs);
+Users_Pending_Packs.belongsTo(Packs); //remove users pending packs, add flag for accepted or not
 Users.hasMany(Users_Pending_Packs);
 Users.belongsToMany(Badges, { through: Users_Badges });
 Badges.belongsToMany(Users, { through: Users_Badges });
