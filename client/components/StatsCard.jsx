@@ -18,7 +18,6 @@ const StatsCard = () => (
                 </Feed.Summary>
             </Feed.Content>
             </Feed.Event>
-
             <Feed.Event>
             <Feed.Content>
                 <Feed.Date content='Average mile time' />
