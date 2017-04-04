@@ -2,10 +2,10 @@ const request = require('request');
 const db = require('./schema');
 
 exports.createUser = function (req, res) {
-  var profile = req.body.params.profile;
-  var names = profile.nickname.split(' ');
-  var firstName = names[0];
-  var lastName;
+  const profile = req.body.params.profile;
+  const names = profile.nickname.split(' ');
+  const firstName = names[0];
+  let lastName;
   names[1] !== undefined ? lastName = names[1] : lastName = '';
   if (profile.username === undefined) {
     profile.username = profile.nickname;
@@ -26,7 +26,6 @@ exports.createUser = function (req, res) {
 };
 
 exports.returnUserData = function (req, res, id) {
-  console.log(id)
   db.Users.findOne({ where: { id } })
   .then((results) => {
     res.send(results);
@@ -36,14 +35,26 @@ exports.returnUserData = function (req, res, id) {
 exports.getPacks = function (req, res) {
 
 };
-exports.addRunToHistory = function (req, res) {
-  var entry = req.body.params.runHistoryEntry;
-  console.log(entry.initialPosition.longitude);
-  console.log(entry.initialPosition.latitude);
-  console.log(JSON.stringify(entry.coordinates));
-  // const newHistoryItem = db.RunHistories.build({
 
-  // })
+exports.addRunToHistory = function (req, res) {
+  const entry = req.body.params.runHistoryEntry;
+  const coords = JSON.stringify(entry.coordinates);
+  db.Users.findOne({ where: { authID: req.body.params.userID } })
+    .then((result) => {
+      const newHistoryItem = db.RunHistories.build({
+        startLong: entry.initialPosition.longitude,
+        startLat: entry.initialPosition.latitude,
+        distance: entry.distance,
+        date: entry.today,
+        duration: entry.duration,
+        route: coords,
+        UserId: result.id,
+      });
+      newHistoryItem.save()
+      .then((record) => {
+        res.send(record);
+      });
+    });
 };
 
 exports.createPack = function (req, res) {
@@ -52,11 +63,11 @@ exports.createPack = function (req, res) {
     image: req.query.img,
     totalDistance: 0,
   });
-newPack.save().then((result) => {
-  const newUserPack = db.Users_Packs.build({
+  newPack.save().then((result) => {
+    const newUserPack = db.Users_Packs.build({
     PackId: result.id,
-  })
-})
+  });
+  });
 };
 
 exports.acceptRequest = function (req, res) {
