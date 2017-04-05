@@ -26,7 +26,6 @@
 }
 
 .challenge {
-  position: relative;
   width: 350px;
   margin-top: 10px;
   background-color: teal;
@@ -39,7 +38,6 @@
 }
 
 .goal {
-  position: relative;
   width: 350px;
   margin-top: 10px;
   background-color: salmon;
@@ -62,12 +60,15 @@
   border: solid #e0e0e0;
   border-width: 3px;
 }
+
 .goalText {
-  width: 300px;
+  width: 290px;
+  padding: 10px;
 }
 
 .challengeText {
   width: 300px;
+  padding: 10px;
 }
 
 .rejectChallenge:hover {
@@ -75,18 +76,58 @@
 }
 
 .rejectChallenge {
-  font-size: 28px;
+  font-size: 24px;
   text-align: right;
   margin-right: 10px;
+  margin-top: 6px;
 
 }
 
 .acceptChallenge {
-  font-size: 25px;
+  font-size: 20px;
   text-align: right;
   margin-right: 10px;
+  margin-top: 8px;
 }
 
 .acceptChallenge:hover {
   color: green;
+}
+
+.completeGoal {
+  position: relative;
+  font-size: 28px;
+  padding: 20px;
+  text-align: right;
+}
+
+.completeGoal:hover {
+  color: #fff2d1;
+}
+
+.completedGoals {
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+.accContent {
+  margin-left: 24px;
+}
+
+.input {
+  width: 350px;
+  margin-top: 15px;
+}
+
+
+.ui .button {
+  background-color: salmon;
+  color: white;
+  font-family: avenir;
+  font-size: 15px;
+}
+
+.ui .button:hover {
+  background-color: salmon;
+  color: #fff2d1;
 }
