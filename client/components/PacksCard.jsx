@@ -1,43 +1,63 @@
-import React from 'react'
-import { Card, Icon, Feed } from 'semantic-ui-react'
+import React from 'react';
+import { Card, Icon, Accordion, Row, Col, Grid } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 
-const PacksCard = () => (
+
+const newPackModal = () => {
+    alert("new pack")
+};
+
+@connect((store) => {
+  return {
+    userdata: store.userdata,
+  };
+})
+
+export default class PacksCard extends React.Component {
+  
+  render() {
+      console.log(this.props)
+  return (
     <Card>
         <Card.Content>
         <Card.Header>
-            Packs
+            <Grid columns={2}>
+            <Grid.Column>
+                My Packs
+            </Grid.Column>
+            <Grid.Column style={{ textAlign: 'right', fontSize: '16' }}>
+                <Card.Meta>
+                <span className="date" onClick={() => { newPackModal(); }}>
+                    (+)
+                    </span>
+                </Card.Meta>
+            </Grid.Column>
+            </Grid>
         </Card.Header>
         </Card.Content>
         <Card.Content>
-        <Feed>
-            <Feed.Event>
-            <Feed.Content>
-                <Feed.Date content='Most recent run' />
-                <Feed.Summary>
-                You last ran <a>2.3 miles</a> in <a>21:40</a> on <a>April 4th</a>.
-                </Feed.Summary>
-            </Feed.Content>
-            </Feed.Event>
+        { this.props.userdata.myPacks.map((pack) => {
+            return (
+                <Accordion>
+                    <Accordion.Title>
+                    <Icon name="dropdown" />
+                    {pack.packName}
+                    </Accordion.Title>
+                    <Accordion.Content>
+                        {pack.members.map((member) => {
+                            return (
+                                <p>
+                                    {member}
+                                </p>
+                            )
+                        })}
+                    </Accordion.Content>
+                </Accordion>
 
-            <Feed.Event>
-            <Feed.Content>
-                <Feed.Date content='Average mile time' />
-                <Feed.Summary>
-                You averaged <a>7:29</a> a mile last week.
-                </Feed.Summary>
-            </Feed.Content>
-            </Feed.Event>
-            <Feed.Event>
-            <Feed.Content>
-                <Feed.Date content='Total miles run' />
-                <Feed.Summary>
-                You've run <a>42.1 miles</a> since you joined Rabbit!
-                </Feed.Summary>
-            </Feed.Content>
-            </Feed.Event>
-        </Feed>
+            )
+        })}
         </Card.Content>
     </Card>
-)
-
-export default PacksCard
+    );
+  }
+};

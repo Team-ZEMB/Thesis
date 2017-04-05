@@ -10,6 +10,20 @@ const initialState = {
   points: 0,
   firstName: null,
   lastName: null,
+  myPacks: [
+    {
+      packName: 'Megazord',
+      members: ['Sandra', 'Alex', 'Emily'],
+      image: null,
+      totalDistance: "1000 miles",
+    },
+    {
+      packName: 'mexicanfreetailedbat.io',
+      members: ['Squishmaster', 'Assistant to the project manager'],
+      image: null,
+      totalDistance: "0 miles",
+    },
+  ],
 };
 
 export default function groups(state = initialState, action) {
