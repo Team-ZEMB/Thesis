@@ -26,26 +26,22 @@ exports.createUser = function (req, res) {
 };
 
 exports.returnUserData = function (req, res, id) {
-  db.Users.findOne({ where: { id } })
-  .then((results) => {
-    db.RunHistories.findAll({ where: { UserId: results.id } })
-    .then((history) => {
-      db.Users_Packs.findAll({
-        where: {
-          UserId: results.id,
-        },
-      })
-      .then((packs) => {
-        res.send(packs);
-      })
-      // let userObj = {
-      //   userInfo: results,
-      //   history,
-      // };
-      // res.send(userObj);
-    });
-
-    // res.send(results);
+  db.Users.findOne({
+    where: { id },
+    include: [{
+      model: db.Packs,
+      include: [{
+        model: db.Users,
+        attributes: ['username'],
+      }],
+    },
+    { model: db.RunHistories },
+    { model: db.Challenges },
+    { model: db.Badges },
+    ],
+  })
+  .then((packs) => {
+    res.send(packs);
   });
 };
 

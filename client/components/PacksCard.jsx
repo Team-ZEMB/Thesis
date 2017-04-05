@@ -63,13 +63,13 @@ export default class PacksCard extends React.Component {
                 <Accordion>
                     <Accordion.Title>
                     <h5><Icon name="dropdown" />
-                    {pack.packName} | <small> {pack.totalDistance}</small></h5>
+                    {pack.name} | <small> {pack.totalDistance}</small></h5>
                     </Accordion.Title>
                     <Accordion.Content>
-                        {pack.members.map((member) => {
+                        {pack.Users.map((member) => {
                             return (
                                 <p style={{'textIndent': '2em'}}>
-                                  {member}
+                                  {member.username}
                                 </p>
                             )
                         })}
