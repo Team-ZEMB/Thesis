@@ -10,27 +10,10 @@ const initialState = {
   points: 0,
   firstName: null,
   lastName: null,
-  myPacks: [
-    {
-      packName: 'Megazord',
-      members: ['Sandra', 'Alex', 'Emily'],
-      image: null,
-      totalDistance: "1000 miles",
-    },
-    {
-      packName: 'mexicanfreetailedbat.io',
-      members: ['Squishmaster', 'Assistant to the project manager'],
-      image: null,
-      totalDistance: "0 miles",
-    },
-  ], 
-  badges: [{ image: '10goals.png', description: 'achieved 10 goals' }, { image: '50miles.png', description: 'ran 50 miles' }],
-  goals: [
-    { source: null, description: 'this is a goal for my own important self', status: 'accepted' },
-    { source: 'Marcie', description: 'Fly to the moon in your undies', status: 'completed' },
-    { source: 'Brandon', description: 'Talk Emily out of running for two weeks', status: 'pending' },
-    { source: 'Zach', description: 'Do more pushups than Andrew', status: 'accepted' },
-  ],
+  myPacks: [],
+  badges: [],
+  goals: [],
+  history: [],
 };
 
 export default function groups(state = initialState, action) {
@@ -44,6 +27,10 @@ export default function groups(state = initialState, action) {
         username: action.userObj.username,
         points: action.userObj.points,
         profileImage: action.userObj.profileImage,
+        myPacks: action.userObj.myPacks,
+        badges: action.userObj.badges,
+        goals: action.userObj.goals,
+        history: action.userObj.history,
       };
 
     case types.STORE_PROFILE:

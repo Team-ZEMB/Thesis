@@ -8,6 +8,10 @@ export function signInSuccess(userinfo) {
     username: userinfo.username,
     points: userinfo.points,
     profileImage: userinfo.profileImage,
+    badges: userinfo.Badges,
+    goals: userinfo.Challenges,
+    myPacks: userinfo.Packs,
+    history: userinfo.RunHistories,
   };
   return {
     type: types.SIGN_IN,

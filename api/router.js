@@ -4,8 +4,7 @@ const db = require('./schema');
 
 myRouter.route('/users')
   .post((req, res) => {
-    console.log(req.body.userID);
-    db.Users.findAll({ where: { authID: req.body.userID } })
+    db.Users.findAll({ where: { authID: req.body.params.userID } })
     .then((result) => {
       if (result.length === 0) {
         controller.createUser(req, res);

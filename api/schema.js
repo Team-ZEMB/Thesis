@@ -30,7 +30,7 @@ const RunHistories = db.define('RunHistories', {
 const Challenges = db.define('Challenges', {
   description: Sequelize.STRING, // limit to 30 chars
   status: Sequelize.STRING, // completed, pending, accepted
-  source: Sequelize.INTEGER, // source user id of challenge .. null for goals
+  source: Sequelize.STRING, // source username of challenge .. null for goals
 });
 
 const Packs = db.define('Packs', {
