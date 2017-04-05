@@ -23,6 +23,7 @@ const initialState = {
       image: null,
       totalDistance: "0 miles",
     },
+  ],
   badges: [{ image: '10goals.png', description: 'achieved 10 goals' }, { image: '50miles.png', description: 'ran 50 miles' }],
   goals: [
     { source: null, description: 'this is a goal for my own important self', status: 'accepted' },
