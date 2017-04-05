@@ -1,0 +1,92 @@
+.badgeImg {
+  max-width: 50px;
+}
+
+.imgContainer {
+  width: 65px;
+  display: inline-block;
+}
+
+.imgContainer p {
+  display: none;
+  color: #000000;
+}
+
+.imgContainer:hover p {
+  background-color: rgba(255, 255, 255, 0.7);
+  display: inline;
+  position: absolute;
+  margin-left: -58px;
+  margin-top: 6px;
+  width: 65px;
+  font-family: avenir;
+  font-size: 13px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.challenge {
+  position: relative;
+  width: 350px;
+  margin-top: 10px;
+  background-color: teal;
+  font-family: avenir;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  border: solid #cce2e2;
+  border-width: 3px;
+}
+
+.goal {
+  position: relative;
+  width: 350px;
+  margin-top: 10px;
+  background-color: salmon;
+  font-family: avenir;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  border: solid #fccfc2;
+  border-width: 3px;
+}
+
+.pendingChallenge {
+  width: 350px;
+  margin-top: 10px;
+  background-color: #a3a3a3;
+  font-family: avenir;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  border: solid #e0e0e0;
+  border-width: 3px;
+}
+.goalText {
+  width: 300px;
+}
+
+.challengeText {
+  width: 300px;
+}
+
+.rejectChallenge:hover {
+  color: red;
+}
+
+.rejectChallenge {
+  font-size: 28px;
+  text-align: right;
+  margin-right: 10px;
+
+}
+
+.acceptChallenge {
+  font-size: 25px;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.acceptChallenge:hover {
+  color: green;
+}

@@ -10,6 +10,12 @@ const initialState = {
   points: 0,
   firstName: null,
   lastName: null,
+  badges: [{ image: '10goals.png', description: 'achieved 10 goals' }, { image: '50miles.png', description: 'ran 50 miles' }],
+  goals: [
+    { source: null, description: 'this is a goal for my own important self', status: 'accepted' },
+    { source: 'Marcie', description: 'Fly to the moon in your undies', status: 'pending' },
+    { source: 'Brandon', description: 'Talk Emily out of running for two weeks', status: 'accepted' },
+  ],
 };
 
 export default function groups(state = initialState, action) {

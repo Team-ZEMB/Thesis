@@ -43,6 +43,8 @@
     "redux-thunk": "^2.2.0",
     "regression": "^1.4.0",
     "request": "^2.81.0",
+    "semantic-ui-css": "^2.2.10",
+    "semantic-ui-react": "^0.67.2",
     "sequelize": "^3.30.4"
   },
   "devDependencies": {
