@@ -39,17 +39,13 @@ const Packs = db.define('Packs', {
   totalDistance: Sequelize.FLOAT,
 });
 
-const Users_Packs = db.define('Users_Packs');
-const Users_Pending_Packs = db.define('Users_Pending_Packs', {
-  sentBy: Sequelize.INTEGER,
+const Users_Packs = db.define('Users_Packs', {
+  confirmed: Sequelize.BOOLEAN,
 });
 const Users_Badges = db.define('Users_Badges');
 
 Users.belongsToMany(Packs, { through: Users_Packs });
 Packs.belongsToMany(Users, { through: Users_Packs });
-Users_Pending_Packs.belongsTo(Users);
-Users_Pending_Packs.belongsTo(Packs); //remove users pending packs, add flag for accepted or not
-Users.hasMany(Users_Pending_Packs);
 Users.belongsToMany(Badges, { through: Users_Badges });
 Badges.belongsToMany(Users, { through: Users_Badges });
 Users.hasMany(RunHistories);
@@ -61,7 +57,6 @@ Challenges.belongsTo(Users);
 Users.sync();
 Packs.sync();
 Users_Packs.sync();
-Users_Pending_Packs.sync();
 Badges.sync();
 Users_Badges.sync();
 RunHistories.sync();
@@ -71,7 +66,6 @@ Challenges.sync();
 exports.Users = Users;
 exports.Packs = Packs;
 exports.Users_Packs = Users_Packs;
-exports.Users_Pending_Packs = Users_Pending_Packs;
 exports.Badges = Badges;
 exports.Users_Badges = Users_Badges;
 exports.RunHistories = RunHistories;

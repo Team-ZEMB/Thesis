@@ -28,7 +28,24 @@ exports.createUser = function (req, res) {
 exports.returnUserData = function (req, res, id) {
   db.Users.findOne({ where: { id } })
   .then((results) => {
-    res.send(results);
+    db.RunHistories.findAll({ where: { UserId: results.id } })
+    .then((history) => {
+      db.Users_Packs.findAll({
+        where: {
+          UserId: results.id,
+        },
+      })
+      .then((packs) => {
+        res.send(packs);
+      })
+      // let userObj = {
+      //   userInfo: results,
+      //   history,
+      // };
+      // res.send(userObj);
+    });
+
+    // res.send(results);
   });
 };
 
@@ -65,8 +82,8 @@ exports.createPack = function (req, res) {
   });
   newPack.save().then((result) => {
     const newUserPack = db.Users_Packs.build({
-    PackId: result.id,
-  });
+      PackId: result.id,
+    });
   });
 };
 

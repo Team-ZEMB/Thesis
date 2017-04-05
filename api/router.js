@@ -4,14 +4,18 @@ const db = require('./schema');
 
 myRouter.route('/users')
   .post((req, res) => {
-    db.Users.findAll({ where: { authID: req.body.params.userID } })
+    console.log(req.body.userID);
+    db.Users.findAll({ where: { authID: req.body.userID } })
     .then((result) => {
       if (result.length === 0) {
         controller.createUser(req, res);
       } else {
         controller.returnUserData(req, res, result[0].id);
       }
-    });
+    })
+    .catch((err) => {
+      res.send(err);
+    })
   });
 
 myRouter.route('/runHistory')

@@ -1,11 +1,11 @@
 import React from 'react';
-import { Card, Icon, Accordion, Row, Col, Grid } from 'semantic-ui-react';
+import { Card, Icon, Accordion, Row, Col, Grid, Button, Header, Modal } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 
-const newPackModal = () => {
-    alert("new pack")
-};
+const addToPack = (packName) => {
+    alert(packName)
+}
 
 @connect((store) => {
   return {
@@ -14,7 +14,16 @@ const newPackModal = () => {
 })
 
 export default class PacksCard extends React.Component {
-  
+  state = { modalOpen: false }
+
+  handleOpen = (e) => this.setState({
+    modalOpen: true,
+  })
+
+  handleClose = (e) => this.setState({
+    modalOpen: false,
+  })
+
   render() {
       console.log(this.props)
   return (
@@ -27,9 +36,22 @@ export default class PacksCard extends React.Component {
             </Grid.Column>
             <Grid.Column style={{ textAlign: 'right', fontSize: '16' }}>
                 <Card.Meta>
-                <span className="date" onClick={() => { newPackModal(); }}>
-                    (+)
-                    </span>
+                    <span onClick={this.handleOpen} className="date" >(+)</span> 
+                          <Modal open={this.state.modalOpen} onClose={this.handleClose} closeIcon='close'>
+                            <Header icon='users' content='Create New Pack' />
+                            <Modal.Content>
+                            <p>This will be form</p>
+                            </Modal.Content>
+                            <Modal.Actions>
+                            <Button color='red'>
+                                <Icon name='remove' /> No
+                            </Button>
+                            <Button color='green'>
+                                <Icon name='checkmark' /> Yes
+                            </Button>
+                            </Modal.Actions>
+                        </Modal>
+                
                 </Card.Meta>
             </Grid.Column>
             </Grid>
@@ -40,17 +62,20 @@ export default class PacksCard extends React.Component {
             return (
                 <Accordion>
                     <Accordion.Title>
-                    <Icon name="dropdown" />
-                    {pack.packName}
+                    <h5><Icon name="dropdown" />
+                    {pack.packName} | <small> {pack.totalDistance}</small></h5>
                     </Accordion.Title>
                     <Accordion.Content>
                         {pack.members.map((member) => {
                             return (
-                                <p>
-                                    {member}
+                                <p style={{'textIndent': '2em'}}>
+                                  {member}
                                 </p>
                             )
                         })}
+                        <p style={{'textIndent': '2em'}}>
+                          <small><a onClick={() => {addToPack(pack.packName)}}>Invite to Pack</a></small>
+                        </p>
                     </Accordion.Content>
                 </Accordion>
 
