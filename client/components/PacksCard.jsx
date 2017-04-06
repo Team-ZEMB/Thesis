@@ -7,11 +7,11 @@ import _ from 'lodash'
 
 
 
-// @connect((store) => {
-//   return {
-//     userdata: store.userdata,
-//   };
-// })
+@connect((store) => {
+  return {
+    userdata: store.userdata,
+  };
+})
 
 export default class PacksCard extends React.Component {
   state = { 
