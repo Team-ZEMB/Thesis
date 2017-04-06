@@ -22,6 +22,11 @@ myRouter.route('/runHistory')
     controller.addRunToHistory(req, res);
   });
 
+myRouter.route('/goals')
+  .post((req, res) => {
+    controller.addToGoals(req, res);
+  });
+
 myRouter.route('/newPack')
   .get((req, res) => {
     controller.getPacks(req, res);
