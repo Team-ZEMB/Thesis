@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Grid, Row, Col, Accordion, Icon } from 'semantic-ui-react';
+import { Grid, Row, Col, Accordion, Icon, Card, Header } from 'semantic-ui-react';
 import axios from 'axios';
+import * as UserActions from '../actions';
 
 @connect((store) => {
   return {
@@ -17,6 +18,9 @@ class GoalsCard extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this);
     this.completedGoal = this.completedGoal.bind(this);
+    this.addGoal = this.addGoal.bind(this);
+    this.acceptChallenge = this.acceptChallenge.bind(this);
+    this.rejectChallenge = this.rejectChallenge.bind(this);
   }
 
   handleChange(event) {
@@ -24,6 +28,7 @@ class GoalsCard extends React.Component {
   }
 
   addGoal(user, input) {
+    var that = this;
     if (input.length > 1) {
       axios.post('/api/goals', {
         UserId: user,
@@ -31,46 +36,61 @@ class GoalsCard extends React.Component {
         status: 'accepted'
       })
       .then((res) => {
-        console.log("Saved goal");
+        that.setState({userInput: ''});
+        that.props.dispatch(UserActions.signIn());
       })
       .catch(err => console.log(err))
     }
   }
 
   acceptChallenge(id) {
+    var that = this;
     axios.put('/api/goals', {
       id: id,
       status: 'accepted'
     })
     .then((res) => {
-      console.log("updated goal");
+      that.props.dispatch(UserActions.signIn());
     })
     .catch(err => console.log(err))
   }
 
   rejectChallenge(id) {
+    var that = this;
     axios.request({
       url: '/api/goals',
       method: 'delete',
       data: { id: id }
     });
+    that.props.dispatch(UserActions.signIn());
   }
 
   completedGoal(id) {
+    var that = this;
     axios.put('/api/goals', {
       id: id,
       status: 'completed'
     })
     .then((res) => {
-      console.log("updated goal");
+      that.props.dispatch(UserActions.signIn());
     })
     .catch(err => console.log(err))
   }
 
   render() {
     return (
-      <div>
+    <Card>
+    <Card.Content>
+      <Card.Header>            
+        <Grid>
+          <Grid.Column>
+            Goals and Challenges
+          </Grid.Column>
+        </Grid>
+      </Card.Header>
+      </Card.Content>
 
+      <Card.Content>
       {this.props.userdata.goals.map((goal, idx) => {
       var goalId = goal.id;
         if (goal.source === null && goal.status !== 'completed') {
@@ -106,9 +126,9 @@ class GoalsCard extends React.Component {
         }
       })
     }
-    <div className="ui large icon input">
+    <div className="ui small icon input">
       <input type="text" placeholder="Add new goal" value={this.state.userInput} onChange={this.handleChange}/>
-      <div className="ui button" onClick={() => {this.addGoal(this.props.userdata.DBID, this.state.userInput)}}>Submit</div>
+      <div className="ui small button" onClick={() => {this.addGoal(this.props.userdata.DBID, this.state.userInput)}}>Submit</div>
     </div>
 
     <Accordion className="completedGoals">
@@ -130,8 +150,8 @@ class GoalsCard extends React.Component {
       </Accordion.Content>
 
     </Accordion>
-
-    </div>
+    </Card.Content>
+    </Card>
 
     );
     }
