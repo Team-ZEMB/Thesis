@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Icon, Accordion, Search, Row, Form, Col, Grid, Button, Header, Modal } from 'semantic-ui-react';
+import { Card, Icon, Accordion, Search, Row, Form, Col, Grid, Button, Segment, Header, Modal } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import * as UserActions from '../actions';
@@ -7,11 +7,11 @@ import _ from 'lodash'
 
 
 
-@connect((store) => {
-  return {
-    userdata: store.userdata,
-  };
-})
+// @connect((store) => {
+//   return {
+//     userdata: store.userdata,
+//   };
+// })
 
 export default class PacksCard extends React.Component {
   state = { 
@@ -24,6 +24,8 @@ export default class PacksCard extends React.Component {
       isLoading: false,
       userlist: [],
       filteredUsers: [],
+      selectedUser: null,
+      selectedUserID: null,
     }
 
   handleOpen = (e) => this.setState({
@@ -45,8 +47,11 @@ export default class PacksCard extends React.Component {
     })
   }
 
-  handleResultSelect = (result) => {
-    
+  handleResultSelect = (e, result) => {
+    this.setState({
+      selectedUser: result.title,
+      selectedUserID: result.id,
+    })
   }
 
   handleClose = (e) => this.setState({
@@ -70,6 +75,11 @@ export default class PacksCard extends React.Component {
   }
   handleInviteClose = (e) => this.setState({
     inviteModalOpen: false,
+    inviteInput: '',
+    invitePackName: null,
+    invitePackID: null,
+    selectedUser: null,
+    selectedUserID: null,
   })
   handleInviteChange = (e) => {
       this.setState({
@@ -95,17 +105,20 @@ export default class PacksCard extends React.Component {
   }
 
   handleInviteSubmit = (e) => {
-    //   var newPackName = this.state.newPackInput;
-    //   axios.post('/api/newPack', {
-    //     user: this.props.userdata.DBID,
-    //     newPackName,
-    //   }).then((res) => {
-    //     this.props.dispatch(UserActions.signIn());
-    //   })
-    //     this.setState({
-    //         newPackInput: '',
-    //         modalOpen: false
-    //     })
+      axios.post('/api/addToPack', {
+        user: this.state.selectedUserID,
+        pack: this.state.invitePackID,
+      }).then((res) => {
+        this.props.dispatch(UserActions.signIn());
+      })
+        this.setState({
+            inviteModalOpen: false,
+            inviteInput: '',
+            invitePackName: null,
+            invitePackID: null,
+            selectedUser: null,
+            selectedUserID: null,
+        })
   }
 
   render() {
@@ -158,8 +171,7 @@ export default class PacksCard extends React.Component {
                         value={this.state.inviteInput}
                         />
                         <br />
-                        <br />
-                        <br />
+                        {this.state.selectedUser !== null ? (<Segment raised>{"Selected: "+this.state.selectedUser}</Segment>):(<div><br /><br /></div>)}
                         <br />
                         <br />
                         <br />
