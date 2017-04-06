@@ -70,8 +70,37 @@ exports.addRunToHistory = function (req, res) {
     });
 };
 
+exports.addToGoals = function (req, res) {
+  const newGoal = db.Challenges.build({
+    UserId: req.body.UserId,
+    description: req.body.description,
+    status: req.body.status,
+    source: req.body.source,
+  });
+  newGoal.save()
+  .then((result) => {
+    res.send(result);
+  });
+};
+
+exports.changeGoalStatus = function (req, res) {
+  db.Challenges.update(
+    { status: req.body.status },
+    { where: {id: req.body.id}}
+  ).then((result) => {
+    res.send(result);
+  });
+};
+
+exports.deleteGoal = function (req, res) {
+  db.Challenges.destroy({
+    where: {id: req.body.id}
+  }).then((result) => {
+    res.send('deleted');
+  })
+};
+
 exports.createPack = function (req, res) {
-  console.log(req.body.user)
   var name = req.body.newPackName;
   const newPack = db.Packs.build({
     name,

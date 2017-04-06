@@ -6,6 +6,7 @@ import StatsCard from '../components/StatsCard';
 import PacksCard from '../components/PacksCard';
 import BadgesCard from '../components/BadgesCard';
 import GoalsCard from '../components/GoalsCard';
+import { Grid, Row, Col, Accordion, Icon, Card, Header } from 'semantic-ui-react';
 
 @connect((store) => {
   return {
@@ -27,15 +28,13 @@ export default class Profile extends React.Component {
       return false;
     } else {
       return (
-        <div>
-          <h1>goals</h1>
-          <GoalsCard />
-          <h1>badges</h1>
+        <div id='profileContent'>
+          <PacksCard /> 
+          <StatsCard />   
+          <div id="clear"></div>
           <BadgesCard />
-          <h1>Profile</h1>
-          <img src={this.props.userdata.profileImage} alt="no profile picture" />
-          <StatsCard />
-          <PacksCard />
+
+          <GoalsCard />
         </div>
         );
     }

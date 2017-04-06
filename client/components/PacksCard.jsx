@@ -53,7 +53,7 @@ export default class PacksCard extends React.Component {
             <Grid.Column>
                 My Packs
             </Grid.Column>
-            <Grid.Column style={{ textAlign: 'right', fontSize: '16' }}>
+            <Grid.Column style={{ textAlign: 'right', fontSize: 16 }}>
                 <Card.Meta>
                     <span onClick={this.handleOpen} className="date" >(+)</span> 
                         <Modal open={this.state.modalOpen} onClose={this.handleClose} closeIcon='close'>

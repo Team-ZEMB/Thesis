@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Grid, Row, Col, Icon, Card, Header } from 'semantic-ui-react';
 
 @connect((store) => {
   return {
@@ -13,14 +14,25 @@ class BadgesCard extends React.Component {
   }
   render() {
     return (
-      <div>
+    <Card>
+    <Card.Content>
+      <Card.Header>            
+        <Grid>
+          <Grid.Column>
+            Badges
+          </Grid.Column>
+        </Grid>
+      </Card.Header>
+      </Card.Content>
+      <Card.Content>
       {
         this.props.userdata.badges.map((badge, idx) => {
        return <div key={idx} className="imgContainer"><img src={'assets/' + badge.image} className="badgeImg"/>
          <p>{badge.description}</p>
        </div>
       })}
-      </div>
+      </Card.Content>
+      </Card>
     );
   }
 }
