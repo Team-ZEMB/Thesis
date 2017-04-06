@@ -4,19 +4,27 @@ import regression from 'regression';
 import { connect } from 'react-redux';
 
 @connect((store) => {
-  return {
-    userdata: store.userdata,
-  };
+    return {
+        userdata: store.userdata,
+    };
 })
 
-class LineChart extends React.Component{
+class LineChart extends React.Component {
+    constructor() {
+        super()
+        this.state = { mileGoal: 0 }
 
-    getData() {
-        var input = [];
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
 
-        var hist = this.props.userdata.history
+    handleSubmit(value) {
+        this.setState = { mileGoal: value }
+    }
 
-        console.log('history: ', hist);
+    getData(input) {
+
+        //input should be an empty array unless you are adding prediction tuples [miles, null]
+        var hist = this.props.userdata.history;
 
         for (var j = 0; j < hist.length; j++) {
             var tuple = [];
@@ -25,37 +33,29 @@ class LineChart extends React.Component{
             tuple.push(minutes);
             input.push(tuple);
         }
-        console.log('input: ', input);
 
-        var sorted = input.sort(function(a,b) {
+        var sorted = input.sort(function (a, b) {
             return a[0] - b[0];
         });
 
-        console.log('sorted array: ', sorted);
-
         var result = regression('linear', sorted);
 
-        console.log('regression result: ', result);
-
-        var unzip = function(array, index) {
-        var output = [];
-        for (var i = 0; i < array.length; i++) {
-            output.push(array[i][index]);
-        }
+        var unzip = function (array, index) {
+            var output = [];
+            for (var i = 0; i < array.length; i++) {
+                output.push(array[i][index]);
+            }
             return output;
         }
 
         var xArray = unzip(result.points, 0);
         var yArray = unzip(result.points, 1);
 
-        console.log('x data: ', xArray);
-        console.log('y data: ', yArray);
-
         return ({
             labels: xArray,
             datasets: [
                 {
-                    label: "Linear regression: best-fit",
+                    label: "Miles / Minutes",
                     fill: false,
                     lineTension: 0.1,
                     backgroundColor: "rgba(75,192,192,0.4)",
@@ -80,13 +80,44 @@ class LineChart extends React.Component{
         });
     }
 
+    setGoal(miles) {
+
+        var input = [[miles, null]];
+
+        var hist = this.props.userdata.history;
+
+        for (var k = 0; k < hist.length; k++) {
+            var tuple = [];
+            var minutes = this.props.userdata.history[k].duration / 60;
+            tuple.push(this.props.userdata.history[k].distance);
+            tuple.push(minutes);
+            input.push(tuple);
+        }
+
+        var result = regression('linear', input);
+
+        var expectedTime = Math.ceil(result.points[0][1]);
+
+        return ("Run " + miles + " miles in " + expectedTime + " minutes.");
+    }
+
     render() {
-        console.log("line graph data: ", this.getData());
         return (
             <div>
-                <h2>Time Estimates</h2>
+                <h2>Miles Times</h2>
                 <p>Predicts the time it will take you to run a number of miles based on your history</p>
-                <Line data={this.getData()} />
+                <p>dev - x miles, y minutes</p>
+                <Line data={this.getData([])} />
+                <form onSubmit={this.handleSubmit}>
+                    <label>
+                        Set a goal (miles):
+                        <input type="number" name="mileGoal" value={this.state.value}/>
+                    </label>
+                    <input type="submit" value="Submit" />
+                </form>
+                <div>
+                    {this.setGoal(this.state.mileGoal)}
+                </div>
             </div>
         );
     }
