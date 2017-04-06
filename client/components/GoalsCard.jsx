@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col, Accordion, Icon } from 'semantic-ui-react';
+import axios from 'axios';
 
 @connect((store) => {
   return {
@@ -11,9 +12,30 @@ import { Grid, Row, Col, Accordion, Icon } from 'semantic-ui-react';
 class GoalsCard extends React.Component {
   constructor(props) {
     super();
+    this.state = {
+      userInput: ''
+    }
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  addGoal() {
+  handleChange(event) {
+    this.setState({userInput: event.target.value});
+  }
+
+  addGoal(user, input) {
+    console.log("USR***", user);
+    console.log("INPUT****", input);
+    if (input.length > 0) {
+    axios.post('/api/goals', {
+      UserId: user,
+      description: input, 
+      status: 'accepted'
+    })
+    .then((res) => {
+      console.log("Saved goal");
+    })
+    .catch(err => console.log(err))
+  }
   }
 
   acceptChallenge() {
@@ -64,8 +86,8 @@ class GoalsCard extends React.Component {
       })
     }
     <div className="ui large icon input">
-      <input type="text" placeholder="Add new goal" />
-      <div className="ui button" onClick={this.addGoal}>Submit</div>
+      <input type="text" placeholder="Add new goal" value={this.state.userInput} onChange={this.handleChange}/>
+      <div className="ui button" onClick={() => {this.addGoal(this.props.userdata.UserId, this.state.userInput)}}>Submit</div>
     </div>
 
     <Accordion className="completedGoals">

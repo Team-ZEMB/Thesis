@@ -70,6 +70,19 @@ exports.addRunToHistory = function (req, res) {
     });
 };
 
+exports.addToGoals = function (req, res) {
+  const newGoal = db.Challenges.build({
+    UserId: req.body.UserId,
+    description: req.body.description,
+    status: req.body.status,
+    source: req.body.source,
+  });
+  newGoal.save()
+  .then((result) => {
+    res.send(result);
+  });
+};
+
 exports.createPack = function (req, res) {
   console.log(req.body.user)
   var name = req.body.newPackName;
