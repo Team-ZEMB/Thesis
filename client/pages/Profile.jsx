@@ -29,7 +29,6 @@ export default class Profile extends React.Component {
       return (
         <div>
           <h1>goals</h1>
-
           <GoalsCard />
           <h1>badges</h1>
           <BadgesCard />
