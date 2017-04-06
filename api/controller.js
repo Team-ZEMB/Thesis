@@ -118,6 +118,15 @@ exports.createPack = function (req, res) {
   });
 };
 
+exports.getAllUsers = function (req, res) {
+  db.Users.findAll({
+    attributes: ['id', ['profileImage', 'image'], ['username', 'title'], ['username', 'description']],
+  })
+  .then((results) => {
+    res.send(results)
+  })
+}
+
 exports.acceptRequest = function (req, res) {
   const requestID = req.body.id;
   db.Users_Pending_Packs.find({ where: { id: requestID } })
