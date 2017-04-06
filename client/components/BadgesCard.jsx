@@ -15,8 +15,8 @@ class BadgesCard extends React.Component {
     return (
       <div>
       {
-        this.props.userdata.badges.map((badge) => {
-       return <div className="imgContainer"><img src={'assets/' + badge.image} className="badgeImg"/>
+        this.props.userdata.badges.map((badge, idx) => {
+       return <div key={idx} className="imgContainer"><img src={'assets/' + badge.image} className="badgeImg"/>
          <p>{badge.description}</p>
        </div>
       })}

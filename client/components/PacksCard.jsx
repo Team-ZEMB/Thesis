@@ -1,7 +1,8 @@
 import React from 'react';
-import { Card, Icon, Accordion, Row, Col, Grid, Button, Header, Modal } from 'semantic-ui-react';
+import { Card, Icon, Accordion, Row, Form, Col, Grid, Button, Header, Modal } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-
+import axios from 'axios';
+import * as UserActions from '../actions';
 
 const addToPack = (packName) => {
     alert(packName)
@@ -14,7 +15,10 @@ const addToPack = (packName) => {
 })
 
 export default class PacksCard extends React.Component {
-  state = { modalOpen: false }
+  state = { 
+      modalOpen: false,
+      newPackInput: '',
+    }
 
   handleOpen = (e) => this.setState({
     modalOpen: true,
@@ -23,9 +27,24 @@ export default class PacksCard extends React.Component {
   handleClose = (e) => this.setState({
     modalOpen: false,
   })
+  handleChange = (e) => this.setState({
+      newPackInput: e.target.value
+  })
+  handleSubmit = (e) => {
+      var newPackName = this.state.newPackInput;
+      axios.post('/api/newPack', {
+        user: this.props.userdata.DBID,
+        newPackName,
+      }).then((res) => {
+        this.props.dispatch(UserActions.signIn());
+      })
+        this.setState({
+            newPackInput: '',
+            modalOpen: false
+        })
+  }
 
   render() {
-      console.log(this.props)
   return (
     <Card>
         <Card.Content>
@@ -37,44 +56,48 @@ export default class PacksCard extends React.Component {
             <Grid.Column style={{ textAlign: 'right', fontSize: '16' }}>
                 <Card.Meta>
                     <span onClick={this.handleOpen} className="date" >(+)</span> 
-                          <Modal open={this.state.modalOpen} onClose={this.handleClose} closeIcon='close'>
-                            <Header icon='users' content='Create New Pack' />
-                            <Modal.Content>
-                            <p>This will be form</p>
-                            </Modal.Content>
-                            <Modal.Actions>
-                            <Button color='red'>
-                                <Icon name='remove' /> No
-                            </Button>
-                            <Button color='green'>
-                                <Icon name='checkmark' /> Yes
-                            </Button>
-                            </Modal.Actions>
-                        </Modal>
-                
+                        <Modal open={this.state.modalOpen} onClose={this.handleClose} closeIcon='close'>
+                        <Header icon='users' content='Create New Pack' />
+                        <Modal.Content>
+                            <form onSubmit={() => {this.handleSubmit()}}>
+                            
+                            <label>Name:</label>
+                            <input onChange={(e) => this.handleChange(e)} />
+                            
+                        <Modal.Actions>
+                        <Button type='reset' color='red' onClick={this.handleClose} >
+                            <Icon name='remove' /> Cancel
+                        </Button>
+                        <Button type='submit' color='green'>
+                            <Icon name='checkmark' /> Confirm
+                        </Button>
+                        </Modal.Actions>
+                        </form>
+                        </Modal.Content>
+                    </Modal>
                 </Card.Meta>
             </Grid.Column>
             </Grid>
         </Card.Header>
         </Card.Content>
         <Card.Content>
-        { this.props.userdata.myPacks.map((pack) => {
+        { this.props.userdata.myPacks.map((pack, idx) => {
             return (
-                <Accordion>
+                <Accordion key={idx}>
                     <Accordion.Title>
                     <h5><Icon name="dropdown" />
                     {pack.name} | <small> {pack.totalDistance}</small></h5>
                     </Accordion.Title>
                     <Accordion.Content>
-                        {pack.Users.map((member) => {
+                        {pack.Users.map((member, idx) => {
                             return (
-                                <p style={{'textIndent': '2em'}}>
+                                <p key={idx} style={{'textIndent': '2em'}}>
                                   {member.username}
                                 </p>
                             )
                         })}
                         <p style={{'textIndent': '2em'}}>
-                          <small><a onClick={() => {addToPack(pack.packName)}}>Invite to Pack</a></small>
+                          <small><a onClick={() => {addToPack(<pack className="name"></pack>)}}>Invite to Pack</a></small>
                         </p>
                     </Accordion.Content>
                 </Accordion>

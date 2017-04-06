@@ -26,8 +26,6 @@ export default class Profile extends React.Component {
       window.location.href= "/#/login"
       return false;
     } else {
-      console.log(this.props)
-      console.log('that was props...')
       return (
         <div>
           <h1>goals</h1>
