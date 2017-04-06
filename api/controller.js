@@ -71,15 +71,21 @@ exports.addRunToHistory = function (req, res) {
 };
 
 exports.createPack = function (req, res) {
+  console.log(req.body.user)
+  var name = req.body.newPackName;
   const newPack = db.Packs.build({
-    name: req.query.name,
-    image: req.query.img,
+    name,
+    image: null,
     totalDistance: 0,
   });
   newPack.save().then((result) => {
     const newUserPack = db.Users_Packs.build({
       PackId: result.id,
+      UserId: req.body.user,
     });
+    newUserPack.save().then((result) => {
+      res.send(result);
+    })
   });
 };
 

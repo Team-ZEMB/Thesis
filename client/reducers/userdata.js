@@ -14,6 +14,7 @@ const initialState = {
   badges: [],
   goals: [],
   history: [],
+  DBID: null,
 };
 
 export default function groups(state = initialState, action) {
@@ -31,6 +32,7 @@ export default function groups(state = initialState, action) {
         badges: action.userObj.badges,
         goals: action.userObj.goals,
         history: action.userObj.history,
+        DBID: action.userObj.DBID,
       };
 
     case types.STORE_PROFILE:

@@ -22,7 +22,7 @@ myRouter.route('/runHistory')
     controller.addRunToHistory(req, res);
   });
 
-myRouter.route('/packs')
+myRouter.route('/newPack')
   .get((req, res) => {
     controller.getPacks(req, res);
   })

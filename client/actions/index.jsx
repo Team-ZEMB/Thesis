@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as types from '../constants/ActionTypes.jsx';
 
 export function signInSuccess(userinfo) {
-  var userObj = {
+  let userObj = {
     firstName: userinfo.firstName,
     lastName: userinfo.lastName,
     username: userinfo.username,
@@ -12,37 +12,23 @@ export function signInSuccess(userinfo) {
     goals: userinfo.Challenges,
     myPacks: userinfo.Packs,
     history: userinfo.RunHistories,
+    DBID: userinfo.id,
   };
   return {
     type: types.SIGN_IN,
     userObj,
-  }
+  };
 }
 
 export function loading() {
   return {
     type: types.LOADING,
-  }
+  };
 }
 
 export function doneLoading() {
   return {
     type: types.DONE_LOADING,
-  }
-}
-
-export function signIn() {
-  return (dispatch) => {
-    dispatch(loading());
-    var profile = JSON.parse(localStorage.getItem("profile"));
-    var userID = profile.user_id;
-    axios.post('/api/users', { params: {
-      userID,
-      profile,
-    }})
-    .then((result) => {
-      dispatch(signInSuccess(result.data));
-    })
   };
 }
 
@@ -52,3 +38,20 @@ export function storeProfile(profile) {
     profile,
   };
 }
+
+export function signIn() {
+  return (dispatch) => {
+    dispatch(loading());
+    let profile = JSON.parse(localStorage.getItem('profile'));
+    dispatch(storeProfile(profile));
+    let userID = profile.user_id;
+    axios.post('/api/users', { params: {
+      userID,
+      profile,
+    } })
+    .then((result) => {
+      dispatch(signInSuccess(result.data));
+    });
+  };
+}
+

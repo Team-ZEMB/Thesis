@@ -14,29 +14,24 @@ class GoalsCard extends React.Component {
   }
 
   addGoal() {
-    console.log("add goal")
   }
 
   acceptChallenge() {
-    console.log("accepted challenge");
   }
 
   rejectChallenge() {
-    console.log("rejected challenge");
   }
 
   completedGoal() {
-    console.log("completed goal")
   }
 
   render() {
-    console.log(this.props.userdata.goals);
     return (
       <div>
 
-      {this.props.userdata.goals.map((goal) => {
+      {this.props.userdata.goals.map((goal, idx) => {
         if (goal.source === null && goal.status !== 'completed') {
-          return <div className="goal">
+          return <div className="goal" key={idx}>
           <Grid>
             <Grid.Row>
               <div className="goalText">{"Goal: " + goal.description}</div>
@@ -45,7 +40,7 @@ class GoalsCard extends React.Component {
           </Grid>
           </div>
         } else if (goal.source !== null && goal.status === 'pending') {
-          return <div className="pendingChallenge">
+          return <div className="pendingChallenge" key={idx}>
           <Grid>
             <Grid.Row>
               <div className="challengeText">{"Challenge from " + goal.source + ": " + goal.description}</div>
@@ -57,7 +52,7 @@ class GoalsCard extends React.Component {
           </Grid>
           </div>
         } else if (goal.source !== null && goal.status === 'accepted'){
-          return <div className="challenge">
+          return <div className="challenge" key={idx}>
           <Grid>
             <Grid.Row>
               <div className="challengeText">{"Challenge from " + goal.source + ": " + goal.description}</div>
@@ -83,9 +78,9 @@ class GoalsCard extends React.Component {
 
       <Accordion.Content className="accContent">
         {
-          this.props.userdata.goals.map((goal) => { 
+          this.props.userdata.goals.map((goal, idx) => { 
             if (goal.status === 'completed') {
-            return <p>{goal.description}</p>
+            return <p key={idx}>{goal.description}</p>
           }
           })
         }
