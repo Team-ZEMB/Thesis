@@ -45,4 +45,9 @@ myRouter.route('/newPack')
     controller.createPack(req, res);
   });
 
+myRouter.route('/getAllUsers')
+  .get((req, res) => {
+    controller.getAllUsers(req, res);
+  });
+
 module.exports = myRouter;
