@@ -9,8 +9,20 @@ export default class HistoryCard extends React.Component {
 
     getDescription() {
         var minutes = (this.props.hist.duration / 60).toFixed(1);
+        var converter = function secondsToHms(d) {
+            d = Number(d);
+            var h = Math.floor(d / 3600);
+            var m = Math.floor(d % 3600 / 60);
+            var s = Math.floor(d % 3600 % 60);
+
+            var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+            var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+            var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+            return hDisplay + mDisplay + sDisplay; 
+        }
+        var duration = converter(this.props.hist.duration)
         var miles = Math.round(this.props.hist.distance * 10) / 10;
-        return ("You ran " + miles + " miles in " + minutes + " minutes.");
+        return ("You ran " + miles + " miles in " + duration+'.');
     }
 
     getDate() {

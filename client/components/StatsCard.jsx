@@ -17,9 +17,21 @@ export default class StatsCard extends React.Component {
         if (this.props.stats.history.length > 0) {
             var idx = this.props.stats.history.length - 1;
             var miles = Math.round(this.props.stats.history[idx].distance * 10) / 10;
-            var minutes = Math.round((this.props.stats.history[idx].duration / 60) * 10) / 10;
+            var converter = function secondsToHms(d) {
+                d = Number(d);
+                var h = Math.floor(d / 3600);
+                var m = Math.floor(d % 3600 / 60);
+                var s = Math.floor(d % 3600 % 60);
+
+                var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+                var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+                var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+                return hDisplay + mDisplay + sDisplay; 
+            }
+            var duration = converter(this.props.stats.history[idx].duration);
+            // var minutes = Math.round((this.props.stats.history[idx].duration / 60) * 10) / 10;
             var date = (this.props.stats.history[idx].date).substring(0, 10);
-            return ("You last ran " + miles + " miles in " + minutes + " minutes on " + date + ".");
+            return ("You last ran " + miles + " miles in " + duration + " on " + date + ".");
         } else {
             return ("Can't find recent run data");
         }

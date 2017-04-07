@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import HistoryCard from '../components/HistoryCard';
 import { Card } from 'semantic-ui-react'
 import * as UserActions from '../actions';
+import {GoogleMapLoader, GoogleMap, Marker} from "react-google-maps";
+
 
 @connect((store) => {
   return {
@@ -17,14 +19,21 @@ export default class RunHistory extends React.Component {
       this.props.dispatch(UserActions.signIn());
     }
   }
-
+  
   render() {
-    return (
+    var histArray = this.props.userdata.history.slice().reverse();
+
+
+
+  return (
+    <div>
+          
       <Card.Group itemsPerRow={2}>
-        {this.props.userdata.history.map(function(history) {
+        {histArray.map(function(history) {
           return <HistoryCard hist={history} />;
         })}
       </Card.Group>
+      </div>
     )
   }
 }
