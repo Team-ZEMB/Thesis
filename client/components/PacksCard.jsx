@@ -42,10 +42,8 @@ export default class PacksCard extends React.Component {
       invitePackID: id,
       invitePackName: packName,
     })
-    console.log("ready to get")
     axios.get('/api/getAllUsers')
     .then((results) => {
-        console.log(results.data);
         this.setState({
             userlist: results.data,
         })
@@ -104,12 +102,10 @@ export default class PacksCard extends React.Component {
       const re = new RegExp(_.escapeRegExp(this.state.inviteInput), 'i')
       const isMatch = (result) => re.test(result.title)
       var filteredResults = _.filter(this.state.userlist, isMatch)
-      console.log(this.state.userlist)
       this.setState({
         filteredUsers: filteredResults,
         isLoading: false,
       })
-      console.log(filteredResults)
     }, 500)
   }
 
@@ -132,7 +128,6 @@ export default class PacksCard extends React.Component {
   }
 
   handleChallengeOpen = (id, name, challenger) => {
-  console.log(name);
     this.setState({
       challengeModalOpen: true,
       challengee: id,

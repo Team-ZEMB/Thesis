@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import HistoryCard from '../components/HistoryCard';
 import { Card } from 'semantic-ui-react'
+import * as UserActions from '../actions';
 
 @connect((store) => {
   return {
@@ -10,6 +11,13 @@ import { Card } from 'semantic-ui-react'
 })
 
 export default class RunHistory extends React.Component {
+
+  componentWillMount() {
+    if (!!localStorage.getItem("profile")) {
+      this.props.dispatch(UserActions.signIn());
+    }
+  }
+
   render() {
     return (
       <Card.Group itemsPerRow={2}>

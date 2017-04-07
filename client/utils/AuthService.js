@@ -39,7 +39,6 @@ class AuthService {
       if (err) {
         lockError(err);
       }
-      console.log(profile)
     })
   }
 

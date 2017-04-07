@@ -12,7 +12,6 @@ export default class Login extends React.Component {
     super()
   }
   render() {
-    console.log(AuthService)
     return (
       <div>
         <h2>Login</h2>

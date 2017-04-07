@@ -26,6 +26,7 @@ exports.createUser = function (req, res) {
 };
 
 exports.returnUserData = function (req, res, id) {
+  console.log('ctrl 29')
   db.Users.findOne({
     where: { id },
     include: [{
@@ -41,6 +42,8 @@ exports.returnUserData = function (req, res, id) {
     ],
   })
   .then((packs) => {
+   console.log('ctrl 45')
+
     res.send(packs);
   });
 };
@@ -128,7 +131,6 @@ exports.getAllUsers = function (req, res) {
 };
 
 exports.addToPack = function (req, res) {
-  console.log(req.body);
   const newUsersPacks = db.Users_Packs.build({
     UserId: req.body.user,
     PackId: req.body.pack,
