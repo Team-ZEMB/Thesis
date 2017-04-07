@@ -19,6 +19,12 @@ export default class App extends React.Component {
   handleItemClick = (e, { name }) => {
     this.setState({ activeItem: name });
   }
+  handleLogout = () => {
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('profile');
+    this.setState({ activeItem: 'Login' });
+    window.location.href =  '/#/login'
+  }
 
   render() {
     const { activeItem } = this.state
@@ -31,7 +37,7 @@ export default class App extends React.Component {
           <Menu.Item name='Analytics' active={activeItem === 'Analytics'} onClick={this.handleItemClick} href='/#/analytics' />
           <Menu.Menu position='right'>
             <img id="profilePic" src={this.props.userdata.profileImage} alt="profile picture" />
-            <Menu.Item name='logout' active={activeItem === 'logout'} onClick={this.handleItemClick} />
+            <Menu.Item name='logout' active={activeItem === 'logout'} onClick={this.handleLogout} />
           </Menu.Menu>
         </Menu>
         <Route exact path="/" component={Profile} />
