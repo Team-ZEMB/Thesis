@@ -29,6 +29,7 @@ export default class Profile extends React.Component {
     } else {
       return (
         <div id='profileContent'>
+
           <StatsCard stats={this.props.userdata}/>  
           <PacksCard /> 
           <div id="clear"></div>

@@ -20,11 +20,7 @@
   margin-bottom: 20px;
   position: relative;
   display: inline-block;
-  font-family: avenir
-}
-
-.ui.headers {
-  font-size: 100px;
+  font-family: avenir;
 }
 
 .imgContainer {
@@ -111,6 +107,17 @@
   margin-top: 6px;
 }
 
+.generatedGoal {
+  width: 310px;
+  margin-top: 7px;
+  background-color: #FFD769;
+  color: white;
+  border-radius: 5px;
+  border: solid #fff3d3;
+  border-width: 3px;
+  margin-left: -7px;
+}
+
 .acceptChallenge:hover {
   color: green;
 }
@@ -121,6 +128,7 @@
   height: 32px;
   font-size: 16px;
 }
+
 .completeGoal {
   position: relative;
   font-size: 22px;
