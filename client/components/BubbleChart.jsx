@@ -19,7 +19,6 @@ class BubbleChart extends React.Component {
         for (var i = 0; i < this.props.userdata.history.length; i++) {
 
             var triple = {};
-            console.log('DATE', this.props.userdata.history[i].date)
 
             //this.props.userdata.history[i].distance / this.props.userdata.history[i].duration
 
@@ -27,12 +26,8 @@ class BubbleChart extends React.Component {
             triple.y = this.props.userdata.history[i].duration / 60;
             triple.r = Math.ceil(this.props.userdata.history[i].distance * 10);
 
-            console.log('triple object', triple);
-
             datesArray.push(this.props.userdata.history[i].date)
             resultsArray.push(triple);
-
-            console.log('resultsArray ', resultsArray);
         }
 
 

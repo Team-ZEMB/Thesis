@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 export default class StatsCard extends React.Component {
     constructor(props) {
         super(props);
-    }
+    } 
 
     getRecentRun() {
         if (this.props.stats.history.length > 0) {
