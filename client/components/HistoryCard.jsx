@@ -34,8 +34,6 @@ export default class HistoryCard extends React.Component {
             <Card color="teal">
                 <Card.Content header={this.getDate()} />
                 <Card.Content description={this.getDescription()} />
-                <Card.Content extra>
-                </Card.Content>
             </Card>
         )
     }
