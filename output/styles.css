@@ -108,13 +108,19 @@
   font-size: 20px;
   text-align: right;
   margin-right: 10px;
-  margin-top: 7px;
+  margin-top: 6px;
 }
 
 .acceptChallenge:hover {
   color: green;
 }
 
+.modalInput {
+  margin-bottom: 20px;
+  width: 260px;
+  height: 32px;
+  font-size: 16px;
+}
 .completeGoal {
   position: relative;
   font-size: 22px;
@@ -126,6 +132,14 @@
   color: #fff2d1;
 }
 
+a {
+  color: teal;
+}
+
+a:hover {
+  color: #a3a3a3;
+}
+
 .completedGoals {
   margin-top: 10px;
   margin-left: 5px;
@@ -133,6 +147,10 @@
 
 .accContent {
   margin-left: 24px;
+}
+
+#packmates:hover {
+  color: #a3a3a3;
 }
 
 .ui.input {
