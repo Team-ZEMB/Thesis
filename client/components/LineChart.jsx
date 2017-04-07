@@ -2,6 +2,7 @@ import React from 'react';
 import { Line } from 'react-chartjs-2';
 import regression from 'regression';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 @connect((store) => {
     return {
@@ -12,13 +13,21 @@ import { connect } from 'react-redux';
 class LineChart extends React.Component {
     constructor() {
         super()
-        this.state = { mileGoal: 0 }
-
+        this.state = {
+            value: ''
+        }
+    
+        this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    handleChange(event) {
+        this.setState({value: event.target.value});
+    }
+
     handleSubmit(value) {
-        this.setState = { mileGoal: value }
+        this.setGoal(this.state.value);
+        //success
     }
 
     getData(input) {
@@ -81,7 +90,7 @@ class LineChart extends React.Component {
     }
 
     setGoal(miles) {
-
+        //miles is the problem
         var input = [[miles, null]];
 
         var hist = this.props.userdata.history;
@@ -98,7 +107,28 @@ class LineChart extends React.Component {
 
         var expectedTime = Math.ceil(result.points[0][1]);
 
-        return ("Run " + miles + " miles in " + expectedTime + " minutes.");
+        // var easy = expectedTime;
+        // var medium = expectedTime * 0.85;
+        // var hard = expectedTime * 0.60;
+
+        var goalInput = "Run " + miles + " miles in " + expectedTime + " minutes.";
+
+        this.addGoal(this.props.userdata.DBID, goalInput);
+    }
+
+    addGoal(user, input) {
+        var that = this;
+        if (input.length > 1) {
+            axios.post('/api/goals', {
+                UserId: user,
+                description: input,
+                status: 'generated'
+            })
+            .then((res) => {
+                console.log('Generated goal: ', input)
+            })
+            .catch(err => console.log(err))
+        }
     }
 
     render() {
@@ -110,14 +140,11 @@ class LineChart extends React.Component {
                 <Line data={this.getData([])} />
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        Set a goal (miles):
-                        <input type="number" name="mileGoal" value={this.state.value}/>
+                        Set a goal (miles): 
+                        <input type="number" name="mileGoal" value={this.state.value} onChange={this.handleChange}/>
                     </label>
                     <input type="submit" value="Submit" />
                 </form>
-                <div>
-                    {this.setGoal(this.state.mileGoal)}
-                </div>
             </div>
         );
     }
