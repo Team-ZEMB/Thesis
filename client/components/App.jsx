@@ -36,7 +36,7 @@ export default class App extends React.Component {
           <Menu.Item name='Run History' active={activeItem === 'Run History'} onClick={this.handleItemClick} href='/#/runhistory' />
           <Menu.Item name='Analytics' active={activeItem === 'Analytics'} onClick={this.handleItemClick} href='/#/analytics' />
           <Menu.Menu position='right'>
-            <img id="profilePic" src={this.props.userdata.profileImage} alt="profile picture" />
+            <img id="profilePic" src={this.props.userdata.profileImage} alt="" />
             <Menu.Item name='logout' active={activeItem === 'logout'} onClick={this.handleLogout} />
           </Menu.Menu>
         </Menu>

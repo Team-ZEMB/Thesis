@@ -27,7 +27,6 @@ export default class RunHistory extends React.Component {
 
   return (
     <div>
-          
       <Card.Group itemsPerRow={2}>
         {histArray.map(function(history) {
           return <HistoryCard hist={history} />;

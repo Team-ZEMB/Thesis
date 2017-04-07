@@ -1,7 +1,7 @@
 import React, { PropTypes as T } from 'react'
 import AuthService from '../utils/AuthService'
 import config from '../../environment';
-
+import { Button } from 'semantic-ui-react';
 
 export default class Login extends React.Component {
   static propTypes = {
@@ -14,8 +14,8 @@ export default class Login extends React.Component {
   render() {
     return (
       <div>
-        <h2>Login</h2>
-        <button onClick={AuthService.login}>Login</button>
+        <h2>Welcome to Rabbit!</h2>
+        <Button color='teal' onClick={AuthService.login}>Login</Button>
       </div>
     )
   }

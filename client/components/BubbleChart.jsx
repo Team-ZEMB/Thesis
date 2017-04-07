@@ -65,7 +65,6 @@ class BubbleChart extends React.Component {
             <div>
                 <h2>Progress</h2>
                 <p>Tracks your past runs by date and predicts future progress</p>
-                <p>dev - x chronological run id, y minutes, r distance representation</p> 
                 <Bubble data={this.getData()} />
             </div>
         );
