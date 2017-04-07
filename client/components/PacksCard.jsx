@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Icon, Accordion, Search, Row, Form, Col, Grid, Button, Segment, Header, Modal } from 'semantic-ui-react';
+import { Card, Icon, Dimmer, Loader, Accordion, Search, Row, Form, Col, Grid, Button, Segment, Header, Modal } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import * as UserActions from '../actions';
@@ -117,6 +117,7 @@ export default class PacksCard extends React.Component {
       axios.post('/api/addToPack', {
         user: this.state.selectedUserID,
         pack: this.state.invitePackID,
+        self: this.props.userdata.DBID,
       }).then((res) => {
         this.props.dispatch(UserActions.signIn());
       })
@@ -172,7 +173,7 @@ export default class PacksCard extends React.Component {
   }
 
   render() {
-  return (
+    return (
     <Card>
         <Card.Content>
         <Card.Header>
@@ -237,7 +238,11 @@ export default class PacksCard extends React.Component {
                 </form>
                 </Modal.Content>
             </Modal>
-        { this.props.userdata.myPacks.map((pack, idx) => {
+        { this.props.userdata.loading === true ? (<Segment>
+      <Dimmer active inverted>
+        <Loader size='small'>Loading</Loader>
+      </Dimmer><br /><br /><br /><br />
+    </Segment>) :  (this.props.userdata.myPacks.map((pack, idx) => {
             return (
                 <Accordion key={idx}>
                     <Accordion.Title>
@@ -284,9 +289,9 @@ export default class PacksCard extends React.Component {
                     </Accordion.Content>
                 </Accordion>
             )
-        })}
+        }))}
         </Card.Content>
     </Card>
-    );
+    )
   }
 };

@@ -123,9 +123,21 @@ exports.getAllUsers = function (req, res) {
     attributes: ['id', ['profileImage', 'image'], ['username', 'title'], ['username', 'description']],
   })
   .then((results) => {
-    res.send(results)
-  })
-}
+    res.send(results);
+  });
+};
+
+exports.addToPack = function (req, res) {
+  console.log(req.body);
+  const newUsersPacks = db.Users_Packs.build({
+    UserId: req.body.user,
+    PackId: req.body.pack,
+    confirmed: 'FALSE',
+  });
+  newUsersPacks.save().then((result) => {
+    res.send(result);
+  });
+};
 
 exports.acceptRequest = function (req, res) {
   const requestID = req.body.id;

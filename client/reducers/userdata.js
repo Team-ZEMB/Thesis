@@ -33,6 +33,7 @@ export default function groups(state = initialState, action) {
         goals: action.userObj.goals,
         history: action.userObj.history,
         DBID: action.userObj.DBID,
+        loading: false,
       };
 
     case types.STORE_PROFILE:
