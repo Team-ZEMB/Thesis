@@ -97,11 +97,11 @@ class GoalsCard extends React.Component {
                 </Dimmer><br /><br /><br /><br />
             </Segment>) : ( this.props.userdata.goals.map((goal, idx) => {
       var goalId = goal.id;
-        if (goal.source === null && goal.status !== 'completed') {
+        if (goal.source === null && goal.status === 'accepted') {
           return <div className="goal" key={idx}>
           <Grid>
             <Grid.Row>
-              <div className="goalText">{"Goal: " + goal.description}</div>
+              <div className="goalText">{"My Goal: " + goal.description}</div>
               <div className="completeGoal" onClick={() => {this.completedGoal(goalId)}}>✔</div>
             </Grid.Row>
           </Grid>
@@ -127,10 +127,20 @@ class GoalsCard extends React.Component {
             </Grid.Row>
           </Grid>
           </div>
-        }
+        } else if (goal.status === 'generated') {
+          return <div className="generatedGoal" key={idx}>
+          <Grid>
+            <Grid.Row>
+              <div className="challengeText">{"Rabbit Goal: " + goal.description}</div>
+              <div className="completeGoal" onClick={() => {this.completedGoal(goalId)}}>✔</div>
+            </Grid.Row>
+          </Grid>
+          </div>
+      }
       }) 
     )}
     {this.props.userdata.loading === true ? (<div></div>) : (
+    })}
     <div className="ui small icon input">
       <input type="text" placeholder="Add new goal" value={this.state.userInput} onChange={this.handleChange}/>
       <div className="ui small button" onClick={() => {this.addGoal(this.props.userdata.DBID, this.state.userInput)}}>Submit</div>
