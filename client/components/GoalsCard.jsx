@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Grid, Row, Col, Accordion, Icon, Card, Header } from 'semantic-ui-react';
+import { Grid, Row, Col, Accordion, Icon, Card, Header, Segment, Dimmer, Loader } from 'semantic-ui-react';
 import axios from 'axios';
 import * as UserActions from '../actions';
 
@@ -91,7 +91,11 @@ class GoalsCard extends React.Component {
       </Card.Content>
 
       <Card.Content>
-      {this.props.userdata.goals.map((goal, idx) => {
+      {this.props.userdata.loading === true ? (<Segment>
+                <Dimmer active inverted>
+                <Loader size="small">Loading</Loader>
+                </Dimmer><br /><br /><br /><br />
+            </Segment>) : ( this.props.userdata.goals.map((goal, idx) => {
       var goalId = goal.id;
         if (goal.source === null && goal.status !== 'completed') {
           return <div className="goal" key={idx}>
@@ -124,20 +128,20 @@ class GoalsCard extends React.Component {
           </Grid>
           </div>
         }
-      })
-    }
+      }) 
+    )}
+    {this.props.userdata.loading === true ? (<div></div>) : (
     <div className="ui small icon input">
       <input type="text" placeholder="Add new goal" value={this.state.userInput} onChange={this.handleChange}/>
       <div className="ui small button" onClick={() => {this.addGoal(this.props.userdata.DBID, this.state.userInput)}}>Submit</div>
     </div>
-
+    )}
+    {this.props.userdata.loading === true ? (<div></div>) : (
     <Accordion className="completedGoals">
 
       <Accordion.Title>
         <Icon name="dropdown" /> completed goals and challenges
       </Accordion.Title>
-
-
 
       <Accordion.Content className="accContent">
         {
@@ -150,11 +154,12 @@ class GoalsCard extends React.Component {
       </Accordion.Content>
 
     </Accordion>
+    )}
     </Card.Content>
     </Card>
-
-    );
-    }
+    )
   }
+}
+  
 
   export default GoalsCard;

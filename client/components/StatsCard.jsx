@@ -1,7 +1,14 @@
-import React from 'react'
-import { Card, Icon, Feed } from 'semantic-ui-react'
+import React from 'react';
+import { Card, Icon, Feed, Dimmer, Loader, Segment } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 
-class StatsCard extends React.Component {
+@connect((store) => {
+  return {
+    userdata: store.userdata,
+  };
+})
+
+export default class StatsCard extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -40,6 +47,11 @@ class StatsCard extends React.Component {
         </Card.Header>
                 </Card.Content>
                 <Card.Content>
+                { this.props.userdata.loading === true ? (<Segment>
+                    <Dimmer active inverted>
+                    <Loader size="small">Loading</Loader>
+                    </Dimmer><br /><br /><br /><br />
+                </Segment>) : (
                     <Feed>
                         <Feed.Event>
                             <Feed.Content>
@@ -66,10 +78,9 @@ class StatsCard extends React.Component {
                             </Feed.Content>
                         </Feed.Event>
                     </Feed>
+                )}
                 </Card.Content>
             </Card>
         )
     }
 }
-
-export default StatsCard
