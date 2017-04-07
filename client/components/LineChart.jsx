@@ -29,6 +29,17 @@ class LineChart extends React.Component {
         this.setGoal(this.state.value);
         //success
     }
+    
+    converter (d) {
+        d = Number(d);
+        var h = Math.floor(d / 3600);
+        var m = Math.floor(d % 3600 / 60);
+        var s = Math.floor(d % 3600 % 60);
+
+        var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+        var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes") : "";
+        return hDisplay + mDisplay + sDisplay; 
+    }
 
     getData(input) {
 
@@ -111,7 +122,9 @@ class LineChart extends React.Component {
         // var medium = expectedTime * 0.85;
         // var hard = expectedTime * 0.60;
 
-        var goalInput = "Run " + miles + " miles in " + expectedTime + " minutes.";
+        var convertedTime = this.converter(expectedTime * 60);
+
+        var goalInput = "Run " + miles + " miles in " + convertedTime + ".";
 
         this.addGoal(this.props.userdata.DBID, goalInput);
     }
@@ -136,7 +149,6 @@ class LineChart extends React.Component {
             <div>
                 <h2>Miles Times</h2>
                 <p>Predicts the time it will take you to run a number of miles based on your history</p>
-                <p>dev - x miles, y minutes</p>
                 <Line data={this.getData([])} />
                 <form onSubmit={this.handleSubmit}>
                     <label>
