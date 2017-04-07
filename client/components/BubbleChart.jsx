@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { Bubble } from 'react-chartjs-2';
-import moment from 'moment'
 
 @connect((store) => {
   return {
