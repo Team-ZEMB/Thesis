@@ -28,13 +28,12 @@ export default class Profile extends React.Component {
       return false;
     } else {
       return (
-        <div id='profileContent'>
-          <PacksCard /> 
+        <div id='profileContent clear'>
           <StatsCard />   
+          <PacksCard /> 
           <div id="clear"></div>
-          <BadgesCard />
-
           <GoalsCard />
+          <BadgesCard />
         </div>
         );
     }

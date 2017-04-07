@@ -6,7 +6,6 @@ import * as UserActions from '../actions';
 import _ from 'lodash'
 
 
-
 @connect((store) => {
   return {
     userdata: store.userdata,
@@ -26,11 +25,17 @@ export default class PacksCard extends React.Component {
       filteredUsers: [],
       selectedUser: null,
       selectedUserID: null,
+      challengeText: '',
+      challenger: '',
+      challengee: '',
+      challengeModalOpen: false,
+      challengeeName: ''
     }
 
   handleOpen = (e) => this.setState({
     modalOpen: true,
   })
+
   handleInviteOpen = (id, packName) => {
     this.setState({
       inviteModalOpen: true,
@@ -57,9 +62,11 @@ export default class PacksCard extends React.Component {
   handleClose = (e) => this.setState({
     modalOpen: false,
   })
+
   handleChange = (e) => this.setState({
       newPackInput: e.target.value
   })
+
   handleSubmit = (e) => {
       var newPackName = this.state.newPackInput;
       axios.post('/api/newPack', {
@@ -73,6 +80,7 @@ export default class PacksCard extends React.Component {
             modalOpen: false
         })
   }
+
   handleInviteClose = (e) => this.setState({
     inviteModalOpen: false,
     inviteInput: '',
@@ -81,6 +89,7 @@ export default class PacksCard extends React.Component {
     selectedUser: null,
     selectedUserID: null,
   })
+
   handleInviteChange = (e) => {
       this.setState({
         inviteInput: e.target.value,
@@ -121,6 +130,47 @@ export default class PacksCard extends React.Component {
         })
   }
 
+  handleChallengeOpen = (id, name, challenger) => {
+  console.log(name);
+    this.setState({
+      challengeModalOpen: true,
+      challengee: id,
+      challengeeName: name,
+      challenger: challenger,
+    })
+  }
+
+  handleChallengeClose = (e) => this.setState({
+      challengeText: '',
+      challenger: '',
+      challengee: '',
+      challengeModalOpen: false
+  })
+
+  handleChallengeText = (e) => {
+      this.setState({
+        challengeText: e.target.value,
+      })
+  }
+
+  createChallenge = () => {
+    var that = this;
+    this.handleChallengeClose();
+    if (this.state.challengeText.length > 0) {
+      axios.post('/api/goals', {
+        UserId: that.state.challengee,
+        source: that.state.challenger,
+        description: that.state.challengeText, 
+        status: 'pending'
+      })
+      .then((res) => {
+        that.setState({challengeText: ''});
+        that.props.dispatch(UserActions.signIn());
+      })
+      .catch(err => console.log(err))
+    }
+  }
+
   render() {
   return (
     <Card>
@@ -139,13 +189,13 @@ export default class PacksCard extends React.Component {
                             <form onSubmit={() => {this.handleSubmit()}}>
                             
                             <label>Name:</label>
-                            <input onChange={(e) => this.handleChange(e)} />
+                            <input className="modalInput" onChange={(e) => this.handleChange(e)} />
                             
                         <Modal.Actions>
-                        <Button type='reset' color='red' onClick={this.handleClose} >
+                        <Button type='reset' color='salmon' onClick={this.handleClose} >
                             <Icon name='remove' /> Cancel
                         </Button>
-                        <Button type='submit' color='green'>
+                        <Button type='submit' color='teal'>
                             <Icon name='checkmark' /> Confirm
                         </Button>
                         </Modal.Actions>
@@ -177,10 +227,10 @@ export default class PacksCard extends React.Component {
                         <br />
                         <br />
                 <Modal.Actions>
-                <Button type='reset' color='red' onClick={this.handleInviteClose} >
+                <Button type='reset' color='salmon' onClick={this.handleInviteClose} >
                     <Icon name='remove' /> Cancel
                 </Button>
-                <Button type='submit' color='green'>
+                <Button type='submit' color='teal'>
                     <Icon name='checkmark' /> Confirm
                 </Button>
                 </Modal.Actions>
@@ -196,18 +246,43 @@ export default class PacksCard extends React.Component {
                     </Accordion.Title>
                     <Accordion.Content>
                         {pack.Users.map((member, idx) => {
+                          if (this.props.userdata.firstName) {
+                            var challengerName = this.props.userdata.firstName;
+                          } else {
+                            var challengerName = this.props.userdata.username;
+                          }
                             return (
-                                <p key={idx} style={{'textIndent': '2em'}}>
+                                <p id="packmates" key={idx} style={{'textIndent': '2em'}} onClick={() => {this.handleChallengeOpen(member.Users_Packs.UserId, member.username, challengerName)}}>
                                   {member.username}
                                 </p>
                             )
                         })}
+
+                        <Modal open={this.state.challengeModalOpen} onClose={this.handleChallengeClose} closeIcon='close'>
+                        <Header icon='users' content='Send a challenge' />
+                        <Modal.Content>
+                            <form onSubmit={this.createChallenge}>
+                            <label>{'I challenge ' + this.state.challengeeName + ' to: '}</label>
+                            <input className="modalInput" onChange={(e) => this.handleChallengeText(e)} />
+                            
+                        <Modal.Actions>
+                        <Button type='reset' color='salmon' onClick={this.handleChallengeClose} >
+                            <Icon name='remove' /> Cancel
+                        </Button>
+                        <Button type='submit' color='teal' >
+                            <Icon name='checkmark' /> Send
+                        </Button>
+                        </Modal.Actions>
+                        </form>
+                        </Modal.Content>
+                    </Modal>
+
+
                         <p style={{'textIndent': '2em'}}>
-                          <small><a onClick={() => {this.handleInviteOpen(pack.id, pack.name)}}>Invite to Pack</a></small>
+                          <small><a onClick={() => {this.handleInviteOpen(pack.id, pack.name)}}>Invite New Packmate</a></small>
                         </p>
                     </Accordion.Content>
                 </Accordion>
-
             )
         })}
         </Card.Content>

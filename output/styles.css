@@ -13,9 +13,14 @@
 }
 
 .ui.card {
+  margin-top: auto;
   min-width: 325px;
   float: left;
   margin-left: 20px;
+  margin-bottom: 20px;
+  position: relative;
+  display: inline-block;
+  font-family: avenir
 }
 
 .ui.headers {
@@ -47,7 +52,6 @@
   width: 310px;
   margin-top: 7px;
   background-color: teal;
-  font-family: avenir;
   color: white;
   border-radius: 5px;
   border: solid #cce2e2;
@@ -59,7 +63,6 @@
   width: 310px;
   margin-top: 7px;
   background-color: salmon;
-  font-family: avenir;
   color: white;
   border-radius: 5px;
   border: solid #fccfc2;
@@ -71,7 +74,6 @@
   width: 310px;
   margin-top: 10px;
   background-color: #a3a3a3;
-  font-family: avenir;
   color: white;
   border-radius: 5px;
   border: solid #e0e0e0;
@@ -106,13 +108,19 @@
   font-size: 20px;
   text-align: right;
   margin-right: 10px;
-  margin-top: 7px;
+  margin-top: 6px;
 }
 
 .acceptChallenge:hover {
   color: green;
 }
 
+.modalInput {
+  margin-bottom: 20px;
+  width: 260px;
+  height: 32px;
+  font-size: 16px;
+}
 .completeGoal {
   position: relative;
   font-size: 22px;
@@ -124,6 +132,14 @@
   color: #fff2d1;
 }
 
+a {
+  color: teal;
+}
+
+a:hover {
+  color: #a3a3a3;
+}
+
 .completedGoals {
   margin-top: 10px;
   margin-left: 5px;
@@ -131,6 +147,10 @@
 
 .accContent {
   margin-left: 24px;
+}
+
+#packmates:hover {
+  color: #a3a3a3;
 }
 
 .ui.input {
