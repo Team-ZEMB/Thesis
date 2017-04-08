@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Icon, Feed, Dimmer, Loader, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 @connect((store) => {
   return {
@@ -11,6 +12,10 @@ import { connect } from 'react-redux';
 export default class StatsCard extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            goals: [],
+            packs: [],
+        }
     } 
     
     componentWillReceiveProps(props) {
@@ -56,6 +61,64 @@ export default class StatsCard extends React.Component {
             return ("Can't find total mile data");
         }
     }
+    acceptChallenge(id, index) {
+        axios.put('/api/goals', {
+        id: id,
+        status: 'accepted'
+        })
+        .then((res) => {
+            var newGoals = this.state.goals.slice();
+            newGoals.splice(index, 1)
+            this.setState({
+                goals: newGoals,
+            })
+        })
+    }
+    
+    decChallenge(id, index) {
+        axios.request({
+            url: '/api/goals',
+            method: 'delete',
+            data: { id: id }
+        }).then((res) => {
+            var newGoals = this.state.goals.slice();
+            newGoals.splice(index, 1)
+            this.setState({
+                goals: newGoals,
+            })
+        })
+    }
+    
+    acceptPack(id, index) {
+        axios.put('/api/packs', {
+            id: id,
+            user: this.props.userdata.DBID,
+        })
+        .then((res) => {
+            var newPacks = this.state.packs.slice();
+            newPacks.splice(index, 1);
+            this.setState({
+                packs: newPacks,
+            })
+        })
+    }
+    
+    declinePack(id, index) {
+        axios.request({
+            url: '/api/packs',
+            method: 'delete',
+            data: { 
+            id: id, 
+            user: this.props.userdata.DBID,
+         }
+        }).then((res) => {
+            var newPacks = this.state.packs.slice()
+            newPacks.splice(index, 1)
+            this.setState({
+                packs: newPacks,
+            })
+        })
+    }
 
     render() {
         return (
@@ -72,29 +135,31 @@ export default class StatsCard extends React.Component {
                     </Dimmer><br /><br /><br /><br />
                 </Segment>) : (
                     <Feed>
-                        <Feed.Event>
+                        {this.state.goals.length === 0 ? (<div></div>) : ( 
+                            <Feed.Event>
                             <Feed.Content>
                                 <Feed.Date content='Recent Challenges:' />
                                 
                                     {this.state.goals.map((goal, idx) => {
                                         if (goal.source !== null && goal.status === 'pending') {
-                                            return (<p><Feed.Summary>Challenge from <a>{goal.source}</a>{": " + goal.description + " "}<Feed.Meta>(Accept | Decline)</Feed.Meta></Feed.Summary></p>)
+                                            return (<div key={idx}><Feed.Summary>Challenge from <a>{goal.source}</a>{": " + goal.description + " "}<Feed.Meta>(<a onClick={() => this.acceptChallenge(goal.id, idx)}>Accept</a> | <a onClick={() => this.decChallenge(goal.id, idx)}>Decline</a>)</Feed.Meta></Feed.Summary></div>)
                                         }
                                     })}
                                     <br />
                             </Feed.Content>
-                        </Feed.Event>
-                        <Feed.Event>
+                        </Feed.Event> ) }
+                        {this.state.packs.length === 0 ? (<div></div>) : (
+                            <Feed.Event>
                             <Feed.Content>
                                 <Feed.Date content='New Pack Invitations:' />
                                     {this.state.packs.map((pack, idx) => {
                                         if (pack.Users_Packs.confirmed === "FALSE") {
-                                            return (<p><Feed.Summary>You've been invited by to join <a>{pack.name} </a><Feed.Meta>(Accept | Decline)</Feed.Meta></Feed.Summary></p>)
+                                            return (<div key={idx}><Feed.Summary>You've been invited by to join <a>{pack.name} </a><Feed.Meta>(<a onClick={() => this.acceptPack(pack.id, idx)}>Accept</a> | <a onClick={() => this.declinePack(pack.id, idx)}>Decline</a>)</Feed.Meta></Feed.Summary></div>)
                                         }
                                     })}
                                     <br />
                             </Feed.Content>
-                        </Feed.Event>
+                        </Feed.Event>) }
                         <Feed.Event>
                             <Feed.Content>
                                 <Feed.Date content='Most recent run' />

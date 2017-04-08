@@ -50,6 +50,14 @@ myRouter.route('/addToPack')
     controller.addToPack(req, res);
   });
 
+myRouter.route('/packs')
+  .put((req, res) => {
+    controller.acceptPack(req, res);
+  })
+  .delete((req, res) => {
+    controller.declinePack(req, res);
+  });
+
 myRouter.route('/getAllUsers')
   .get((req, res) => {
     controller.getAllUsers(req, res);
