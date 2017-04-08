@@ -12,7 +12,14 @@ export default class StatsCard extends React.Component {
     constructor(props) {
         super(props);
     } 
-
+    
+    componentWillReceiveProps(props) {
+        this.setState({
+            goals: props.userdata.goals,
+            packs: props.userdata.myPacks,
+        })
+    }
+    
     getRecentRun() {
         if (this.props.stats.history.length > 0) {
             var idx = this.props.stats.history.length - 1;
@@ -55,7 +62,7 @@ export default class StatsCard extends React.Component {
             <Card>
                 <Card.Content>
                     <Card.Header>
-                        Statistics
+                        Overview
         </Card.Header>
                 </Card.Content>
                 <Card.Content>
@@ -65,6 +72,29 @@ export default class StatsCard extends React.Component {
                     </Dimmer><br /><br /><br /><br />
                 </Segment>) : (
                     <Feed>
+                        <Feed.Event>
+                            <Feed.Content>
+                                <Feed.Date content='Recent Challenges:' />
+                                
+                                    {this.state.goals.map((goal, idx) => {
+                                        if (goal.source !== null && goal.status === 'pending') {
+                                            return (<p><Feed.Summary>Challenge from <a>{goal.source}</a>{": " + goal.description + " "}<Feed.Meta>(Accept | Decline)</Feed.Meta></Feed.Summary></p>)
+                                        }
+                                    })}
+                                    <br />
+                            </Feed.Content>
+                        </Feed.Event>
+                        <Feed.Event>
+                            <Feed.Content>
+                                <Feed.Date content='New Pack Invitations:' />
+                                    {this.state.packs.map((pack, idx) => {
+                                        if (pack.Users_Packs.confirmed === "FALSE") {
+                                            return (<p><Feed.Summary>You've been invited by to join <a>{pack.name} </a><Feed.Meta>(Accept | Decline)</Feed.Meta></Feed.Summary></p>)
+                                        }
+                                    })}
+                                    <br />
+                            </Feed.Content>
+                        </Feed.Event>
                         <Feed.Event>
                             <Feed.Content>
                                 <Feed.Date content='Most recent run' />
