@@ -114,6 +114,7 @@ exports.createPack = function (req, res) {
     const newUserPack = db.Users_Packs.build({
       PackId: result.id,
       UserId: req.body.user,
+      confirmed: true,
     });
     newUserPack.save().then((result) => {
       res.send(result);
