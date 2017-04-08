@@ -29,8 +29,13 @@ export default class PacksCard extends React.Component {
       challenger: '',
       challengee: '',
       challengeModalOpen: false,
-      challengeeName: ''
+      challengeeName: '',
+      packs: ''
     }
+
+  componentWillReceiveProps(props) {
+    this.setState({packs: props.userdata.myPacks})
+  }
 
   handleOpen = (e) => this.setState({
     modalOpen: true,
@@ -66,17 +71,25 @@ export default class PacksCard extends React.Component {
   })
 
   handleSubmit = (e) => {
-      var newPackName = this.state.newPackInput;
-      axios.post('/api/newPack', {
-        user: this.props.userdata.DBID,
-        newPackName,
-      }).then((res) => {
-        this.props.dispatch(UserActions.signIn());
-      })
-        this.setState({
-            newPackInput: '',
-            modalOpen: false
-        })
+    var newPackName = this.state.newPackInput;
+    axios.post('/api/newPack', {
+       user: this.props.userdata.DBID,
+       newPackName,
+    }).then((res) => {
+      var packsCopy = this.state.packs.slice();
+      packsCopy.push({
+        Users: [{
+          Users_Packs: {UserId: this.props.userdata.DBID},
+          username: this.props.userdata.username
+        }],
+        name: newPackName,
+        id: (this.state.packs[this.state.packs.length-1].id) + 1,
+        totalDistance: 0,
+        Users_Packs: {UserId: this.props.userdata.DBID, PackId: (this.state.packs[this.state.packs.length-1].id) + 1}
+      });
+      this.setState({packs: packsCopy});
+     })
+     this.setState({newPackInput: '', modalOpen: false});
   }
 
   handleInviteClose = (e) => this.setState({
@@ -115,7 +128,6 @@ export default class PacksCard extends React.Component {
         pack: this.state.invitePackID,
         self: this.props.userdata.DBID,
       }).then((res) => {
-        this.props.dispatch(UserActions.signIn());
       })
         this.setState({
             inviteModalOpen: false,
@@ -161,7 +173,6 @@ export default class PacksCard extends React.Component {
       })
       .then((res) => {
         that.setState({challengeText: ''});
-        that.props.dispatch(UserActions.signIn());
       })
       .catch(err => console.log(err))
     }
@@ -237,7 +248,7 @@ export default class PacksCard extends React.Component {
       <Dimmer active inverted>
         <Loader size='small'>Loading</Loader>
       </Dimmer><br /><br /><br /><br />
-    </Segment>) :  (this.props.userdata.myPacks.map((pack, idx) => {
+    </Segment>) :  (this.state.packs.map((pack, idx) => {
             return (
                 <Accordion key={idx}>
                     <Accordion.Title>
