@@ -138,17 +138,17 @@ class GoalsCard extends React.Component {
           </Grid>
           </div>
         } else if (goal.source !== null && goal.status === 'pending') {
-          return <div className="pendingChallenge" key={idx}>
-          <Grid>
-            <Grid.Row>
-              <div className="challengeText">{"Challenge from " + goal.source + ": " + goal.description}</div>
-              <Grid.Column>
-              <div className="acceptChallenge" onClick={() => {this.acceptChallenge(goalId)}}>✔</div>
-              <div className="rejectChallenge" onClick={() => {this.rejectChallenge(goalId)}}>✘</div>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-          </div>
+          // return <div className="pendingChallenge" key={idx}>
+          // <Grid>
+          //   <Grid.Row>
+          //     <div className="challengeText">{"Challenge from " + goal.source + ": " + goal.description}</div>
+          //     <Grid.Column>
+          //     <div className="acceptChallenge" onClick={() => {this.acceptChallenge(goalId)}}>✔</div>
+          //     <div className="rejectChallenge" onClick={() => {this.rejectChallenge(goalId)}}>✘</div>
+          //     </Grid.Column>
+          //   </Grid.Row>
+          // </Grid>
+          // </div>
         } else if (goal.source !== null && goal.status === 'accepted'){
           return <div className="challenge" key={idx}>
           <Grid>
