@@ -3,6 +3,7 @@ import { Line } from 'react-chartjs-2';
 import regression from 'regression';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { Card, Dimmer, Segment, Loader } from 'semantic-ui-react'
 
 @connect((store) => {
     return {
@@ -45,7 +46,6 @@ class LineChart extends React.Component {
 
         //input should be an empty array unless you are adding prediction tuples [miles, null]
         var hist = this.props.userdata.history;
-
         for (var j = 0; j < hist.length; j++) {
             var tuple = [];
             var minutes = this.props.userdata.history[j].duration / 60;
@@ -146,10 +146,16 @@ class LineChart extends React.Component {
 
     render() {
         return (
-            <div>
-                <h2>Miles Times</h2>
-                <p>Predicts the time it will take you to run a number of miles based on your history</p>
-                <Line data={this.getData([])} />
+              <Card color="teal">
+                <Card.Content header='Predicts the time it will take you to run a number of miles based on your history' />
+                <Card.Content description='dev - x miles, y minutes' />
+                { this.props.userdata.loading === true ? (<Segment>
+                    <Dimmer active inverted>
+                        <Loader size='small'>Loading</Loader>
+                    </Dimmer><br /><br /><br /><br />
+                    </Segment>) :  (
+                        <div>
+                 <Line data={this.getData([])} />
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         Set a goal (miles): 
@@ -157,7 +163,8 @@ class LineChart extends React.Component {
                     </label>
                     <input type="submit" value="Submit" />
                 </form>
-            </div>
+                </div>)}
+                </Card>
         );
     }
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { Bubble } from 'react-chartjs-2';
+import { Card, Dimmer, Loader, Segment } from 'semantic-ui-react';
 
 @connect((store) => {
   return {
@@ -13,7 +14,7 @@ class BubbleChart extends React.Component {
     getData() {
         //data is an array of objects with x(date), y(rate) and z(distance) props
 
-        var resultsArray = [{x: 4.75, y: 2, r: 10}];
+        var resultsArray = [];
         var datesArray = [];
 
         for (var i = 0; i < this.props.userdata.history.length; i++) {
@@ -29,9 +30,9 @@ class BubbleChart extends React.Component {
             datesArray.push(this.props.userdata.history[i].date)
             resultsArray.push(triple);
         }
+        
 
-
-
+        console.log(datesArray[9] - datesArray[0]);
         return {
             xLabels: datesArray,
             datasets: [
@@ -62,11 +63,17 @@ class BubbleChart extends React.Component {
 
     render() {
         return (
-            <div>
-                <h2>Progress</h2>
-                <p>Tracks your past runs by date and predicts future progress</p>
+            <Card color="teal">
+                <Card.Content header='Tracks your past runs by date and predicts future progress' />
+                <Card.Content description='dev - x chronological run id, y minutes, r distance representation' />
+                 { this.props.userdata.loading === true ? (<Segment>
+                    <Dimmer active inverted>
+                        <Loader size='small'>Loading</Loader>
+                    </Dimmer><br /><br /><br /><br />
+                    </Segment>) :  (
                 <Bubble data={this.getData()} />
-            </div>
+                    )}
+            </Card>
         );
     }
 };
