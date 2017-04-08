@@ -12,6 +12,31 @@ class BadgesCard extends React.Component {
   constructor(props) {
     super();
   }
+  state = {
+    allBadges: [
+      {image: '50miles.png', description: 'Ran 50 Miles'}, 
+      {image: '200miles.png', description: 'Ran 200 Miles'}, 
+      {image: '1000miles.png', description: 'Ran 1000 Miles'}, 
+      {image: '10goals.png', description: 'Achieved 10 Goals'}, 
+      {image: '50goals.png', description: 'Achieved 50 Goals'}, 
+      {image: '200goals.png', description: 'Achieved 200 Goals'},
+      {image: '100hrs.png', description: 'Ran for 100 hours'}
+    ],
+    totalMiles: '',
+    totalGoals: 0
+
+  };
+
+  componentDidUpdate() {
+    if (this.props.userdata.history.length > 1) {
+      var totalMiles = 0;
+      for (var i = 0; i < this.props.userdata.history.length; i++) {
+        totalMiles += this.props.userdata.history[i].distance;
+      }
+      this.setState({totalMiles: totalMiles});
+    }
+  }
+
   render() {
     return (
     <Card>
@@ -30,11 +55,39 @@ class BadgesCard extends React.Component {
                 <Loader size="small">Loading</Loader>
                 </Dimmer><br /><br /><br /><br />
             </Segment>) : ( 
-        this.props.userdata.badges.map((badge, idx) => {
-       return <div key={idx} className="imgContainer"><img src={'assets/' + badge.image} className="badgeImg"/>
-         <p>{badge.description}</p>
-       </div>
-      }))}
+
+        this.state.allBadges.map((badge, idx) => {
+          if (this.state.totalMiles >= 50 && badge.description === 'Ran 50 Miles') {
+            return <div key={idx} className="imgContainer"><img src={'assets/' + badge.image} className="badgeImg"/>
+            <p>{badge.description}</p>
+            </div>
+          } else if (this.state.totalMiles >= 200 && badge.description === 'Ran 200 Miles') {
+            return <div key={idx} className="imgContainer"><img src={'assets/' + badge.image} className="badgeImg"/>
+            <p>{badge.description}</p>
+            </div>            
+          } else if (this.state.totalMiles >= 1000 && badge.description === 'Ran 1000 Miles') {
+            return <div key={idx} className="imgContainer"><img src={'assets/' + badge.image} className="badgeImg"/>
+            <p>{badge.description}</p>
+            </div>            
+          } else if (badge.description === 'Achieved 10 Goals') {
+            return <div key={idx} className="imgContainer"><img src={'assets/' + badge.image} className="badgeImg"/>
+            <p>{badge.description, this.state.totalGoals}</p>
+            </div>            
+          } else if (badge.description === 'Achieved 50 Goals') {
+            return <div key={idx} className="imgContainer"><img src={'assets/' + badge.image} className="badgeImg"/>
+            <p>{badge.description}</p>
+            </div>            
+          } else if (badge.description === 'Achieved 200 Goals') {
+            return <div key={idx} className="imgContainer"><img src={'assets/' + badge.image} className="badgeImg"/>
+            <p>{badge.description}</p>
+            </div>            
+          } else if (badge.description === 'Ran for 100 hours') {
+            return <div key={idx} className="imgContainer"><img src={'assets/' + badge.image} className="badgeImg"/>
+            <p>{badge.description, this.state.totalMiles}</p>
+            </div>            
+          } 
+        })
+      )}
       
       </Card.Content>
       </Card>
