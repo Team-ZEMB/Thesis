@@ -26,7 +26,7 @@ exports.createUser = function (req, res) {
 };
 
 exports.returnUserData = function (req, res, id) {
-  console.log('ctrl 29')
+  console.log('ctrl 29');
   db.Users.findOne({
     where: { id },
     include: [{
@@ -38,11 +38,11 @@ exports.returnUserData = function (req, res, id) {
     },
     { model: db.RunHistories },
     { model: db.Challenges },
-    { model: db.Badges },
+    // { model: db.Badges },
     ],
   })
   .then((packs) => {
-   console.log('ctrl 45')
+    console.log('ctrl 45');
 
     res.send(packs);
   });
@@ -89,22 +89,23 @@ exports.addToGoals = function (req, res) {
 exports.changeGoalStatus = function (req, res) {
   db.Challenges.update(
     { status: req.body.status },
-    { where: {id: req.body.id}}
-  ).then((result) => {
+    { where: { id: req.body.id } }
+    )
+  .then((result) => {
     res.send(result);
   });
 };
 
 exports.deleteGoal = function (req, res) {
   db.Challenges.destroy({
-    where: {id: req.body.id}
+    where: { id: req.body.id },
   }).then((result) => {
     res.send('deleted');
-  })
+  });
 };
 
 exports.createPack = function (req, res) {
-  var name = req.body.newPackName;
+  const name = req.body.newPackName;
   const newPack = db.Packs.build({
     name,
     image: null,
@@ -114,11 +115,11 @@ exports.createPack = function (req, res) {
     const newUserPack = db.Users_Packs.build({
       PackId: result.id,
       UserId: req.body.user,
-      confirmed: true,
+      confirmed: 'TRUE',
     });
     newUserPack.save().then((result) => {
       res.send(result);
-    })
+    });
   });
 };
 
@@ -162,11 +163,33 @@ exports.acceptRequest = function (req, res) {
     });
 };
 
-exports.declineRequest = function (req, res) {
-  const requestID = req.body.id;
-  db.Users_Pending_Packs.destroy({ where: { id: requestID } })
+exports.declinePack = function (req, res) {
+  db.Users_Packs.destroy({
+    where: {
+      PackId: req.body.id,
+      UserId: req.body.user,
+    },
+  })
   .then(() => {
     res.send('Successfully Deleted');
+  })
+  .catch((err) => {
+    res.sendStatus(500);
+    res.send(err);
+  });
+};
+
+exports.acceptPack = function (req, res) {
+  db.Users_Packs.update({
+    confirmed: 'TRUE',
+  },
+    { where: {
+      PackId: req.body.id,
+      UserId: req.body.user,
+    },
+  })
+  .then(() => {
+    res.send('Successfully Confirmed');
   })
   .catch((err) => {
     res.sendStatus(500);
