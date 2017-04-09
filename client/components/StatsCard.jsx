@@ -98,7 +98,7 @@ export default class StatsCard extends React.Component {
             var newPacks = this.state.packs.slice();
             newPacks.splice(index, 1);
             this.setState({
-                packs: newPacks,
+                packs: newPacks
             })
         })
     }

@@ -30,7 +30,8 @@ export default class PacksCard extends React.Component {
       challengee: '',
       challengeModalOpen: false,
       challengeeName: '',
-      packs: ''
+      packs: '',
+      packIndex: ''
     }
 
   componentWillReceiveProps(props) {
@@ -41,11 +42,12 @@ export default class PacksCard extends React.Component {
     modalOpen: true,
   })
 
-  handleInviteOpen = (id, packName) => {
+  handleInviteOpen = (id, packName, idx) => {
     this.setState({
       inviteModalOpen: true,
       invitePackID: id,
       invitePackName: packName,
+      packIndex: idx
     })
     axios.get('/api/getAllUsers')
     .then((results) => {
@@ -67,7 +69,7 @@ export default class PacksCard extends React.Component {
   })
 
   handleChange = (e) => this.setState({
-      newPackInput: e.target.value
+    newPackInput: e.target.value
   })
 
   handleSubmit = (e) => {
@@ -102,14 +104,14 @@ export default class PacksCard extends React.Component {
   })
 
   handleInviteChange = (e) => {
-      this.setState({
-        inviteInput: e.target.value,
-        isLoading: true,
-      })
+    this.setState({
+      inviteInput: e.target.value,
+      isLoading: true,
+    })
     setTimeout(() => {
       if (this.state.inviteInput.length < 1) {
         this.setState({
-            isLoading: false,
+          isLoading: false,
         })
       }
       const re = new RegExp(_.escapeRegExp(this.state.inviteInput), 'i')
@@ -123,11 +125,19 @@ export default class PacksCard extends React.Component {
   }
 
   handleInviteSubmit = (e) => {
+    var packsCopy = this.state.packs.slice();
+    packsCopy[this.state.packIndex].Users.push(
+      {Users_Packs: {confirmed: "FALSE", UserId: this.state.selectedUserID, PackId: this.state.packIndex},
+      username: this.state.selectedUser
+    })
+    this.setState({packs: packsCopy});
+
       axios.post('/api/addToPack', {
         user: this.state.selectedUserID,
         pack: this.state.invitePackID,
         self: this.props.userdata.DBID,
       }).then((res) => {
+
       })
         this.setState({
             inviteModalOpen: false,
@@ -136,6 +146,7 @@ export default class PacksCard extends React.Component {
             invitePackID: null,
             selectedUser: null,
             selectedUserID: null,
+            packIndex: ''
         })
   }
 
@@ -262,11 +273,21 @@ export default class PacksCard extends React.Component {
                           } else {
                             var challengerName = this.props.userdata.username;
                           }
+                          if (member.Users_Packs.UserId === this.props.userdata.DBID) {
+                            return;
+                          } else if (member.Users_Packs.confirmed === "TRUE") {
                             return (
                                 <p id="packmates" key={idx} style={{'textIndent': '2em'}} onClick={() => {this.handleChallengeOpen(member.Users_Packs.UserId, member.username, challengerName)}}>
                                   {member.username}
                                 </p>
                             )
+                          } else {
+                              return (
+                                <p id="pendingPackmates" key={idx} style={{'textIndent': '2em'}}>
+                                  {member.username + " (pending)"}
+                                </p>
+                            )
+                          }
                         })}
 
                         <Modal open={this.state.challengeModalOpen} onClose={this.handleChallengeClose} closeIcon='close'>
@@ -287,10 +308,8 @@ export default class PacksCard extends React.Component {
                         </form>
                         </Modal.Content>
                     </Modal>
-
-
                         <p style={{'textIndent': '2em'}}>
-                          <small><a onClick={() => {this.handleInviteOpen(pack.id, pack.name)}}>Invite New Packmate</a></small>
+                          <small><a onClick={() => {this.handleInviteOpen(pack.id, pack.name, idx)}}>Invite New Packmate</a></small>
                         </p>
                     </Accordion.Content>
                 </Accordion>
