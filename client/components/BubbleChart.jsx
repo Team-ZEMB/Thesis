@@ -65,7 +65,7 @@ class BubbleChart extends React.Component {
         return (
             <Card color="teal">
                 <Card.Content header='Tracks your past runs by date and predicts future progress' />
-                <Card.Content description='dev - x chronological run id, y minutes, r distance representation' />
+                <Card.Content>
                  { this.props.userdata.loading === true ? (<Segment>
                     <Dimmer active inverted>
                         <Loader size='small'>Loading</Loader>
@@ -73,6 +73,7 @@ class BubbleChart extends React.Component {
                     </Segment>) :  (
                 <Bubble data={this.getData()} />
                     )}
+                    </Card.Content>
             </Card>
         );
     }

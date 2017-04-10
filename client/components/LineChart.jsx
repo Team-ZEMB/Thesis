@@ -156,13 +156,6 @@ class LineChart extends React.Component {
                     </Segment>) :  (
                         <div>
                  <Line data={this.getData([])} />
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Set a goal (miles): 
-                        <input type="number" name="mileGoal" value={this.state.value} onChange={this.handleChange}/>
-                    </label>
-                    <input type="submit" value="Submit" />
-                </form>
                 </div>)}
                 </Card>
         );

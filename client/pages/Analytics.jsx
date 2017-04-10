@@ -4,8 +4,9 @@ import * as UserActions from '../actions';
 import regression from 'regression';
 import LineChart from '../components/LineChart';
 import BubbleChart from '../components/BubbleChart';
+import WeeklyChart from '../components/WeeklyChart';
 import { Chart } from 'chart.js'
-import { Card, Grid } from 'semantic-ui-react';
+import { Card, Grid, Feed } from 'semantic-ui-react';
 import axios from 'axios';
 
 Chart.defaults.global.legend.display = false;
@@ -97,44 +98,94 @@ class Analytics extends React.Component {
         }
     }
 
+    getTotalMiles() {
+        if (this.props.userdata.history.length > 0) {
+            var totalMiles = 0;
+            for (var i = 0; i < this.props.userdata.history.length; i++) {
+                totalMiles += this.props.userdata.history[i].distance;
+            }
+            totalMiles = Math.round(totalMiles * 10) / 10;
+            return ("You've run " + totalMiles + " miles since signing up!");
+        } else {
+            return ("Can't find total mile data");
+        }
+    }
+
+    getRecentRun() {
+        if (this.props.userdata.history.length > 0) {
+            var idx = this.props.userdata.history.length - 1;
+            var miles = Math.round(this.props.userdata.history[idx].distance * 10) / 10;
+            var converter = function secondsToHms(d) {
+                d = Number(d);
+                var h = Math.floor(d / 3600);
+                var m = Math.floor(d % 3600 / 60);
+                var s = Math.floor(d % 3600 % 60);
+
+                var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+                var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+                var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+                return hDisplay + mDisplay + sDisplay; 
+            }
+            var duration = converter(this.props.userdata.history[idx].duration);
+            // var minutes = Math.round((this.props.userdata.history[idx].duration / 60) * 10) / 10;
+            var date = (this.props.userdata.history[idx].date).substring(0, 10);
+            return ("You last ran " + miles + " miles in " + duration + " on " + date + ".");
+        } else {
+            return ("Can't find recent run data");
+        }
+    }
+
     render() {
         return (
             <div>
-                <Grid>
-                  <Grid.Row>
-                  <Grid.Column width={1}>
-                  </Grid.Column>
-                  <Grid.Column width={12}>
-              <Card.Group itemsPerRow={1}>
+              <Card.Group itemsPerRow={2}>
+                <Card color="teal">
+                <Card.Content header='Goal Planner' />
+                <Card.Content>
+                    <Feed>
+                    <Feed.Event>
+                    <Feed.Content>
+                        <Feed.Date content='Most recent run' />
+                        <Feed.Summary>
+                            {this.getRecentRun()}
+                        </Feed.Summary>
+                    </Feed.Content>
+                    </Feed.Event>
+                            <br />
+                    <Feed.Event>
+                    <Feed.Content>
+                        <Feed.Date content='Average mile time' />
+                        <Feed.Summary>
+                        You averaged <a>dynamic mile time</a> a mile last week.
+                        </Feed.Summary>
+                    </Feed.Content>
+                    </Feed.Event>
+                        <br />
+                    <Feed.Event>
+                    <Feed.Content>
+                        <Feed.Date content='Total miles run' />
+                        <Feed.Summary>
+                            {this.getTotalMiles()}
+                            <br />
+                        </Feed.Summary>
+                    </Feed.Content>
+                    </Feed.Event>
+                    </Feed>
+                    <br />
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        Set a goal (miles): 
+                        Set a goal (miles): <br />
                         <input type="number" name="mileGoal" value={this.state.value} onChange={this.handleChange}/>
                     </label>
                     <input type="submit" value="Submit" />
                 </form>
-                 </Card.Group>
-                </Grid.Column>
-                </Grid.Row>
-                <Grid.Row>
-                  <Grid.Column width={1}>
-                  </Grid.Column>
-                  <Grid.Column width={12}>
-              <Card.Group itemsPerRow={1}>
+                <br /><br /><br />
+                </Card.Content>
+                </Card>
                 <BubbleChart />
-                </Card.Group>
-                </Grid.Column>
-                </Grid.Row>
-                <Grid.Row>
-                  <Grid.Column width={1}>
-                  </Grid.Column>
-                <Grid.Column width={12}>
-                <Card.Group itemsPerRow={1}>
                 <LineChart />
+                <WeeklyChart />
                 </Card.Group>
-                </Grid.Column>
-                </Grid.Row>
-                </Grid>
             </div>
         )
     }
