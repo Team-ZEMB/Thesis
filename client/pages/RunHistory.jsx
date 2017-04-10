@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import HistoryCard from '../components/HistoryCard';
-import { Card } from 'semantic-ui-react'
+import { Card, Grid } from 'semantic-ui-react'
 import * as UserActions from '../actions';
 import {GoogleMapLoader, GoogleMap, Marker} from "react-google-maps";
 
@@ -47,14 +47,16 @@ export default class RunHistory extends React.Component {
 
   return (
     <div>
-      <div className="map-view">
-      <div className="google-map" ref="mapCanvas"></div>
+      <div style={{width: '365px', float:'left'}}>
+          {histArray.map(function(history, idx) {
+            return <HistoryCard key={idx} hist={history} />;
+          })}
       </div>
-      <Card.Group itemsPerRow={2}>
-        {histArray.map(function(history, idx) {
-          return <HistoryCard key={idx} hist={history} />;
-        })}
-      </Card.Group>
+      <div style={{width: 'calc(100% - 365px)', float:'right'}}>
+        <div className="map-view">
+        <div className="google-map" ref="mapCanvas"></div>
+        </div>
+        </div>
       </div>
     )
   }
