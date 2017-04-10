@@ -4,6 +4,7 @@ import Profile from '../pages/Profile';
 import Login from '../pages/Login';
 import Analytics from '../pages/Analytics';
 import RunHistory from '../pages/RunHistory';
+import Leaderboard from '../pages/Leaderboard';
 import { Menu, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
@@ -35,6 +36,7 @@ export default class App extends React.Component {
           <Menu.Item name='Profile' active={activeItem === 'Profile'} onClick={this.handleItemClick} href='/#/profile' />
           <Menu.Item name='Run History' active={activeItem === 'Run History'} onClick={this.handleItemClick} href='/#/runhistory' />
           <Menu.Item name='Analytics' active={activeItem === 'Analytics'} onClick={this.handleItemClick} href='/#/analytics' />
+          <Menu.Item name='Leaderboard' active={activeItem === 'Leaderboard'} onClick={this.handleItemClick} href='/#/leaderboard' />
           <Menu.Menu position='right'>
             <img id="profilePic" src={this.props.userdata.profileImage} alt="" />
             <Menu.Item name='logout' active={activeItem === 'logout'} onClick={this.handleLogout} />
@@ -45,6 +47,7 @@ export default class App extends React.Component {
         <Route path="/login" component={Login} />
         <Route path="/analytics" component={Analytics} />
         <Route path="/runhistory" component={RunHistory} />
+        <Route path="/leaderboard" component={Leaderboard} />
       </div>
     );
   }

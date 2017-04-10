@@ -25,7 +25,6 @@ class BadgesCard extends React.Component {
     totalMiles: '',
     totalGoals: '',
     totalHours: 0
-
   };
 
   componentDidUpdate() {
@@ -49,7 +48,7 @@ class BadgesCard extends React.Component {
 
   render() {
     return (
-    <Card>
+    <Card className="teal">
     <Card.Content>
       <Card.Header>            
         <Grid>

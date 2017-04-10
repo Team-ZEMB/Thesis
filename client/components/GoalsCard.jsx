@@ -110,7 +110,7 @@ class GoalsCard extends React.Component {
 
   render() {
     return (
-    <Card>
+    <Card className="teal">
     <Card.Content>
       <Card.Header>            
         <Grid>
