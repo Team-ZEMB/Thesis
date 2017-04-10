@@ -122,7 +122,7 @@ export default class StatsCard extends React.Component {
 
     render() {
         return (
-            <Card>
+            <Card className="teal">
                 <Card.Content>
                     <Card.Header>
                         Overview

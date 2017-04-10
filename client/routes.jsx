@@ -20,6 +20,7 @@ const createRoutes = () => (
     <Route exact path="/" component={Profile} />
     <Route path="/profile" component={Profile} onEnter={requireAuth} />
     <Route path="/login" component={Login} auth={auth}/>
+    <Route path="/leaderboard" component={Leaderboard} auth={auth}/>
   </Route>
   );
 

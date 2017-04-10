@@ -191,7 +191,7 @@ export default class PacksCard extends React.Component {
 
   render() {
     return (
-    <Card>
+    <Card className="teal">
         <Card.Content>
         <Card.Header>
             <Grid columns={2}>
