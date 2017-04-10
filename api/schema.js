@@ -25,6 +25,7 @@ const RunHistories = db.define('RunHistories', {
   duration: Sequelize.INTEGER, // in seconds
   date: Sequelize.DATE,
   route: Sequelize.TEXT,
+  pack: Sequelize.STRING,
 });
 
 const Challenges = db.define('Challenges', {
@@ -41,6 +42,7 @@ const Packs = db.define('Packs', {
 
 const Users_Packs = db.define('Users_Packs', {
   confirmed: Sequelize.BOOLEAN,
+  bestThreeMile: Sequelize.FLOAT,
 });
 const Users_Badges = db.define('Users_Badges');
 

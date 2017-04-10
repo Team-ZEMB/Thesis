@@ -12,6 +12,25 @@
   max-width: 85px;
 }
 
+.ui.card.hist:hover {
+  box-shadow: inset  0px 0px 1px 1px gray !important;
+}
+
+.google-map {
+  height: 500px;
+  width: 100%;
+}
+
+.map-view {
+  height: 100%;
+  width: 100%;
+}
+
+.map-view button.entry {
+  float: right;
+  border-radius: 0px;
+}
+
 .ui.card {
   margin-top: auto;
   min-width: 325px;
