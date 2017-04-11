@@ -65,6 +65,7 @@ exports.addRunToHistory = function (req, res) {
         duration: entry.duration,
         route: coords,
         UserId: result.id,
+        pack: entry.currentPack,
       });
       newHistoryItem.save()
       .then((record) => {
@@ -89,7 +90,7 @@ exports.addToGoals = function (req, res) {
 exports.changeGoalStatus = function (req, res) {
   db.Challenges.update(
     { status: req.body.status },
-    { where: { id: req.body.id } }
+    { where: { id: req.body.id } },
     )
   .then((result) => {
     res.send(result);
@@ -187,7 +188,7 @@ exports.acceptPack = function (req, res) {
       PackId: req.body.id,
       UserId: req.body.user,
     },
-  })
+    })
   .then(() => {
     res.send('Successfully Confirmed');
   })
