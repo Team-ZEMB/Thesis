@@ -90,7 +90,7 @@ exports.addToGoals = function (req, res) {
 exports.changeGoalStatus = function (req, res) {
   db.Challenges.update(
     { status: req.body.status },
-    { where: { id: req.body.id } },
+    { where: { id: req.body.id } }
     )
   .then((result) => {
     res.send(result);
