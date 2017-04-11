@@ -26,7 +26,9 @@ export default class HistoryCard extends React.Component {
     }
 
     getDate() {
-        return ((this.props.hist.date).substring(0,10));
+        var exact = moment(new Date(this.props.hist.date)).fromNow()
+        console.log(exact)
+        return exact
     }
 
     render() {
