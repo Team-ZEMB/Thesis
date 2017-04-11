@@ -20,7 +20,7 @@ export default class RunHistory extends React.Component {
         lat: 33.9759, 
         lng: -118.3907 
       },
-      zoom: 13,
+      zoom: 15,
     }
   }
 
@@ -39,17 +39,39 @@ export default class RunHistory extends React.Component {
     window.markerBounds = new google.maps.LatLngBounds();
   }
 
-  
+
   render() {
     var histArray = this.props.userdata.history.slice().reverse();
 
+  var showOnMap = (histItem) => {
+    var tmpPath = [];
+    JSON.parse(histItem.route).map((point) => {
+      tmpPath.push({
+        lat: point.latitude,
+        lng: point.longitude
+      })
+    })
+    window.map = new google.maps.Map(this.refs.mapCanvas, {
+      zoom: 15,
+      center: {
+        lat: tmpPath[Math.floor(tmpPath.length/2)].lat,
+        lng: tmpPath[Math.floor(tmpPath.length/2)].lng,
+      },
+    })
+    console.log(tmpPath)
+
+    let route = new google.maps.Polyline({
+        map: window.map,
+        path: tmpPath,
+      })
+    }
 
 
   return (
     <div>
       <div style={{width: '365px', float:'left'}}>
           {histArray.map(function(history, idx) {
-            return <HistoryCard key={idx} hist={history} />;
+            return <a onClick={() => showOnMap(history)}><HistoryCard key={idx} hist={history} /><br /></a>;
           })}
       </div>
       <div style={{width: 'calc(100% - 365px)', float:'right'}}>
