@@ -44,6 +44,7 @@ const Users_Packs = db.define('Users_Packs', {
   confirmed: Sequelize.BOOLEAN,
   bestThreeMile: Sequelize.FLOAT,
 });
+
 const Users_Badges = db.define('Users_Badges');
 
 Users.belongsToMany(Packs, { through: Users_Packs });

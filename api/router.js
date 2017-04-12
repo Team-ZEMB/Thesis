@@ -14,7 +14,7 @@ myRouter.route('/users')
     })
     .catch((err) => {
       res.send(err);
-    })
+    });
   });
 
 myRouter.route('/runHistory')
@@ -61,6 +61,11 @@ myRouter.route('/packs')
 myRouter.route('/getAllUsers')
   .get((req, res) => {
     controller.getAllUsers(req, res);
+  });
+
+myRouter.route('/king')
+  .put((req, res) => {
+    controller.addBestThreeMile(req, res);
   });
 
 module.exports = myRouter;
