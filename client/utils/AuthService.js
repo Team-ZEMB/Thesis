@@ -7,7 +7,7 @@ class AuthService {
   constructor(clientId, domain) {
     // Configure Auth0
     this.lock = new Auth0Lock(config.AUTH_ID, config.AUTH_CLIENT)
-  
+
     // Add callback for lock `authenticated` event
     var self = this;
     this.lock.on("authenticated", (authResult) => {
@@ -62,5 +62,12 @@ class AuthService {
     localStorage.removeItem('id_token');
   }
 }
+
+// const options = {
+//   theme: {
+//     logo: 'http://i.imgur.com/qlpg0K4.png',
+//     primaryColor: '#31324F',
+//   }
+// }
 
 export default new AuthService(config.AUTH_ID, config.AUTH_CLIENT)
