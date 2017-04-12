@@ -99,6 +99,18 @@ class Analytics extends React.Component {
         }
     }
 
+    getWeekAverage() {
+        if (this.props.userdata.history.length > 0) {
+            //pull last 7 runs
+            //standardize distance to 1 mile
+            //total times and divide by 7
+            var time;
+            return ("Recently you've averaged " + time + " per mile.")
+        } else {
+            return ("Can't find average data.")
+        }
+    }
+
     getTotalMiles() {
         if (this.props.userdata.history.length > 0) {
             var totalMiles = 0;
@@ -108,8 +120,14 @@ class Analytics extends React.Component {
             totalMiles = Math.round(totalMiles * 10) / 10;
             return ("You've run " + totalMiles + " miles since signing up!");
         } else {
-            return ("Can't find total mile data");
+            return ("Can't find total mile data.");
         }
+    }
+    
+    getDate() {
+        var idx = this.props.userdata.history.length - 1;
+        var exact = moment(new Date(this.props.userdata.history[idx].date)).fromNow()
+        return exact
     }
 
     getRecentRun() {
@@ -128,11 +146,10 @@ class Analytics extends React.Component {
                 return hDisplay + mDisplay + sDisplay; 
             }
             var duration = converter(this.props.userdata.history[idx].duration);
-            // var minutes = Math.round((this.props.userdata.history[idx].duration / 60) * 10) / 10;
-            var date = (this.props.userdata.history[idx].date).substring(0, 10);
-            return ("You last ran " + miles + " miles in " + duration + " on " + date + ".");
+            var date = this.getDate();
+            return (date + ", you ran " + miles + " miles in " + duration + ".");
         } else {
-            return ("Can't find recent run data");
+            return ("Can't find recent run data.");
         }
     }
 
@@ -157,7 +174,7 @@ class Analytics extends React.Component {
                     <Feed.Content>
                         <Feed.Date content='Average mile time' />
                         <Feed.Summary>
-                        You averaged <a>dynamic mile time</a> a mile last week.
+                        {this.getWeekAverage()}
                         </Feed.Summary>
                     </Feed.Content>
                     </Feed.Event>

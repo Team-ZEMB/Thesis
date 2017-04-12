@@ -210,7 +210,7 @@ export default class PacksCard extends React.Component {
                             <input className="modalInput" onChange={(e) => this.handleChange(e)} />
                             
                         <Modal.Actions>
-                        <Button type='reset' color='salmon' onClick={this.handleClose} >
+                        <Button type='reset' color='pink' onClick={this.handleClose} >
                             <Icon name='remove' /> Cancel
                         </Button>
                         <Button type='submit' color='teal'>
@@ -245,7 +245,7 @@ export default class PacksCard extends React.Component {
                         <br />
                         <br />
                 <Modal.Actions>
-                <Button type='reset' color='salmon' onClick={this.handleInviteClose} >
+                <Button type='reset' color='pink' onClick={this.handleInviteClose} >
                     <Icon name='remove' /> Cancel
                 </Button>
                 <Button type='submit' color='teal'>
@@ -298,7 +298,7 @@ export default class PacksCard extends React.Component {
                             <input className="modalInput" onChange={(e) => this.handleChallengeText(e)} />
                             
                         <Modal.Actions>
-                        <Button type='reset' color='salmon' onClick={this.handleChallengeClose} >
+                        <Button type='reset' color='pink' onClick={this.handleChallengeClose} >
                             <Icon name='remove' /> Cancel
                         </Button>
                         <Button type='submit' color='teal' >
