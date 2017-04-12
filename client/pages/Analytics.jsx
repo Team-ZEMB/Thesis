@@ -8,6 +8,7 @@ import WeeklyChart from '../components/WeeklyChart';
 import { Chart } from 'chart.js'
 import { Card, Grid, Feed } from 'semantic-ui-react';
 import axios from 'axios';
+import moment from 'moment';
 
 Chart.defaults.global.legend.display = false;
 
