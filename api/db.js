@@ -18,4 +18,3 @@ db.authenticate()
   })
 
 module.exports = db;
-
