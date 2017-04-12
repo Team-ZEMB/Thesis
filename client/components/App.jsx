@@ -40,7 +40,6 @@ export default class App extends React.Component {
           <Menu.Item name='Leaderboard' active={activeItem === 'Leaderboard'} onClick={this.handleItemClick} href='/#/leaderboard' />
           <Menu.Item name='About' active={activeItem === 'About'} onClick={this.handleItemClick} href='/#/about' />
           <Menu.Menu position='right'>
-            <img id="rabbitLogo" src="http://i.imgur.com/qlpg0K4.png" height="45" alt="" />
             <img id="profilePic" src={this.props.userdata.profileImage} alt="" />
             <Menu.Item name='logout' active={activeItem === 'logout'} onClick={this.handleLogout} />
           </Menu.Menu>

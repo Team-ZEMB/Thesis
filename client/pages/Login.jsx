@@ -15,7 +15,6 @@ export default class Login extends React.Component {
     return (
       <div>
         <h2>Welcome to Rabbit!</h2>
-        <img src='http://i.imgur.com/qlpg0K4.png' alt='Rabbit' height='100'/>
         <Button color='teal' onClick={AuthService.login}>Login</Button>
       </div>
     )

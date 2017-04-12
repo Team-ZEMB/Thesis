@@ -120,12 +120,38 @@ export default class StatsCard extends React.Component {
         })
     }
 
+    renderGoalMessages() {
+        let noGoal = true;
+        this.state.goals.map((goal, idx) => {
+            if (goal.source !== null && goal.status === 'pending') {
+                noGoal = false;
+                return (<div key={idx}><Feed.Summary>Challenge from <a>{goal.source}</a>{": " + goal.description + " "}<Feed.Meta>(<a onClick={() => this.acceptChallenge(goal.id, idx)}>Accept</a> | <a onClick={() => this.decChallenge(goal.id, idx)}>Decline</a>)</Feed.Meta></Feed.Summary></div>)
+            }
+        })
+        if (noGoal) {
+            return (<div>You don't have any pending challenges! Challenge a friend instead.</div>)
+        }
+    }
+
+    renderPackMessages() {
+        let noPack = true;
+        this.state.packs.map((pack, idx) => {
+            if (pack.Users_Packs.confirmed === "FALSE") {
+                noPack = false;
+                return (<div key={idx}><Feed.Summary>You've been invited by to join <a>{pack.name} </a><Feed.Meta>(<a onClick={() => this.acceptPack(pack.id, idx)}>Accept</a> | <a onClick={() => this.declinePack(pack.id, idx)}>Decline</a>)</Feed.Meta></Feed.Summary></div>)
+            }
+        })
+        if (noPack) {
+            return (<div>You don't have any pending pack invites! Try creating your own.</div>)
+        }
+    }
+
     render() {
         return (
             <Card className="teal">
                 <Card.Content>
                     <Card.Header>
-                        Overview
+                        Activity Feed
         </Card.Header>
                 </Card.Content>
                 <Card.Content>
@@ -135,27 +161,18 @@ export default class StatsCard extends React.Component {
                     </Dimmer><br /><br /><br /><br />
                 </Segment>) : (
                     <Feed>
-                        {this.state.goals.length === 0 ? (<div></div>) : ( 
                             <Feed.Event>
                             <Feed.Content>
-                                <Feed.Date content='Recent Challenges:' />
-                                    {this.state.goals.map((goal, idx) => {
-                                        if (goal.source !== null && goal.status === 'pending') {
-                                            return (<div key={idx}><Feed.Summary>Challenge from <a>{goal.source}</a>{": " + goal.description + " "}<Feed.Meta>(<a onClick={() => this.acceptChallenge(goal.id, idx)}>Accept</a> | <a onClick={() => this.decChallenge(goal.id, idx)}>Decline</a>)</Feed.Meta></Feed.Summary></div>)
-                                        }
-                                    })}
+                                <Feed.Date />
+                                    {this.renderGoalMessages()}
                                     <br />
                             </Feed.Content>
-                        </Feed.Event> ) }
+                        </Feed.Event>
                         {this.state.packs.length === 0 ? (<div></div>) : (
                             <Feed.Event>
                             <Feed.Content>
-                                <Feed.Date content='New Pack Invitations:' />
-                                    {this.state.packs.map((pack, idx) => {
-                                        if (pack.Users_Packs.confirmed === "FALSE") {
-                                            return (<div key={idx}><Feed.Summary>You've been invited by to join <a>{pack.name} </a><Feed.Meta>(<a onClick={() => this.acceptPack(pack.id, idx)}>Accept</a> | <a onClick={() => this.declinePack(pack.id, idx)}>Decline</a>)</Feed.Meta></Feed.Summary></div>)
-                                        }
-                                    })}
+                                <Feed.Date />
+                                    {this.renderPackMessages()}
                                     <br />
                             </Feed.Content>
                         </Feed.Event>) }

@@ -147,7 +147,7 @@ class Analytics extends React.Component {
             }
             var duration = converter(this.props.userdata.history[idx].duration);
             var date = this.getDate();
-            return (date + ", you ran " + miles + " miles in " + duration + ".");
+            return ("You ran " + miles + " miles in " + duration + " about " + date + ".");
         } else {
             return ("Can't find recent run data.");
         }
@@ -163,7 +163,7 @@ class Analytics extends React.Component {
                     <Feed>
                     <Feed.Event>
                     <Feed.Content>
-                        <Feed.Date content='Most recent run' />
+                        <Feed.Date />
                         <Feed.Summary>
                             {this.getRecentRun()}
                         </Feed.Summary>
@@ -172,7 +172,7 @@ class Analytics extends React.Component {
                             <br />
                     <Feed.Event>
                     <Feed.Content>
-                        <Feed.Date content='Average mile time' />
+                        <Feed.Date />
                         <Feed.Summary>
                         {this.getWeekAverage()}
                         </Feed.Summary>
@@ -181,7 +181,7 @@ class Analytics extends React.Component {
                         <br />
                     <Feed.Event>
                     <Feed.Content>
-                        <Feed.Date content='Total miles run' />
+                        <Feed.Date />
                         <Feed.Summary>
                             {this.getTotalMiles()}
                             <br />
