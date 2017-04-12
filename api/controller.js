@@ -54,8 +54,13 @@ exports.getPacks = function (req, res) {
 
 exports.addRunToHistory = function (req, res) {
   const entry = req.body.params.runHistoryEntry;
-  console.log(entry);
   const coords = JSON.stringify(entry.coordinates);
+  if (!entry.avgAltitude) {
+    entry.avgAltitude = 0;
+  }
+  if (!entry.altitudeVariance) {
+    entry.altitudeVariance = 0;
+  }
   db.Users.findOne({ where: { authID: entry.userID } })
     .then((result) => {
       const newHistoryItem = db.RunHistories.build({
@@ -67,6 +72,8 @@ exports.addRunToHistory = function (req, res) {
         route: coords,
         UserId: result.id,
         pack: entry.currentPack,
+        absAltitude: entry.avgAltitude,
+        changeAltitude: entry.altitudeVariance,
       });
       newHistoryItem.save()
       .then((record) => {

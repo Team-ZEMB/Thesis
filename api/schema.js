@@ -26,6 +26,8 @@ const RunHistories = db.define('RunHistories', {
   date: Sequelize.DATE,
   route: Sequelize.TEXT,
   pack: Sequelize.STRING,
+  absAltitude: Sequelize.FLOAT,
+  changeAltitude: Sequelize.FLOAT,
 });
 
 const Challenges = db.define('Challenges', {
