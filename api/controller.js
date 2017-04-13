@@ -108,15 +108,17 @@ exports.changeGoalStatus = function (req, res) {
 exports.addBestThreeMile = function (req, res) {
   db.Users_Packs.update(
     { bestThreeMile: req.body.bestThreeMile },
-    { where: { 
-      PackId: req.body.PackId, 
-      UserId: req.body.UserId 
-    } }
+    { 
+      where: { 
+        PackId: req.body.PackId, 
+        UserId: req.body.UserId, 
+    } 
+  }
     )
   .then((result) => {
     res.send('Added time of ' + req.body.bestThreeMile + ' seconds');
   }).catch((err) => {
-    res.send("Oh no, you encountered an error");
+    res.send("Oh no!, you encountered an error");
   });
 };
 
