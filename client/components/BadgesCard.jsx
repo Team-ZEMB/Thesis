@@ -80,7 +80,7 @@ class BadgesCard extends React.Component {
             } else if (this.state.totalGoals >= 10 && badge.description === 'Achieved 10 Goals') {
               return <div key={idx} className="imgContainer"><img src={'assets/' + badge.image} className="badgeImg"/>
               <p>{badge.description}</p>
-              </div>            
+              </div>
             } else if (this.state.totalGoals >= 50 && badge.description === 'Achieved 50 Goals') {
               return <div key={idx} className="imgContainer"><img src={'assets/' + badge.image} className="badgeImg"/>
               <p>{badge.description}</p>
