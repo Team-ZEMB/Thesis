@@ -54,6 +54,7 @@ exports.getPacks = function (req, res) {
 
 exports.addRunToHistory = function (req, res) {
   const entry = req.body.params.runHistoryEntry;
+  console.log(entry);
   const coords = JSON.stringify(entry.coordinates);
   if (!entry.avgAltitude) {
     entry.avgAltitude = 0;
