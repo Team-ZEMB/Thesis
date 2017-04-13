@@ -1,3 +1,29 @@
+.parallaxImg {
+  background-repeat: no-repeat;
+  width: 100%;
+  opacity: .75;
+}
+
+.parallaxImg2 {
+  background-repeat: no-repeat;
+  width: 100%;
+  opacity: .5;
+}
+
+
+.react-parallax {
+  background-size: cover;
+  height: 600px;
+  text-align: center;
+
+}
+
+.react-parallax-content {
+  display: inline-block;
+  margin-top: 100px;
+  color: black;
+}
+
 
 #profilePic {
  max-height: 40px;
