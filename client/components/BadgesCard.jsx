@@ -28,7 +28,7 @@ class BadgesCard extends React.Component {
   };
 
   componentDidUpdate() {
-    if (this.props.userdata.history.length > 1) {
+    if (this.props.userdata) {
       var totalMiles = 0;
       var totalGoals = 0;
       var totalSecs = 0;

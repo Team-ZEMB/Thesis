@@ -51,6 +51,11 @@ myRouter.route('/addToPack')
   });
 
 myRouter.route('/packs')
+  .get((req, res) => {
+    controller.getAllPacks(req, res);
+  });
+
+myRouter.route('/packs')
   .put((req, res) => {
     controller.acceptPack(req, res);
   })
@@ -61,6 +66,11 @@ myRouter.route('/packs')
 myRouter.route('/getAllUsers')
   .get((req, res) => {
     controller.getAllUsers(req, res);
+  });
+
+myRouter.route('/king')
+  .get((req, res) => {
+    controller.getUsersPacks(req, res);
   });
 
 myRouter.route('/king')

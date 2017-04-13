@@ -52,6 +52,20 @@ exports.getPacks = function (req, res) {
 
 };
 
+exports.getUsersPacks = function (req, res) {
+  db.Users_Packs.findAll({where: {confirmed: "TRUE"} })
+    .then((results) => {
+      res.send(results);
+    });
+};
+
+exports.getAllPacks = function (req, res) {
+  db.Packs.findAll()
+    .then((results) => {
+      res.send(results);
+    });
+};
+
 exports.addRunToHistory = function (req, res) {
   const entry = req.body.params.runHistoryEntry;
   const coords = JSON.stringify(entry.coordinates);

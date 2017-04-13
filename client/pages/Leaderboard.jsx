@@ -1,48 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Grid, Row, Col, Icon, Card, Header, Segment, Dimmer, Loader } from 'semantic-ui-react';
+import * as UserActions from '../actions';
+import axios from 'axios';
+import TopPacksCard from '../components/TopPacksCard';
 
 @connect((store) => {
   return {
-    userdata: store.userdata,
+    userdata: store.userdata
   };
 })
 
 export default class Leaderboard extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      UserId: ''
+
     };
+  }
+
+  componentWillMount() {
+    if (!!localStorage.getItem("profile")) {
+      this.props.dispatch(UserActions.signIn());
+    }
   }
 
   render() {
     return (
-    <Card className='teal'>
-    <Card.Content>
-      <Card.Header>
-        <Grid>
-          <Grid.Column>
-            Top Packs
-          </Grid.Column>
-        </Grid>
-      </Card.Header>
-      </Card.Content>
-
-      <Card.Content>
-      {this.props.userdata.loading === true ? (<Segment>
-                <Dimmer active inverted>
-                <Loader size="small">Loading</Loader>
-                </Dimmer><br /><br /><br /><br />
-            </Segment>) : ( 
-
-
-            <div>stuff here </div>
-
-
-    )}
-    </Card.Content>
-    </Card>
+      <TopPacksCard />
     )
   }
 }
