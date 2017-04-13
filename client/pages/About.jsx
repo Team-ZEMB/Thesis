@@ -38,7 +38,7 @@ class About extends React.Component {
                 </Card.Content>
             </Card>
             <Card>
-                <Image src='http://i.imgur.com/vPAFGVL.jpg' />
+                <Image src='https://scontent-dft4-2.xx.fbcdn.net/v/t1.0-9/17799446_10155257756098593_1867308761315750281_n.jpg?oh=eb1b935c95284c31f14aed34b6b9e29d&oe=5988BA0A' />
                 <Card.Content>
                     <Card.Header>
                         Marcie Anderson
@@ -49,7 +49,7 @@ class About extends React.Component {
                         </span>
                     </Card.Meta>
                     <Card.Description>
-                        "Yeah I love tedium and death"
+                        "Yeah, I love tedium and death."
                     </Card.Description>
                 </Card.Content>
             </Card>
