@@ -1,3 +1,65 @@
+#yellowCircle {
+  background-image: url("https://www.kirupa.com/images/yellow_circle.svg");
+  background-size: 90%;
+  width: 100vw;
+  height: 100vw;
+  position: fixed;
+  background-repeat: no-repeat;
+  z-index: -10;
+  background-position: center center;
+  top: 0;
+  opacity: .75;
+}
+
+#greenPent {
+  background-image: url("https://www.kirupa.com/images/green_pentagon.svg");
+  background-size: 90%;
+  width: 30vw;
+  height: 30vw;
+  position: fixed;
+  background-repeat: no-repeat;
+  z-index: -30;
+  background-position: 20% left;
+  top: 100;
+  opacity: .75;
+}
+
+#blueSquare {
+  background-image: url("https://www.kirupa.com/images/blue_square.svg");
+  width: 100px;
+  height: 100px;
+  background-repeat: no-repeat;
+  z-index: 3;
+  background-position: 97% top;
+  opacity: .75;
+}
+
+.parallaxImg {
+  background-repeat: no-repeat;
+  width: 100%;
+  opacity: .75;
+}
+
+.parallaxImg2 {
+  background-repeat: no-repeat;
+  width: 100%;
+  opacity: .5;
+}
+
+
+.react-parallax {
+  background-size: cover;
+  height: 600px;
+  text-align: center;
+
+}
+
+.react-parallax-content {
+  display: inline-block;
+  margin-top: 100px;
+  color: black;
+}
+
 
 #profilePic {
  max-height: 40px;
