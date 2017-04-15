@@ -110,7 +110,7 @@ exports.addRunToHistory = function (req, res) {
           tmpPackID = packinfo.id;
           console.log('from',packinfo.totalDistance,'to',newPackMiles,'for',tmpPackID)
           db.Packs.update(
-            { points: newPackMiles },
+            { totalDistance: newPackMiles },
             { where: { id: tmpPackID }})
           .then((result) => {
             console.log("updated pack miles")
