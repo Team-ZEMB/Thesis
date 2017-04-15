@@ -8,31 +8,38 @@ import Leaderboard from '../pages/Leaderboard';
 import About from '../pages/About';
 import { Menu, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import * as UserActions from '../actions';
 
 @connect((store) => {
   return {
-    userdata: store.userdata,
+    userdata: store.userdata
   };
 })
 
 export default class App extends React.Component {
-  state = { activeItem: Profile }
+  state = { 
+    activeItem: Profile,
+   }
 
   handleItemClick = (e, { name }) => {
     this.setState({ activeItem: name });
+    if (name === 'Login') {
+      this.props.dispatch(UserActions.hideNavbar());
+    }
   }
+  
   handleLogout = () => {
     localStorage.removeItem('id_token');
     localStorage.removeItem('profile');
     this.setState({ activeItem: 'Login' });
-    window.location.href =  '/#/login'
+    window.location.href = '/#/login'
   }
 
   render() {
     const { activeItem } = this.state
     return (
       <div>
-        <Menu pointing secondary>
+        <Menu pointing secondary id={this.props.userdata.menu}>
           <Menu.Item name='Login' active={activeItem === 'Login'} onClick={this.handleItemClick} href='/#/login' />
           <Menu.Item name='Profile' active={activeItem === 'Profile'} onClick={this.handleItemClick} href='/#/profile' />
           <Menu.Item name='Run History' active={activeItem === 'Run History'} onClick={this.handleItemClick} href='/#/runhistory' />

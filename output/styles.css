@@ -1,5 +1,4 @@
 #yellowCircle {
-  background-image: url("https://www.kirupa.com/images/yellow_circle.svg");
   background-size: 90%;
   width: 100vw;
   height: 100vw;
@@ -7,12 +6,11 @@
   background-repeat: no-repeat;
   z-index: -10;
   background-position: center center;
-  top: 0;
+  margin-top: -9px;
   opacity: .75;
 }
 
 #greenPent {
-  background-image: url("https://www.kirupa.com/images/green_pentagon.svg");
   background-size: 90%;
   width: 30vw;
   height: 30vw;
@@ -25,13 +23,34 @@
 }
 
 #blueSquare {
-  background-image: url("https://www.kirupa.com/images/blue_square.svg");
   width: 100px;
   height: 100px;
-  background-repeat: no-repeat;
+  background-color: #3fafff;
   z-index: 3;
   background-position: 97% top;
   opacity: .75;
+  position: absolute;
+}
+
+#loginButton {
+  position: absolute;
+  z-index: 20;
+  margin-left: 90vw;
+  margin-top: 10px;
+}
+
+#invisible {
+  margin-top: -42px;
+}
+
+.bgr {
+  opacity: .75;
+  height: 400px;
+  position: relative;
+}
+
+.childEl {
+  position: absolute;
 }
 
 .parallaxImg {
@@ -40,18 +59,11 @@
   opacity: .75;
 }
 
-.parallaxImg2 {
-  background-repeat: no-repeat;
-  width: 100%;
-  opacity: .5;
-}
-
-
 .react-parallax {
   background-size: cover;
+  background-color: 'red';
   height: 600px;
   text-align: center;
-
 }
 
 .react-parallax-content {
@@ -59,7 +71,6 @@
   margin-top: 100px;
   color: black;
 }
-
 
 #profilePic {
  max-height: 40px;

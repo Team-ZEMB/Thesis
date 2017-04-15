@@ -15,6 +15,7 @@ const initialState = {
   goals: [],
   history: [],
   DBID: null,
+  menu: ''
 };
 
 export default function groups(state = initialState, action) {
@@ -34,6 +35,7 @@ export default function groups(state = initialState, action) {
         history: action.userObj.history,
         DBID: action.userObj.DBID,
         loading: false,
+        menu: 'visible'
       };
 
     case types.STORE_PROFILE:
@@ -51,6 +53,11 @@ export default function groups(state = initialState, action) {
       return {
         ...state,
         loading: false,
+      };
+    case types.HIDE_NAVBAR:
+      return {
+        ...state,
+        menu: 'invisible',
       };
     default:
       return state;
