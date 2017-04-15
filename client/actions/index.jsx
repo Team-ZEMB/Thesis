@@ -39,6 +39,12 @@ export function storeProfile(profile) {
   };
 }
 
+export function hideNavbar() {
+  return {
+    type: types.HIDE_NAVBAR,
+  };
+}
+
 export function signIn() {
   return (dispatch) => {
     dispatch(loading());
