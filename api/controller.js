@@ -90,6 +90,17 @@ exports.addRunToHistory = function (req, res) {
   }
   db.Users.findOne({ where: { authID: entry.userID } })
     .then((result) => {
+      var newMiles = result.points + entry.distance;
+      db.Challenges.update(
+        { points: newMiles },
+        { where: { id: result.id } }
+        )
+      .then((result) => {
+        //Added total miles to users table
+      })
+      .catch((err) => {
+        console.log(err);
+      })
       const newHistoryItem = db.RunHistories.build({
         startLong: entry.initialPosition.longitude,
         startLat: entry.initialPosition.latitude,
@@ -105,7 +116,10 @@ exports.addRunToHistory = function (req, res) {
       newHistoryItem.save()
       .then((record) => {
         res.send(record);
-      });
+      })
+      .catch((err) => {
+        res.send(err);
+      })
     });
 };
 
@@ -119,7 +133,10 @@ exports.addToGoals = function (req, res) {
   newGoal.save()
   .then((result) => {
     res.send(result);
-  });
+  })
+  .catch((err) => {
+    res.send(err);
+  })
 };
 
 exports.changeGoalStatus = function (req, res) {
@@ -129,7 +146,10 @@ exports.changeGoalStatus = function (req, res) {
     )
   .then((result) => {
     res.send(result);
-  });
+  })
+  .catch((err) => {
+    res.send(err);
+  })
 };
 
 exports.addBestThreeMile = function (req, res) {
@@ -154,7 +174,10 @@ exports.deleteGoal = function (req, res) {
     where: { id: req.body.id },
   }).then((result) => {
     res.send('deleted');
-  });
+  })
+  .catch((err) => {
+    res.send(err);
+  })
 };
 
 exports.createPack = function (req, res) {
@@ -172,8 +195,14 @@ exports.createPack = function (req, res) {
     });
     newUserPack.save().then((result) => {
       res.send(result);
-    });
-  });
+    })
+    .catch((err) => {
+      res.send(err);
+    })
+  })
+  .catch((err) => {
+    res.send(err);
+  })
 };
 
 exports.getAllUsers = function (req, res) {
@@ -182,7 +211,10 @@ exports.getAllUsers = function (req, res) {
   })
   .then((results) => {
     res.send(results);
-  });
+  })
+  .catch((err) => {
+    res.send(err);
+  })
 };
 
 exports.addToPack = function (req, res) {
@@ -193,7 +225,10 @@ exports.addToPack = function (req, res) {
   });
   newUsersPacks.save().then((result) => {
     res.send(result);
-  });
+  })
+  .catch((err) => {
+    res.send(err);
+  })
 };
 
 exports.acceptRequest = function (req, res) {
@@ -213,7 +248,10 @@ exports.acceptRequest = function (req, res) {
         res.sendStatus(500);
         res.send(err);
       });
-    });
+    })
+    .catch((err) => {
+      res.send(err);
+    })
 };
 
 exports.declinePack = function (req, res) {
@@ -275,7 +313,6 @@ exports.createMachineGoal = function (req, res) {
         formatted.push(tmp);
       }
       var csvdata = json2csv({ data: formatted, fields: ['distance', 'duration', 'dayOfWeek', 'timeOfDay', 'absAltitude', 'changeAltitude'] });
-      // console.log(csvdata);
       s3.upload({
         Bucket: 'csvbucketforml',
         accessKeyId: process.env.S3_ACCESS_KEY,
