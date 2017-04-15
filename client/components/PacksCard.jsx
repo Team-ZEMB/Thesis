@@ -190,6 +190,7 @@ export default class PacksCard extends React.Component {
   }
 
   render() {
+    console.log(this.state.packs)
     return (
     <Card className="teal">
         <Card.Content>
