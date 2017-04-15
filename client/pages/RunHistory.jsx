@@ -58,7 +58,6 @@ export default class RunHistory extends React.Component {
         lng: tmpPath[Math.floor(tmpPath.length/2)].lng,
       },
     })
-    console.log(tmpPath)
 
     let route = new google.maps.Polyline({
         map: window.map,
@@ -69,9 +68,9 @@ export default class RunHistory extends React.Component {
 
   return (
     <div>
-      <div style={{width: '365px', float:'left'}}>
+      <div style={{width: '365px', height: '60vw', overflowY:'auto', float:'left'}}>
           {histArray.map(function(history, idx) {
-            return <a onClick={() => showOnMap(history)}><HistoryCard key={idx} hist={history} /><br /></a>;
+            return <a key={idx} onClick={() => showOnMap(history)}><HistoryCard hist={history} /><br /></a>;
           })}
       </div>
       <div style={{width: 'calc(100% - 365px)', float:'right'}}>

@@ -152,6 +152,17 @@ class Analytics extends React.Component {
             return ("Can't find recent run data.");
         }
     }
+    machineGoal() {
+        axios.post('/api/machineGoal', {
+            UserId: this.props.userdata.DBID,
+            customInput: "TBD",
+        })
+        .then((res) => {
+            console.log(res)
+        })
+        .catch(err => console.log(err))
+    }
+
 
     render() {
         return (
@@ -197,6 +208,9 @@ class Analytics extends React.Component {
                     </label>
                     <input type="submit" value="Submit" />
                 </form>
+                <br />
+                <br />
+                <button onClick={() => this.machineGoal()}> Don't Click </button>
                 <br /><br /><br />
                 </Card.Content>
                 </Card>

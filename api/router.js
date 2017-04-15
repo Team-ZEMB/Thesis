@@ -78,4 +78,9 @@ myRouter.route('/king')
     controller.addBestThreeMile(req, res);
   });
 
+myRouter.route('/machineGoal')
+  .post((req, res) => {
+    controller.createMachineGoal(req, res);
+  });
+
 module.exports = myRouter;
