@@ -1,5 +1,22 @@
 const request = require('request');
 const db = require('./schema');
+var fs = require('fs');
+var json2csv = require('json2csv');
+const AWS = require('aws-sdk');
+
+const s3 = new AWS.S3({
+  accessKeyId: process.env.S3_ACCESS_KEY,
+  secretAccessKey: process.env.S3_SECRET,
+  subregion: 'us-west-2',
+  region: 'us-west-2',
+});
+
+var lambda = new AWS.Lambda({
+  accessKeyId: process.env.S3_ACCESS_KEY,
+  secretAccessKey: process.env.S3_SECRET,
+  subregion: 'us-west-2',
+  region: 'us-west-2',
+});
 
 exports.createUser = function (req, res) {
   const profile = req.body.params.profile;
@@ -26,7 +43,6 @@ exports.createUser = function (req, res) {
 };
 
 exports.returnUserData = function (req, res, id) {
-  console.log('ctrl 29');
   db.Users.findOne({
     where: { id },
     include: [{
@@ -38,12 +54,9 @@ exports.returnUserData = function (req, res, id) {
     },
     { model: db.RunHistories },
     { model: db.Challenges },
-    // { model: db.Badges },
     ],
   })
   .then((packs) => {
-    console.log('ctrl 45');
-
     res.send(packs);
   });
 };
@@ -126,8 +139,8 @@ exports.addBestThreeMile = function (req, res) {
       where: { 
         PackId: req.body.PackId, 
         UserId: req.body.UserId, 
-    } 
-  }
+      } 
+    }
     )
   .then((result) => {
     res.send('Added time of ' + req.body.bestThreeMile + ' seconds');
@@ -235,4 +248,62 @@ exports.acceptPack = function (req, res) {
     res.sendStatus(500);
     res.send(err);
   });
+};
+
+exports.createMachineGoal = function (req, res) {
+  db.RunHistories.findAll({where: { UserId : req.body.UserId }})
+    .then((result) => {
+      var formatted = []
+      for (var i = 0; i < result.length; i++) {
+        var d = result[i].date
+        var n = new Date(d).toString();
+        var hour = n.substring(16, 18)
+        if (hour < 12) {
+          hour = "Morning"
+        } else if (hour < 17) {
+          hour = "Afternoon"
+        } else {
+          hour = "Evening"
+        }
+        var tmp = {};
+        tmp.duration = result[i].duration;
+        tmp.distance = result[i].distance;
+        tmp.dayOfWeek = new Date(n).getDay();
+        tmp.timeOfDay = hour;
+        tmp.absAltitude = result[i].absAltitude;
+        tmp.changeAltitude = result[i].changeAltitude;
+        formatted.push(tmp);
+      }
+      var csvdata = json2csv({ data: formatted, fields: ['distance', 'duration', 'dayOfWeek', 'timeOfDay', 'absAltitude', 'changeAltitude'] });
+      // console.log(csvdata);
+      s3.upload({
+        Bucket: 'csvbucketforml',
+        accessKeyId: process.env.S3_ACCESS_KEY,
+        secretAccessKey: process.env.S3_SECRET,
+        subregion: 'us-west-2',
+        Key: 'testCSV.csv',
+        Body: csvdata,
+        ACL: 'public-read-write',  
+      }, (err, data) => {
+        if (err) {
+          console.log(err)
+        } 
+        console.log("succcess: ", data)
+
+        var params = {
+          ClientContext: "prod", 
+          FunctionName: "new", 
+          InvocationType: "Event"
+        }; 
+        lambda.invoke(params, function(err, data) {
+          if (err) console.log(err, err.stack); // an error occurred
+          else {
+            console.log(data);
+          }     
+        });
+      })
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 };

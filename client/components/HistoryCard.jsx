@@ -40,9 +40,3 @@ export default class HistoryCard extends React.Component {
         )
     }
 }
-
-//date
-//distance
-//duration / 60
-//route
-//startingLat, startingLong
