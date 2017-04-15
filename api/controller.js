@@ -115,7 +115,7 @@ exports.addRunToHistory = function (req, res) {
           .then((result) => {
             console.log("updated pack miles")
           })
-          .err((err) => {
+          .catch((err) => {
             console.log("err 118")
             console.log(err);
           })
