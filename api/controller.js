@@ -102,12 +102,14 @@ exports.addRunToHistory = function (req, res) {
         console.log(err);
       })
       if (entry.currentPack !== null) {
-        var newPackMiles = 0
-        var tmpPackID = 0
+        var newPackMiles = 0;
+        var tmpPackID = 0;
         db.Packs.findOne({ where: { name: entry.currentPack }})
         .then((packinfo) => {
           newPackMiles = packinfo.totalDistance + entry.distance;
+          console.log(packinfo)
           tmpPackID = packinfo.id;
+          console.log(tmpPackID)
         }).catch((err) => { res.send(err) })
         db.Packs.update(
           { points: newPackMiles },
