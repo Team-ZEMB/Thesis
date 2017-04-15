@@ -91,7 +91,7 @@ exports.addRunToHistory = function (req, res) {
   db.Users.findOne({ where: { authID: entry.userID } })
     .then((result) => {
       var newMiles = result.points + entry.distance;
-      db.Challenges.update(
+      db.Users.update(
         { points: newMiles },
         { where: { id: result.id } }
         )
