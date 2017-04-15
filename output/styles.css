@@ -29,6 +29,7 @@
   z-index: 3;
   background-position: 97% top;
   opacity: .75;
+  position: absolute;
 }
 
 #loginButton {
@@ -42,10 +43,14 @@
   margin-top: -42px;
 }
 
-.bg {
-  position: fixed;
+.bgr {
   opacity: .75;
-  height: 800px;
+  height: 400px;
+  position: relative;
+}
+
+.childEl {
+  position: absolute;
 }
 
 .parallaxImg {
