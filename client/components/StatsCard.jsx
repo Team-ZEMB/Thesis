@@ -146,6 +146,32 @@ export default class StatsCard extends React.Component {
         }
     }
 
+    renderBadgeMessage() {
+        var milesRemaining;
+        if (this.props.userdata.points > 1000) {
+            return (<div></div>)
+        } else if (this.props.userdata.points > 200) {
+            milesRemaining = 1000 - this.props.userdata.points;
+        } else if (this.props.userdata.points > 50) {
+            milesRemaining = 200 - this.props.userdata.points;
+        } else {
+            milesRemaining = 50 - this.props.userdata.points;
+        }
+
+
+       return (<div>Keep Going! Only {milesRemaining} miles to earn a new badge.</div>)
+        // let noPack = true;
+        // this.state.packs.map((pack, idx) => {
+        //     if (pack.Users_Packs.confirmed === "FALSE") {
+        //         noPack = false;
+        //         return (<div key={idx}><Feed.Summary>You've been invited by to join <a>{pack.name} </a><Feed.Meta>(<a onClick={() => this.acceptPack(pack.id, idx)}>Accept</a> | <a onClick={() => this.declinePack(pack.id, idx)}>Decline</a>)</Feed.Meta></Feed.Summary></div>)
+        //     }
+        // })
+        // if (noPack) {
+        //     return (<div>You don't have any pending pack invites! Try creating your own.</div>)
+        // }
+    }
+
     render() {
         return (
             <Card className="teal">
@@ -161,6 +187,13 @@ export default class StatsCard extends React.Component {
                     </Dimmer><br /><br /><br /><br />
                 </Segment>) : (
                     <Feed>
+                            <Feed.Event>
+                            <Feed.Content>
+                                <Feed.Date />
+                                    {this.renderBadgeMessage()}
+                                    <br />
+                            </Feed.Content>
+                        </Feed.Event>
                             <Feed.Event>
                             <Feed.Content>
                                 <Feed.Date />

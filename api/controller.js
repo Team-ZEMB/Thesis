@@ -189,6 +189,20 @@ exports.addBestThreeMile = function (req, res) {
     res.send("Oh no!, you encountered an error");
   });
 };
+exports.addBestSoloThree = function (req, res) {
+  db.Users.update(
+    { bestSoloThreeMi: req.body.bestThreeMile },
+    { where: {
+        id: req.body.UserId
+      } 
+    }
+    )
+  .then((result) => {
+    res.send("Success")
+  }).catch((err) => {
+    res.send("Error");
+  });
+};
 
 exports.deleteGoal = function (req, res) {
   db.Challenges.destroy({

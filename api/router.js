@@ -77,6 +77,11 @@ myRouter.route('/king')
   .put((req, res) => {
     controller.addBestThreeMile(req, res);
   });
+  
+myRouter.route('/soloking')
+  .put((req, res) => {
+    controller.addBestSoloThree(req, res);
+  });
 
 myRouter.route('/machineGoal')
   .post((req, res) => {
