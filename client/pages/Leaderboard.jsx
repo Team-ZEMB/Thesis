@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as UserActions from '../actions';
 import axios from 'axios';
 import TopPacksCard from '../components/TopPacksCard';
+import TopSoloCard from '../components/TopSoloCard';
 
 @connect((store) => {
   return {
@@ -26,7 +27,10 @@ export default class Leaderboard extends React.Component {
 
   render() {
     return (
+      <div>
       <TopPacksCard />
+      <TopSoloCard />
+      </div>
     )
   }
 }
