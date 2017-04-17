@@ -78,7 +78,10 @@ myRouter.route('/king')
     controller.addBestThreeMile(req, res);
   });
   
-myRouter.route('/soloking')
+myRouter.route('/soloKing')
+  .get((req, res) => {
+    controller.getBestThree(req, res);
+  })
   .put((req, res) => {
     controller.addBestSoloThree(req, res);
   });

@@ -100,7 +100,7 @@ exports.addRunToHistory = function (req, res) {
       })
       .catch((err) => {
         console.log(err);
-      })
+      });
       if (entry.currentPack !== null) {
         var newPackMiles = 0;
         var tmpPackID = 0;
@@ -108,18 +108,18 @@ exports.addRunToHistory = function (req, res) {
         .then((packinfo) => {
           newPackMiles = packinfo.totalDistance + entry.distance;
           tmpPackID = packinfo.id;
-          console.log('from',packinfo.totalDistance,'to',newPackMiles,'for',tmpPackID)
+          console.log('from',packinfo.totalDistance,'to',newPackMiles,'for',tmpPackID);
           db.Packs.update(
             { totalDistance: newPackMiles },
             { where: { id: tmpPackID }})
           .then((result) => {
-            console.log("updated pack miles")
+            console.log("updated pack miles");
           })
           .catch((err) => {
-            console.log("err 118")
+            console.log("err 118");
             console.log(err);
-          })
-        }).catch((err) => { console.log(err, "line 121") })
+          });
+        }).catch((err) => { console.log(err, "line 121"); });
 
       }
       const newHistoryItem = db.RunHistories.build({
@@ -140,7 +140,7 @@ exports.addRunToHistory = function (req, res) {
       })
       .catch((err) => {
         res.send(err);
-      })
+      });
     });
 };
 
@@ -157,7 +157,7 @@ exports.addToGoals = function (req, res) {
   })
   .catch((err) => {
     res.send(err);
-  })
+  });
 };
 
 exports.changeGoalStatus = function (req, res) {
@@ -170,7 +170,7 @@ exports.changeGoalStatus = function (req, res) {
   })
   .catch((err) => {
     res.send(err);
-  })
+  });
 };
 
 exports.addBestThreeMile = function (req, res) {
@@ -198,7 +198,7 @@ exports.addBestSoloThree = function (req, res) {
     }
     )
   .then((result) => {
-    res.send("Success")
+    res.send("Success");
   }).catch((err) => {
     res.send("Error");
   });
@@ -212,7 +212,7 @@ exports.deleteGoal = function (req, res) {
   })
   .catch((err) => {
     res.send(err);
-  })
+  });
 };
 
 exports.createPack = function (req, res) {
@@ -233,11 +233,11 @@ exports.createPack = function (req, res) {
     })
     .catch((err) => {
       res.send(err);
-    })
+    });
   })
   .catch((err) => {
     res.send(err);
-  })
+  });
 };
 
 exports.getAllUsers = function (req, res) {
@@ -249,7 +249,7 @@ exports.getAllUsers = function (req, res) {
   })
   .catch((err) => {
     res.send(err);
-  })
+  });
 };
 
 exports.addToPack = function (req, res) {
@@ -263,7 +263,7 @@ exports.addToPack = function (req, res) {
   })
   .catch((err) => {
     res.send(err);
-  })
+  });
 };
 
 exports.acceptRequest = function (req, res) {
@@ -286,7 +286,7 @@ exports.acceptRequest = function (req, res) {
     })
     .catch((err) => {
       res.send(err);
-    })
+    });
 };
 
 exports.declinePack = function (req, res) {
@@ -323,20 +323,35 @@ exports.acceptPack = function (req, res) {
   });
 };
 
+exports.getBestThree = function (req, res) {
+  db.Users.findAll({
+    where: {
+      bestSoloThreeMi: {
+        $ne: null,
+      },
+    },
+    order: 'bestSoloThreeMi',
+    limit: 3,
+  })
+  .then((results) => {
+    res.send(results)
+  });
+};
+
 exports.createMachineGoal = function (req, res) {
   db.RunHistories.findAll({where: { UserId : req.body.UserId }})
     .then((result) => {
-      var formatted = []
+      var formatted = [];
       for (var i = 0; i < result.length; i++) {
-        var d = result[i].date
+        var d = result[i].date;
         var n = new Date(d).toString();
-        var hour = n.substring(16, 18)
+        var hour = n.substring(16, 18);
         if (hour < 12) {
-          hour = "Morning"
+          hour = "Morning";
         } else if (hour < 17) {
-          hour = "Afternoon"
+          hour = "Afternoon";
         } else {
-          hour = "Evening"
+          hour = "Evening";
         }
         var tmp = {};
         tmp.duration = result[i].duration;
@@ -358,9 +373,9 @@ exports.createMachineGoal = function (req, res) {
         ACL: 'public-read-write',  
       }, (err, data) => {
         if (err) {
-          console.log(err)
+          console.log(err);
         } 
-        console.log("succcess: ", data)
+        console.log("succcess: ", data);
 
         var params = {
           ClientContext: "prod", 
@@ -373,9 +388,9 @@ exports.createMachineGoal = function (req, res) {
             console.log(data);
           }     
         });
-      })
+      });
     })
     .catch((err) => {
-      console.log(err)
-    })
+      console.log(err);
+    });
 };

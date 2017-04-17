@@ -73,6 +73,7 @@ class TopPacksCard extends React.Component {
     var h = Math.floor(d / 3600);
     var m = Math.floor(d % 3600 / 60);
     var s = Math.floor(d % 3600 % 60);
+    s < 10 ? s = '0'+s : null
     var hDisplay = h > 0 ? h + ':' : "";
     return hDisplay + m + ':' + s; 
   }
