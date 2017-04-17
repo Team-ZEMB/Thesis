@@ -10,15 +10,16 @@
   opacity: .75;
 }
 
-#greenPent {
+#greenHex {
   background-size: 90%;
-  width: 30vw;
-  height: 30vw;
+  width: 40vw;
+  height: 40vw;
   position: fixed;
   background-repeat: no-repeat;
-  z-index: -30;
+  z-index: -9;
   background-position: 20% left;
   top: 100;
+  margin-left: 60vw;
   opacity: .75;
 }
 
@@ -32,11 +33,39 @@
   position: absolute;
 }
 
-#loginButton {
+.topLogin {
   position: absolute;
-  z-index: 20;
-  margin-left: 90vw;
-  margin-top: 10px;
+  z-index: 30;
+  margin-left: 30px !important;
+  margin-top: 30px !important;
+}
+
+.bottomLogin {
+  margin-left: 22% !important;
+  margin-top: -99px !important;
+  position: absolute;
+  z-index: 30;
+  height: 60px;
+  border: solid #b1b1b1 2px !important;
+  background-color: #292929 !important;
+  border-radius: 10px !important;
+  width: 240px !important;
+}
+
+.iosStore {
+  max-height: 60px;
+  margin-left: 55%;
+  z-index: 30;
+  margin-top: -100px;
+  position: absolute;
+}
+
+#getStarted {
+  position: absolute;
+  z-index:30;
+  font-size: 45px;
+  margin-left: 30%;
+  margin-top: -200px;
 }
 
 #invisible {
@@ -45,8 +74,15 @@
 
 .bgr {
   opacity: .75;
+  height: 790px;
+  position: relative;
+}
+
+.bgr1 {
+  opacity: .75;
   height: 400px;
   position: relative;
+  z-index: 20;
 }
 
 .childEl {
