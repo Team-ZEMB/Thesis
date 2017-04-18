@@ -10,15 +10,16 @@
   opacity: .75;
 }
 
-#greenPent {
+#greenHex {
   background-size: 90%;
-  width: 30vw;
-  height: 30vw;
+  width: 40vw;
+  height: 40vw;
   position: fixed;
   background-repeat: no-repeat;
-  z-index: -30;
+  z-index: -9;
   background-position: 20% left;
   top: 100;
+  margin-left: 60vw;
   opacity: .75;
 }
 
@@ -32,11 +33,76 @@
   position: absolute;
 }
 
-#loginButton {
+.topLogin {
   position: absolute;
-  z-index: 20;
-  margin-left: 90vw;
-  margin-top: 10px;
+  z-index: 30;
+  margin-left: 30px !important;
+  margin-top: 30px !important;
+}
+
+#rabbit {
+  margin-left: 190px;
+}
+
+#welcome {
+  margin-left: 180px;
+  margin-top: 100px; 
+}
+
+h2 {
+  font-size: 50px;
+  font-family: avenir;
+}
+
+h3 {
+  font-size: 32px;
+  font-family: avenir;
+}
+
+#dl {
+  margin-top: 120px;
+  text-align: center;
+  margin-left: 10px;
+  margin-right: 10vw;
+  position: relative;
+  text-shadow: 2px 2px rgba(100,100,100,.5);
+}
+
+.description {
+  text-align: center;
+  margin-right: 10vw;
+  padding-right: 20px;
+  padding-left: 20px;
+  background-color:rgba(238, 166, 56, 0.5);
+}
+
+.bottomLogin {
+  margin-left: 22% !important;
+  margin-top: -190px !important;
+  position: absolute;
+  z-index: 30;
+  height: 60px;
+  border: solid #b1b1b1 2px !important;
+  background-color: #292929 !important;
+  border-radius: 10px !important;
+  width: 240px !important;
+  font-size: 20px !important;
+}
+
+.iosStore {
+  max-height: 60px;
+  margin-left: 55%;
+  z-index: 30;
+  margin-top: -190px;
+  position: absolute;
+}
+
+#getStarted {
+  position: absolute;
+  z-index:30;
+  font-size: 45px;
+  margin-left: 30%;
+  margin-top: -290px;
 }
 
 #invisible {
@@ -44,32 +110,32 @@
 }
 
 .bgr {
-  opacity: .75;
-  height: 400px;
+  height: 790px;
   position: relative;
+  overflow: hidden;
+}
+
+.bgr .sq {
+  opacity: .75;
+}
+
+.bgr1 {
+  opacity: .75;
+  height: 154px;
+  position: relative;
+  z-index: 20;
 }
 
 .childEl {
   position: absolute;
+  opacity: 1;
 }
 
-.parallaxImg {
-  background-repeat: no-repeat;
-  width: 100%;
-  opacity: .75;
-}
-
-.react-parallax {
-  background-size: cover;
-  background-color: 'red';
-  height: 600px;
-  text-align: center;
-}
-
-.react-parallax-content {
-  display: inline-block;
+#appDemo {
+  border: solid #545454 17px;
+  border-radius: 22px;
+  float: right;
   margin-top: 100px;
-  color: black;
 }
 
 #profilePic {
