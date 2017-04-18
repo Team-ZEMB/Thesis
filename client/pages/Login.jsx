@@ -38,13 +38,14 @@ export default class Login extends React.Component {
     setTimeout(scrollLoop, 0);
 
     var yellowCircle = document.querySelector("#yellowCircle");
-    var greenHex = document.querySelector("#greenHex");
+    var greenHex1 = document.querySelector("#greenHex");
+    var greenHex2 = document.querySelector("#greenHex2")
+    var greenHex3 = document.querySelector("#greenHex3")
     var tealSq = document.querySelector("#tealSq");
     var yellowSq = document.querySelector("#yellowSq");
     var blueSq = document.querySelector("#blueSq");
     var tealSq1 = document.querySelector("#tealSq1");
     var salmonSq = document.querySelector("#salmonSq");
-    var rabbit = document.querySelector("#rabbit");
     var dl = document.querySelector("#dl");
     
     this.setState({
@@ -57,37 +58,54 @@ export default class Login extends React.Component {
     function scrollLoop(e){
       var scroll = window.pageYOffset;
       setTranslate(0, scroll * -0.12, yellowCircle);
-      rotate(0, scroll * 0.1, greenHex);
-      // grow(scroll, dl);
+      setTranslate(0, scroll * .08, dl);
       setTranslate(0, scroll * -.1, tealSq);
       setTranslate(0, scroll * -.2, yellowSq);
       setTranslate(0, scroll * -.1, blueSq);
       setTranslate(0, scroll * -.2, salmonSq);
       setTranslate(0, scroll * -.1, tealSq1);
-      setTranslate(0, scroll * .4, rabbit);
       requestAnimationFrame(scrollLoop);
     }
 
     function setTranslate(xPos, yPos, el) {
       el.style.transform = 'translate3d(' + xPos + 'px, ' + yPos + 'px, 0px)';
     }
+    
 
-    function rotate(xPos, yPos, el) {
-      if (xPos === 0) {
-        el.style.transform = 'translate3d(' + xPos + 'px, ' + yPos + 'px, 0px) rotate(' + yPos/2 +'deg)';
-      } else {
-        el.style.transform = 'translate3d(' + xPos + 'px, ' + yPos + 'px, 0px) rotate(' + xPos/3 +'deg)';
+    setTimeout(rotate(0,0,0,greenHex1, 'left', 'down'),0);
+    setTimeout(rotate(0,0,0,greenHex2, 'right', 'up'),0);
+    setTimeout(rotate(0,0,0,greenHex3, 'right', 'down'),0);
+
+    function rotate(xPos, yPos, rPos, el, dirx, diry) {
+      el.style.transform = 'translate3d(' + xPos + 'px, ' + yPos + 'px, 0px) rotate(' + rPos +'deg)';
+      
+      var rect = el.getBoundingClientRect();
+
+      if (rect.left < -100 && dirx === 'left') {
+        dirx = 'right';
+        var x = xPos + 0.7;
+      } else if (dirx === 'left') {
+        var x = xPos - 0.7;
+      } else if (rect.left > 800 && dirx === 'right') {
+        dirx = 'left';
+        var x = xPos - 0.7;
+      } else if (dirx === 'right') {
+        var x = xPos + 0.7;
+      } 
+      if (diry === 'down' && rect.bottom > 780) {
+        diry = 'up';
+        var y = yPos - 0.7;
+      } else if (diry === 'down') {
+        var y = yPos + 0.7;
+      } else if (diry === 'up' && rect.top < -100) {
+        diry = 'down';
+        var y = yPos + 0.7;
+      } else if (diry === 'up') {
+        var y = yPos - 0.7;
       }
+      setTimeout(()=> {rotate(x, y, rPos+0.2, el, dirx, diry)}, 30);
+
     }
-
-    // function grow (scroll, el) {
-    //   var rect = el.getBoundingClientRect();
-    //   console.log('TOP: ', rect.top, rect.right, rect.bottom, rect.left);
-    //   if (rect.top > 5) {
-    //   el.style.transform = 'scale(' + 1.2 + ',' + 1.2 + ')';
-    // }
-    // }
-
   }
 
   render() {
@@ -95,9 +113,11 @@ export default class Login extends React.Component {
       <div>
         <img id="yellowCircle" src="assets/circle.png"/>
         <img id="greenHex" src="assets/greenhexagon.png"/>
+        <img id="greenHex2" src="assets/greenhexagon2.png"/>
+        <img id="greenHex3" src="assets/greenhexagon1.png"/>
         <Button className="topLogin" color='teal' onClick={() => {AuthService.login(); }}>Login</Button>
 
-        <div className="bgr" id="tealSq"> 
+        <div className="bgr" id="tealSq" style={{marginTop: -15}}> 
         <img src="assets/teal.png" className="childEl sq"/>
         <div className="childEl">
           <h2 id="welcome">Welcome to Rabbit!</h2> 
@@ -109,9 +129,12 @@ export default class Login extends React.Component {
         <img src="assets/yellow.png" className="childEl sq"/>
         <div className="childEl" style={{width: '90vw'}}>
           <img src="assets/appDemo.gif" id="appDemo"></img>
-          <h2 id="dl"> Download running <br/>companion<br/><br/></h2>
-          <h3 className="description" id="tracks"> Save running time <br/>and route<br/></h3>
-          <h3 className="description"> Compete for best three-mile time <br/> alone or with your pack <br/></h3>
+          <h2 id="dl"> Download running <br/>companion<br/></h2>
+          <div id="saveCompete">
+          <br/>
+          <h3 className="appDescr first"> Save running time <br/>and route<br/></h3>
+          <h3 className="appDescr"> Compete for best three-mile time <br/> alone or with your pack <br/></h3>
+          </div>
         </div>
         </div>
 
@@ -129,7 +152,7 @@ export default class Login extends React.Component {
         </div>
 
         <div className="bgr1" id="tealSq1" style={{marginTop: this.state.tealMargin}}> 
-        <img src="assets/teal1.png" className="childEl"/>
+        <img src="assets/teal1.png" className="childEl sq"/>
         <div className="childEl">
         </div>
         </div>
