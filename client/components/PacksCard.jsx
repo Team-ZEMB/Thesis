@@ -264,7 +264,7 @@ export default class PacksCard extends React.Component {
                 <Accordion key={idx}>
                     <Accordion.Title>
                     <h5><Icon name="dropdown" />
-                    {pack.name} | <small> {pack.totalDistance} miles</small></h5>
+                    {pack.name} | <small> {pack.totalDistance.toFixed(2)} miles</small></h5>
                     </Accordion.Title>
                     <Accordion.Content>
                         {pack.Users.map((member, idx) => {
