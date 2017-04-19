@@ -72,7 +72,8 @@
 
 #welcome {
   margin-left: 29vw;
-  margin-top: 100px; 
+  margin-top: 100px;
+  text-shadow: 2px 2px rgba(100,100,100,.5); 
 }
 
 h2 {
@@ -94,6 +95,24 @@ h3 {
   text-shadow: 2px 2px rgba(100,100,100,.5);
 }
 
+#manage {
+  margin-top: 20px;
+  margin-left: 10vw;
+  margin-bottom: 50px;
+  margin-right: 10vw;
+  position: relative;
+  text-shadow: 2px 2px rgba(100,100,100,0.5);
+}
+
+#viewStats {
+  margin-top: -45px;
+  margin-left: 10vw;
+  margin-bottom: 50px;
+  margin-right: 10vw;
+  position: relative;
+  text-shadow: 2px 2px rgba(100,100,100,0.5);
+}
+
 .appDescr {
   text-align: center;
   margin-right: 10vw;
@@ -105,6 +124,31 @@ h3 {
 .appDescr.first {
   margin-top: 100px;
 }
+
+.profDescr {
+  text-align: center;
+  margin-left: 12vw;
+  padding-right: 0vw;
+  padding-left: 20px;
+  background-color:rgba(0, 95, 190, 0.5);
+}
+
+.profDescr.first {
+  margin-top: 180px;
+}
+
+.statsDescr {
+  text-align: center;
+  margin-right: 10vw;
+  padding-right: 20px;
+  padding-left: 20px;
+  background-color:rgba(255, 120, 90, 0.5);
+}
+
+.statsDescr.first {
+  margin-top: 100px;
+}
+
 .bottomLogin {
   margin-left: 22% !important;
   margin-top: -190px !important;
@@ -132,6 +176,7 @@ h3 {
   font-size: 45px;
   margin-left: 30%;
   margin-top: -290px;
+  text-shadow: 2px 2px rgba(100,100,100,.5);
 }
 
 #invisible {
