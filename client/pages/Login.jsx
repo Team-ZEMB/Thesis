@@ -21,10 +21,8 @@ export default class Login extends React.Component {
   constructor() {
     super()
     this.state = {
-      yellowMargin: 0,
-      blueMargin: 0,
-      salmonMargin: 0,
-      tealMargin: 0
+      blinkOpacity: 0,
+      eyeOpacity: 1,
     }
   }
 
@@ -34,8 +32,9 @@ export default class Login extends React.Component {
   }
 
   componentDidMount() {
-
+    var that = this;
     setTimeout(scrollLoop, 0);
+    setTimeout(()=>{that.blink()}, 4020);
 
     var yellowCircle = document.querySelector("#yellowCircle");
     var greenHex1 = document.querySelector("#greenHex");
@@ -47,13 +46,6 @@ export default class Login extends React.Component {
     var tealSq1 = document.querySelector("#tealSq1");
     var salmonSq = document.querySelector("#salmonSq");
     var dl = document.querySelector("#dl");
-    
-    this.setState({
-      yellowMargin: -10,
-      blueMargin: -160,
-      salmonMargin: 100,
-      tealMargin: -270
-    });
 
     function scrollLoop(e){
       var scroll = window.pageYOffset;
@@ -71,6 +63,19 @@ export default class Login extends React.Component {
       el.style.transform = 'translate3d(' + xPos + 'px, ' + yPos + 'px, 0px)';
     }
     
+    var path = document.querySelector('#rabbitpath');
+    var length = path.getTotalLength();
+    // path.style.transition = path.style.WebkitTransition = 'none';
+
+    path.style.strokeDashoffset = 15000;
+    path.style.strokeDasharray = length/120 + ' ' + length/120;
+    path.getBoundingClientRect();
+
+    path.style.transition = path.style.WebkitTransition =
+      'stroke-dashoffset 4s ease-in-out';
+
+    path.style.strokeDashoffset = length/4 - 1950;
+    path.style.strokeDasharray = length/2 + ' ' + length/2;
 
     setTimeout(rotate(0,0,0,greenHex1, 'left', 'down'),0);
     setTimeout(rotate(0,0,0,greenHex2, 'right', 'up'),0);
@@ -107,6 +112,16 @@ export default class Login extends React.Component {
 
     }
   }
+    blink() {
+      var that = this
+      var blinky = function () { return that.setState({ blinkOpacity: 1, eyeOpacity: 0}); };
+      var eyes = function () { return that.setState({ blinkOpacity: 0, eyeOpacity: 1}); };
+      setTimeout(eyes, 200);
+      setTimeout(blinky, 1250);
+      setTimeout(eyes, 1400);
+      setTimeout(blinky, 1800);
+      setTimeout(eyes, 1950)
+    };
 
   render() {
     return (
@@ -121,11 +136,46 @@ export default class Login extends React.Component {
         <img src="assets/teal.png" className="childEl sq"/>
         <div className="childEl">
           <h2 id="welcome">Welcome to Rabbit!</h2> 
-          <img id="rabbit" style={{maxHeight: 400}} src="assets/rabbit.png"></img>
+          <div id="rabbit">
+
+            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+             width="350.000000pt" height="350.000000pt" viewBox="0 0 464.000000 464.000000"
+             preserveAspectRatio="xMidYMid meet" >
+
+            <g transform="translate(0.000000,464.000000) scale(0.100000,-0.100000)">
+            <path id="rabbitpath" fill="none" stroke="#000000" strokeOpacity=".9" strokeWidth="155" d="M2774 4262 c-109 -60 -211 -208 -244 -357 -12 -55 -105 -776 -130
+            -1015 -32 -308 -50 -356 -143 -405 -74 -39 -119 -31 -148 26 -18 37 -144 536
+            -269 1069 -78 334 -97 400 -147 500 -47 94 -49 95 -113 127 -60 30 -70 32
+            -130 26 -85 -8 -101 -15 -153 -62 -29 -27 -57 -70 -88 -133 l-44 -93 -3 -243
+            c-3 -254 -3 -259 83 -1577 39 -594 92 -1280 111 -1429 l6 -49 63 5 c84 7 89
+            11 82 67 -107 843 -109 867 -177 2201 -36 705 -37 971 -6 1045 31 73 86 115
+            152 115 30 0 44 -7 75 -40 51 -54 70 -117 169 -575 106 -486 112 -512 185
+            -775 97 -343 107 -363 201 -389 68 -19 115 -13 189 23 90 45 107 60 144 134
+            38 76 57 182 111 622 79 652 96 764 142 883 43 116 81 157 143 157 108 0 150
+            -96 201 -462 14 -100 27 -185 30 -190 5 -7 43 -461 79 -928 27 -348 55 -676
+            95 -1120 22 -239 45 -493 51 -565 6 -71 13 -150 16 -174 l5 -44 63 5 c34 3 68
+            9 75 13 14 9 14 10 -24 285 -14 102 -28 228 -31 280 -4 52 -15 176 -25 275
+            -11 99 -37 430 -59 735 -81 1113 -107 1365 -172 1670 -30 138 -55 194 -132
+            293 -58 75 -165 106 -233 69z" />
+
+            <path className="rabbitEyes" fill="#000000" fillOpacity={this.state.eyeOpacity} d="M2587 1769 c-44 -26 -62 -131 -32 -189 18 -35 61 -70 87 -70 58 0
+            108 61 108 132 -1 43 -33 113 -58 127 -26 14 -81 14 -105 0z"/>
+            <path className="rabbitEyes" fill="#000000" fillOpacity={this.state.eyeOpacity} d="M1857 1739 c-44 -26 -62 -131 -32 -189 18 -35 61 -70 87 -70 58 0
+             108 61 108 132 -1 43 -33 113 -58 127 -26 14 -81 14 -105 0z"/>
+
+            <path className="rabbitBlink" fillOpacity={this.state.blinkOpacity} d="M2531 1636 c-7 -8 -11 -27 -9 -43 l3 -28 100 -3 c123 -4 145 1 145
+            31 0 46 -13 52 -123 55 -83 3 -106 1 -116 -12z"/>
+            <path className="rabbitBlink" fillOpacity= {this.state.blinkOpacity} d="M1782 1628 c-7 -7 -12 -21 -12 -33 0 -39 18 -45 137 -45 111 0 113 0
+            119 24 3 14 3 34 -1 45 -6 20 -14 21 -119 21 -74 0 -116 -4 -124 -12z"/>
+
+
+            </g>
+            </svg>
+          </div>
         </div>
         </div>
 
-        <div className="bgr" id="yellowSq" style={{marginTop: this.state.yellowMargin}}> 
+        <div className="bgr" id="yellowSq" style={{marginTop: -12}}> 
         <img src="assets/yellow.png" className="childEl sq"/>
         <div className="childEl" style={{width: '90vw'}}>
           <img src="assets/appDemo.gif" id="appDemo"></img>
@@ -138,20 +188,20 @@ export default class Login extends React.Component {
         </div>
         </div>
 
-        <div className="bgr" id="blueSq" style={{marginTop: this.state.blueMargin}}> 
+        <div className="bgr" id="blueSq" style={{marginTop: -160}}> 
         <img src="assets/blue.png" className="childEl sq"/>
         <div className="childEl">
           <img style={{margin: 'center', height: 690, width: 200 }} src='assets/teal.png' />
         </div>
         </div>
 
-        <div className="bgr" id="salmonSq" style={{marginTop: this.state.salmonMargin}}> 
+        <div className="bgr" id="salmonSq" style={{marginTop: 100}}> 
         <img src="assets/sy.png" className="childEl sq"/>
         <div className="childEl">
         </div>
         </div>
 
-        <div className="bgr1" id="tealSq1" style={{marginTop: this.state.tealMargin}}> 
+        <div className="bgr1" id="tealSq1" style={{marginTop: -270}}> 
         <img src="assets/teal1.png" className="childEl sq"/>
         <div className="childEl">
         </div>
