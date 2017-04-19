@@ -12,14 +12,40 @@
 
 #greenHex {
   background-size: 90%;
-  width: 40vw;
-  height: 40vw;
+  width: 28vw;
+  height: 28vw;
   position: fixed;
   background-repeat: no-repeat;
   z-index: -9;
   background-position: 20% left;
-  top: 100;
-  margin-left: 60vw;
+  margin-left: 70vw;
+  opacity: .75;
+}
+
+#greenHex2 {
+  background-size: 90%;
+  width: 28vw;
+  height: 28vw;
+  position: fixed;
+  background-repeat: no-repeat;
+  z-index: -9;
+  background-position: 20% right;
+  top: 700;
+  margin-top: 200px;
+  opacity: .75;
+}
+
+#greenHex3 {
+  background-size: 90%;
+  width: 28vw;
+  height: 28vw;
+  position: fixed;
+  background-repeat: no-repeat;
+  z-index: -9;
+  background-position: 20% right;
+  top: 700;
+  margin-left: 50vw;
+  margin-top: 400px;
   opacity: .75;
 }
 
@@ -41,11 +67,11 @@
 }
 
 #rabbit {
-  margin-left: 190px;
+  margin-left: 32vw;
 }
 
 #welcome {
-  margin-left: 180px;
+  margin-left: 29vw;
   margin-top: 100px; 
 }
 
@@ -60,7 +86,7 @@ h3 {
 }
 
 #dl {
-  margin-top: 120px;
+  margin-top: 70px;
   text-align: center;
   margin-left: 10px;
   margin-right: 10vw;
@@ -68,7 +94,7 @@ h3 {
   text-shadow: 2px 2px rgba(100,100,100,.5);
 }
 
-.description {
+.appDescr {
   text-align: center;
   margin-right: 10vw;
   padding-right: 20px;
@@ -76,6 +102,9 @@ h3 {
   background-color:rgba(238, 166, 56, 0.5);
 }
 
+.appDescr.first {
+  margin-top: 100px;
+}
 .bottomLogin {
   margin-left: 22% !important;
   margin-top: -190px !important;
@@ -113,10 +142,13 @@ h3 {
   height: 790px;
   position: relative;
   overflow: hidden;
+  width: 100vw;
 }
 
 .bgr .sq {
   opacity: .75;
+  width: 100vw;
+  height: 800px;
 }
 
 .bgr1 {
@@ -124,6 +156,13 @@ h3 {
   height: 154px;
   position: relative;
   z-index: 20;
+  width: 100vw;
+}
+
+.bgr1 .sq {
+  opacity: .75;
+  width: 100vw;
+  height: 400px;
 }
 
 .childEl {
