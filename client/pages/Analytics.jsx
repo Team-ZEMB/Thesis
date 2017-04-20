@@ -194,6 +194,10 @@ class Analytics extends React.Component {
     }
 
     render() {
+      if (!!localStorage.getItem("profile") === false){
+        window.location.href= "/#/login"
+        return false;
+      } else {
         return (
             <div className="pageCont">
             <img className="yellowCircle" src="assets/circle.png"/>
@@ -280,6 +284,7 @@ class Analytics extends React.Component {
                 </Card.Group>
             </div>
         )
+      }
     }
 }
 

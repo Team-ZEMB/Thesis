@@ -48,6 +48,7 @@ export default class Login extends React.Component {
     var dl = document.querySelector("#dl");
     var manage = document.querySelector("#manage");
     var view = document.querySelector("#viewStats");
+    var welcome = document.querySelector("#welcome");
 
     function scrollLoop(e){
       var scroll = window.pageYOffset;
@@ -55,6 +56,7 @@ export default class Login extends React.Component {
       setTranslate(0, scroll * .08, dl);
       setTranslate(0, scroll * .08, view);
       setTranslate(0, scroll * .06, manage);
+      setTranslate(0, scroll * .15, welcome);
       setTranslate(0, scroll * -.1, tealSq);
       setTranslate(0, scroll * -.2, yellowSq);
       setTranslate(0, scroll * -.1, blueSq);
@@ -120,10 +122,10 @@ export default class Login extends React.Component {
       var that = this
       var blinky = function () { return that.setState({ blinkOpacity: 1, eyeOpacity: 0}); };
       var eyes = function () { return that.setState({ blinkOpacity: 0, eyeOpacity: 1}); };
-      setTimeout(blinky, 1100);
-      setTimeout(eyes, 1225);
-      setTimeout(blinky, 1700);
-      setTimeout(eyes, 1825);
+      setTimeout(blinky, 900);
+      setTimeout(eyes, 1025);
+      setTimeout(blinky, 1450);
+      setTimeout(eyes, 1550);
     };
 
   render() {

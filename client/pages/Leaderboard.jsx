@@ -14,9 +14,6 @@ import TopSoloCard from '../components/TopSoloCard';
 export default class Leaderboard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-
-    };
   }
 
   componentWillMount() {
