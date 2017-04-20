@@ -69,7 +69,7 @@ export default class RunHistory extends React.Component {
   return (
     <div className="pageCont">
     <img className="yellowCircle" src="assets/circle.png"/>
-    <img className="pageBG" src="assets/yellow.png"/>
+    <div className="pageBG yellowBG" ></div>
       <div style={{width: '365px', height: '60vw', overflowY:'auto', float:'left'}}>
           {histArray.map(function(history, idx) {
             return <a key={idx} onClick={() => showOnMap(history)}><HistoryCard hist={history} /><br /></a>;

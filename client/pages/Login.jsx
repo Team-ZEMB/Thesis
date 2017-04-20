@@ -137,7 +137,7 @@ export default class Login extends React.Component {
         <Button className="topLogin" color='teal' onClick={() => {AuthService.login(); }}>Login</Button>
 
         <div className="bgr" id="tealSq" style={{marginTop: -15}}> 
-        <img src="assets/teal.png" className="childEl sq"/>
+        <div className="childEl sq tealBG"></div>
         <div className="childEl">
           <h2 id="welcome">Welcome to Rabbit!</h2> 
           <div id="rabbit">
@@ -173,7 +173,7 @@ export default class Login extends React.Component {
         </div>
 
         <div className="bgr" id="yellowSq" style={{marginTop: -12}}> 
-        <img src="assets/yellow.png" className="childEl sq"/>
+        <div className="childEl sq yellowBG"> </div>
         <div className="childEl" style={{width: '90vw'}}>
           <img src="assets/appDemo.gif" id="appDemo"></img>
           <h2 id="dl"> Download running <br/>companion<br/></h2>
@@ -186,7 +186,7 @@ export default class Login extends React.Component {
         </div>
 
         <div className="bgr" id="blueSq" style={{marginTop: -160}}> 
-        <img src="assets/blue.png" className="childEl sq"/>
+        <div className="childEl sq blueBG"> </div>
         <div className="childEl" style={{width: '100vw'}}>
         <h2 id="manage">Manage profile on web app</h2>
           <img style={{marginLeft: '5vw', marginTop: 80, maxHeight: 450, float: 'left'}} src='assets/profilePage.gif' />
@@ -198,7 +198,7 @@ export default class Login extends React.Component {
         </div>
 
         <div className="bgr" id="salmonSq" style={{marginTop: 130}}> 
-        <img src="assets/sy.png" className="childEl sq"/>
+        <div className="childEl sq salmonBG"> </div>
         <div className="childEl" style={{width: '100vw'}}>
           <h2 id="viewStats"> View running statistics<br/><br/></h2>
           <img src="assets/analyticsPage.gif" style={{marginRight: '5vw', marginTop: 72, maxHeight: 450, float: 'right'}}></img>
