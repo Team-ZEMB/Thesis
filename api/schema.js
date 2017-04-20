@@ -10,6 +10,10 @@ const Users = db.define('Users', {
   points: Sequelize.INTEGER,
   authID: Sequelize.STRING,
   bestSoloThreeMi: Sequelize.FLOAT,
+  machineGoal: Sequelize.STRING,
+  factors: Sequelize.STRING,
+  timeOfDay: Sequelize.STRING,
+  lastMachineGoal: Sequelize.DATE,
 });
 
 const Badges = db.define('Badges', {

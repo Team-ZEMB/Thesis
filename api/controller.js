@@ -340,13 +340,14 @@ exports.getBestThree = function (req, res) {
 };
 
 exports.createMachineGoal = function (req, res) {
-      // k-nearest neighbor = time of day
-      //polynomial regression -> elevation, change, time of day to time .. leave out distance ?
-      // if you can get the loss function then calc factors
-      // CAN get weight matrix
-      //logistic regression -> factors that impact run
-
-
+  db.Users.findOne({
+    where: { 
+      id: req.body.UserId 
+    }
+  })
+  .then((result) => {
+    console.log(result.lastMachineGoal)
+    if ((Date.now() - result.lastMachineGoal) / (1000 * 60 * 60 * 24) > 7 || result.lastMachineGoal === null) {
       db.RunHistories.findAll({where: { UserId : req.body.UserId }})
         .then((result) => {
           if (result.length > 4) {
@@ -371,85 +372,56 @@ exports.createMachineGoal = function (req, res) {
               tmp.changeAltitude = result[i].changeAltitude;
               formatted.push(tmp);
             }
-            var x = []
-            var y = []
-            for (var i=0; i<formatted.length; i++) {
-              var tmp = [formatted[i].absAltitude, formatted[i].changeAltitude, formatted[i].distance]
-              x.push(tmp);
-              var rate = formatted[i].distance / (formatted[i].duration)
-              y.push([rate])
-            }
-            var classifier = new ml.LogisticRegression({
-                'input' : x,
-                'label' : y,
-                'n_in' : 3,
-                'n_out' : 1
-            });
-
-            classifier.train({
-                'lr' : 0.6,
-                'epochs' : 2000
-            });
-
-
-          //  var mlp = new ml.MLP({
-          //    'input' : x,
-          //    'label' : y,
-          //    'n_ins' : 2,
-          //    'n_outs' : 1,
-          //    'hidden_layer_sizes' : [2, 2, 2]
-          //   });
-          //   mlp.train({
-          //       'lr' : 0.6,
-          //       'epochs' : 20000
-          //   });
-          //   console.log("Entropy : "+mlp.getReconstructionCrossEntropy());
-
-          //   for(var i=0; i < mlp.sigmoidLayers.length; i++) {
-          //       if(i !== mlp.sigmoidLayers.length-1) {
-          //           console.log((i+1)+"th hidden layer W : ", mlp.sigmoidLayers[i].W);
-          //           console.log((i+1)+"th hidden layer b : ", mlp.sigmoidLayers[i].b);
-          //       } else {
-          //           console.log("output layer W : " + mlp.sigmoidLayers[i].W);
-          //           console.log("output layer b : " + mlp.sigmoidLayers[i].b);
-          //       }
-          //   }
-
-            // console.log("Result : ",classifier.predict(test_x));
-            // ----------------- function below exports csv to s3 and triggers lambda to read CSV 
-            // var csvdata = json2csv({ data: formatted, fields: ['distance', 'duration', 'dayOfWeek', 'timeOfDay', 'absAltitude', 'changeAltitude'] });
-            // s3.upload({
-            //   Bucket: 'csvbucketforml',
-            //   accessKeyId: process.env.S3_ACCESS_KEY,
-            //   secretAccessKey: process.env.S3_SECRET,
-            //   subregion: 'us-west-2',
-            //   Key: 'testCSV.csv',
-            //   Body: csvdata,
-            //   ACL: 'public-read-write',  
-            // }, (err, data) => {
-              // if (err) {
-              //   console.log(err);
-              // } 
-              // console.log("succcess: ", data);
-
-              // var params = {
-              //   ClientContext: "prod", 
-              //   FunctionName: "new", 
-              //   InvocationType: "Event"
-              // }; 
-              // lambda.invoke(params, function(err, data) {
-              //   if (err) console.log(err, err.stack); // an error occurred
-              //   else {
-              //     console.log(data);
-              //     db.Users.update({
-              //       lastMachineGoal: Date.now()},
-              //       { where: {
-              //         id: req.body.UserId
-              //       }
-              //     })
-              //   }     
-              // });
+            // var x = []
+            // var y = []
+            // for (var i=0; i<formatted.length; i++) {
+            //   var tmp = [formatted[i].absAltitude, formatted[i].changeAltitude, formatted[i].distance]
+            //   var rate = formatted[i].distance / (formatted[i].duration)
+            //   x.push([rate, formatted[i].distance]);
+            //   y.push(formatted[i].timeOfDay)
+            // }
+            // var dt = new ml.DecisionTree({
+            //     data: x,
+            //     result: y
             // });
+            // dt.build();
+            // dt.print();
+            // var tree = dt.getTree();
+            // while (tree.results === undefined) {
+            //   tree = tree.tb
+            // }
+            // res.send(Object.keys(tree.results))
+
+            var csvdata = json2csv({ data: formatted, fields: ['distance', 'duration', 'dayOfWeek', 'timeOfDay', 'absAltitude', 'changeAltitude'] });
+            s3.upload({
+              Bucket: 'csvbucketforml',
+              accessKeyId: process.env.S3_ACCESS_KEY,
+              secretAccessKey: process.env.S3_SECRET,
+              subregion: 'us-west-2',
+              Key: 'testCSV.csv',
+              Body: csvdata,
+              ACL: 'public-read-write',  
+            }, (err, data) => {
+              if (err) {
+                console.log(err);
+              } 
+              var params = {
+                FunctionName: "createRabbitGoal", 
+                InvocationType: "RequestResponse"
+              }; 
+              lambda.invoke(params, function(err, data) {
+                if (err) console.log(err, err.stack); // an error occurred
+                else {
+                  console.log(JSON.parse(data.Payload).result);
+                  db.Users.update({
+                    lastMachineGoal: Date.now()},
+                    { where: {
+                      id: req.body.UserId
+                    }
+                  })
+                }     
+              });
+            });
           } else {
             res.send("Under 7 days");
           }
@@ -457,4 +429,8 @@ exports.createMachineGoal = function (req, res) {
         .catch((err) => {
           console.log(err);
         });
+    } else {
+      res.send("Under 7 days");
+    }
+  })
 };
