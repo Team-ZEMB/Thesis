@@ -27,7 +27,9 @@ export default class Leaderboard extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="pageCont">
+      <img className="yellowCircle" src="assets/circle.png"/>
+      <img className="pageBG" src="assets/teal.png"/>
       <TopPacksCard />
       <TopSoloCard />
       </div>

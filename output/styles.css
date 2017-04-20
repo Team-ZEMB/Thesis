@@ -10,6 +10,18 @@
   opacity: .75;
 }
 
+.yellowCircle {
+  background-size: 100%;
+  width: 100vw;
+  height: 100vw;
+  position: fixed;
+  background-repeat: no-repeat;
+  z-index: -10;
+  background-position: center center;
+  margin-top: -9px;
+  opacity: .75;
+}
+
 #greenHex {
   background-size: 90%;
   width: 28vw;
@@ -255,6 +267,22 @@ h3 {
   border-radius: 0px;
 }
 
+.pageBG {
+  background-size: 100%;
+  width: 100vw;
+  height: 400vw;
+  position: fixed;
+  background-repeat: no-repeat;
+  z-index: -10;
+  background-position: center center;
+  margin-top: -120px;
+  opacity: .75;
+}
+
+.pageCont {
+  margin-top: 20px;
+}
+
 .ui.card {
   margin-top: auto;
   min-width: 325px;
@@ -408,6 +436,11 @@ a:hover {
 .ui.input {
   width: 300px;
   margin-top: 15px;
+}
+
+.ui.pointing.secondary.menu {
+  margin-bottom: 0px;
+  background-color: white;
 }
 
 .ui.button {
