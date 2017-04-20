@@ -185,7 +185,7 @@ export default class PacksCard extends React.Component {
       .then((res) => {
         that.setState({challengeText: ''});
       })
-      .catch(err => console.log(err))
+      .catch(err => console.log('Unable to process request'))
     }
   }
 

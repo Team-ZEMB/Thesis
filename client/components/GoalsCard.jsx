@@ -51,7 +51,7 @@ class GoalsCard extends React.Component {
         });
         that.setState({goals: goalsCopy, userInput: ''});
       })
-      .catch(err => console.log(err))
+      .catch(err => console.log("Unable to process request"))
     }
   }
 
@@ -70,7 +70,7 @@ class GoalsCard extends React.Component {
       }
       that.setState({goals: goalsCopy});
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log("Unable to process request"))
   }
 
   rejectChallenge(id) {
@@ -105,7 +105,7 @@ class GoalsCard extends React.Component {
       }
       that.setState({goals: goalsCopy});
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log("Unable to process request"))
   }
 
   render() {
