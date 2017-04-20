@@ -24,17 +24,17 @@ class BubbleChart extends React.Component {
             //this.props.userdata.history[i].distance / this.props.userdata.history[i].duration
 
             triple.x = i;
-            triple.y = this.props.userdata.history[i].duration / 60;
-            triple.r = Math.ceil(this.props.userdata.history[i].distance * 5);
+            triple.y = (this.props.userdata.history[i].duration / 60).toFixed(2);
+            triple.r = Math.ceil(this.props.userdata.history[i].distance);
 
             datesArray.push(this.props.userdata.history[i].date)
             resultsArray.push(triple);
         }
         return {
-            xLabels: datesArray,
+            xLabels: "asdf",
             datasets: [
                 {
-                    label: 'Date / Minutes / Distance',
+                    label: 'Run # / Minutes / Miles',
                     fill: false,
                     lineTension: 0.1,
                     backgroundColor: 'rgba(75,192,192,0.4)',
