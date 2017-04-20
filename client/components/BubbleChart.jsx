@@ -30,9 +30,6 @@ class BubbleChart extends React.Component {
             datesArray.push(this.props.userdata.history[i].date)
             resultsArray.push(triple);
         }
-        
-
-        console.log(datesArray[9] - datesArray[0]);
         return {
             xLabels: datesArray,
             datasets: [

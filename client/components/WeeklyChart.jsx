@@ -33,9 +33,7 @@ class WeeklyChart extends React.Component {
                     ]
                 }
             ],
-
         }
-    
     }
 
     
@@ -60,15 +58,12 @@ class WeeklyChart extends React.Component {
             },
             onClick: function(d) {
                 let categories = this.categories(); //c3 function, get categorical labels
-                console.log(d);
                 console.log("you clicked {" + d.name + ": " + categories[d.x] + ": " + d.value + "}");
             }
         };
 
-
-
         return (
-              <Card color="teal" style={{marginRight: 25, marginLeft: 32, width: '46%', fontFamily: 'avenir'}}>
+              <Card color="teal" style={{marginLeft: 32, width: '46%', fontFamily: 'avenir'}}>
                 <Card.Content header='Weekly Activity Summary' />
                 <Card.Content description='10 Week Rolling Average' />
                 { this.props.userdata.loading === true ? (<Segment>

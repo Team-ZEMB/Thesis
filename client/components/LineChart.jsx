@@ -140,7 +140,7 @@ class LineChart extends React.Component {
             .then((res) => {
                 console.log('Generated goal: ', input)
             })
-            .catch(err => console.log(err))
+            .catch(err => console.log('Unable to generate goal'))
         }
     }
 

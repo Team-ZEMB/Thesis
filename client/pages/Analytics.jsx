@@ -6,7 +6,7 @@ import LineChart from '../components/LineChart';
 import BubbleChart from '../components/BubbleChart';
 import WeeklyChart from '../components/WeeklyChart';
 import { Chart } from 'chart.js'
-import { Button, Card, Grid, Message, Feed } from 'semantic-ui-react';
+import { Button, Card, Grid, Message, Feed, Segment, Dimmer, Loader } from 'semantic-ui-react';
 import axios from 'axios';
 import moment from 'moment';
 
@@ -45,7 +45,6 @@ class Analytics extends React.Component {
     }
   } 
       setGoal(miles) {
-        //miles is the problem
         var input = [[miles, null]];
 
         var hist = this.props.userdata.history;
@@ -61,12 +60,17 @@ class Analytics extends React.Component {
         var result = regression('linear', input);
 
         var expectedTime = Math.ceil(result.points[0][1]);
-
         // var easy = expectedTime;
         // var medium = expectedTime * 0.85;
         // var hard = expectedTime * 0.60;
+        var duration = this.converter(expectedTime*60);
+        let mi;
+        miles == 1 ? mi = ' mile' : mi = ' miles';
+        var goalInput = 'Run ' + miles + mi + ' in ' + duration;
+        this.addGoal(this.props.userdata.DBID, goalInput);
+    }
 
-        var converter = function secondsToHms(d) {
+    converter (d) {
           d = Number(d);
           var h = Math.floor(d / 3600);
           var m = Math.floor(d % 3600 / 60);
@@ -76,12 +80,6 @@ class Analytics extends React.Component {
           var hDisplay = h > 0 ? h + ':' : "";
           return hDisplay + m + ':' + s; 
         }
-        var duration = converter(expectedTime*60);
-        let mi;
-        miles === 1 ? mi = ' mile' : mi = ' miles';
-        var goalInput = 'Run ' + miles + mi + ' in ' + duration;
-        this.addGoal(this.props.userdata.DBID, goalInput);
-    }
 
     addGoal(user, input) {
         var that = this;
@@ -112,24 +110,14 @@ class Analytics extends React.Component {
                 break;
             }
         }
-        var converter = function secondsToHms(d) {
-            d = Number(d);
-            var h = Math.floor(d / 3600);
-            var m = Math.floor(d % 3600 / 60);
-            var s = Math.floor(d % 3600 % 60);
 
-            var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
-            var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
-            var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-            return hDisplay + mDisplay + sDisplay; 
-        }
         time = time / count
         dist = dist / count
         var avg = time / dist
-        avg = converter(avg);
+        avg = this.converter(avg);
             return ("Recently you've averaged " + avg + " per mile.")
         } else {
-            return ("Can't find average data.")
+            return ("Can't find average mile data.")
         }
     }
 
@@ -194,6 +182,14 @@ class Analytics extends React.Component {
         .catch(err => console.log(err))
     }
 
+    bestTimeOfDay () {
+      var time // = "afternoon";
+      if (time !== undefined) {
+        return "Your best runs are in the " + time;
+      } else {
+        return "Can't find recent run data.";
+      }
+    }
 
     render() {
         return (
@@ -204,6 +200,12 @@ class Analytics extends React.Component {
                 <Card color="teal" style={{marginLeft: 32, marginRight: -10, width: '46%'}}>
                 <Card.Content header='Goal Planner' />
                 <Card.Content>
+
+                {this.props.userdata.loading === true ? (<Segment>
+                  <Dimmer active inverted>
+                  <Loader size="small">Loading</Loader>
+                  </Dimmer><br /><br /><br /><br />
+                </Segment>) : ( <div>
                     <Feed>
                     <Feed.Event>
                     <Feed.Content>
@@ -213,16 +215,16 @@ class Analytics extends React.Component {
                         </Feed.Summary>
                     </Feed.Content>
                     </Feed.Event>
-                            <br />
+                    <br />
                     <Feed.Event>
                     <Feed.Content>
                         <Feed.Date />
                         <Feed.Summary>
-                        {this.getWeekAverage()}
+                            {this.getWeekAverage()}
                         </Feed.Summary>
                     </Feed.Content>
                     </Feed.Event>
-                        <br />
+                    <br />
                     <Feed.Event>
                     <Feed.Content>
                         <Feed.Date />
@@ -232,28 +234,42 @@ class Analytics extends React.Component {
                         </Feed.Summary>
                     </Feed.Content>
                     </Feed.Event>
+                    <br/>
+                    
+                    <Feed.Event>
+                    <Feed.Content>
+                    <Feed.Date />
+                        <Feed.Summary>   
+                            {this.bestTimeOfDay()}   
+                            <br />                  
+                        </Feed.Summary>
+                    </Feed.Content>
+                    </Feed.Event>
                     </Feed>
                     <br />
-
-                     <div>Get a customized goal! </div>
+                    <div>Get a customized goal! </div>
                     <div className="ui small icon input"> 
-      <input type="text" placeholder="Enter miles to run" value={this.state.value} onChange={this.handleChange}/>
-      <div className="ui small button teal" onClick={() => {console.log(this.state.value); this.handleSubmit(this.state.value)}}>Submit</div>
-    </div>
-
+                      <input type="text" placeholder="Enter miles to run" value={this.state.value} onChange={this.handleChange}/>
+                      <div className="ui small button teal" 
+                      onClick={() => {console.log(this.state.value); this.handleSubmit(this.state.value)}}>Submit</div>
+                    </div>
                 <br />
                 <br />
-                <Button className="small" color="teal" onClick={() => this.machineGoal()}> Don't Click </button>
+                <Button className="small" color="teal" onClick={() => this.machineGoal()}> Don't Click </Button>
                 <br /><br />
                   { this.state.showTimeError ? (<Message
                     error
                     header='Unable to process request'
                     list={[
-                    'You must have at least 5 saved runs to generate a customized goal.',
-                    'Limit: 1 customized goal per week.',
+                    'You must have at least five saved runs to generate a customized goal.',
                     ]}
                 />) : null }
                 <br />
+
+                </div>
+
+                )}
+
                 </Card.Content>
                 </Card>
                 <BubbleChart />
