@@ -166,7 +166,9 @@ class Analytics extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="pageCont">
+            <img className="yellowCircle" src="assets/circle.png"/>
+            <img className="pageBG" src="assets/salmon.png"/>
               <Card.Group itemsPerRow={2}>
                 <Card color="teal">
                 <Card.Content header='Goal Planner' />

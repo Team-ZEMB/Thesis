@@ -197,7 +197,7 @@ export default class Login extends React.Component {
         </div>
         </div>
 
-        <div className="bgr" id="salmonSq" style={{marginTop: 110}}> 
+        <div className="bgr" id="salmonSq" style={{marginTop: 130}}> 
         <img src="assets/sy.png" className="childEl sq"/>
         <div className="childEl" style={{width: '100vw'}}>
           <h2 id="viewStats"> View running statistics<br/><br/></h2>
@@ -217,7 +217,7 @@ export default class Login extends React.Component {
         </div>
         <h2 id="getStarted">Get Started Now!</h2>
         <Button className="bottomLogin" onClick={() => {AuthService.login(); }}>Create an Account</Button>
-        <a rel="external" href='https://www.youtube.com/watch?v=rEGOihjqO9w'>
+        <a rel="external" href='https://itunes.apple.com/us/app/rabbitfitness/id1225338160?mt=8'>
         <img className="iosStore" src="assets/iosstore.png" />
         </a>
     </div>

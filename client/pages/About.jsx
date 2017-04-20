@@ -4,7 +4,7 @@ import { Card, Image } from 'semantic-ui-react'
 class About extends React.Component {
     render() {
         return (
-        <div>
+        <div className="pageCont">
             <Card>
                 <Image src='http://i.imgur.com/IHOKglT.jpg' />
                 <Card.Content>
