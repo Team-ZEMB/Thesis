@@ -177,6 +177,8 @@ class Analytics extends React.Component {
                         showTimeError: false
                     })
                 }, 10000);
+            } else {
+                console.log(res.data)
             }
         })
         .catch(err => console.log(err))
