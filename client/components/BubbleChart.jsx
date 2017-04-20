@@ -31,7 +31,6 @@ class BubbleChart extends React.Component {
             resultsArray.push(triple);
         }
         return {
-            xLabels: "asdf",
             datasets: [
                 {
                     label: 'Run # / Minutes / Miles',
