@@ -340,13 +340,6 @@ exports.getBestThree = function (req, res) {
 
 exports.createMachineGoal = function (req, res) {
 
-  db.Users.findOne({
-    where: { 
-      id: req.body.UserId 
-    }
-  })
-  .then((result) => {
-    if ((Date.now() - result.lastMachineGoal) / (1000 * 60 * 60 * 24) > 7) {
       db.RunHistories.findAll({where: { UserId : req.body.UserId }})
         .then((result) => {
           if (result.length > 4) {
@@ -371,39 +364,41 @@ exports.createMachineGoal = function (req, res) {
               tmp.changeAltitude = result[i].changeAltitude;
               formatted.push(tmp);
             }
-            var csvdata = json2csv({ data: formatted, fields: ['distance', 'duration', 'dayOfWeek', 'timeOfDay', 'absAltitude', 'changeAltitude'] });
-            s3.upload({
-              Bucket: 'csvbucketforml',
-              accessKeyId: process.env.S3_ACCESS_KEY,
-              secretAccessKey: process.env.S3_SECRET,
-              subregion: 'us-west-2',
-              Key: 'testCSV.csv',
-              Body: csvdata,
-              ACL: 'public-read-write',  
-            }, (err, data) => {
-              if (err) {
-                console.log(err);
-              } 
-              console.log("succcess: ", data);
 
-              var params = {
-                ClientContext: "prod", 
-                FunctionName: "new", 
-                InvocationType: "Event"
-              }; 
-              lambda.invoke(params, function(err, data) {
-                if (err) console.log(err, err.stack); // an error occurred
-                else {
-                  console.log(data);
-                  db.Users.update({
-                    lastMachineGoal: Date.now()},
-                    { where: {
-                      id: req.body.UserId
-                    }
-                  })
-                }     
-              });
-            });
+            
+            // var csvdata = json2csv({ data: formatted, fields: ['distance', 'duration', 'dayOfWeek', 'timeOfDay', 'absAltitude', 'changeAltitude'] });
+            // s3.upload({
+            //   Bucket: 'csvbucketforml',
+            //   accessKeyId: process.env.S3_ACCESS_KEY,
+            //   secretAccessKey: process.env.S3_SECRET,
+            //   subregion: 'us-west-2',
+            //   Key: 'testCSV.csv',
+            //   Body: csvdata,
+            //   ACL: 'public-read-write',  
+            // }, (err, data) => {
+              // if (err) {
+              //   console.log(err);
+              // } 
+              // console.log("succcess: ", data);
+
+              // var params = {
+              //   ClientContext: "prod", 
+              //   FunctionName: "new", 
+              //   InvocationType: "Event"
+              // }; 
+              // lambda.invoke(params, function(err, data) {
+              //   if (err) console.log(err, err.stack); // an error occurred
+              //   else {
+              //     console.log(data);
+              //     db.Users.update({
+              //       lastMachineGoal: Date.now()},
+              //       { where: {
+              //         id: req.body.UserId
+              //       }
+              //     })
+              //   }     
+              // });
+            // });
           } else {
             res.send("Under 7 days");
           }
@@ -411,8 +406,4 @@ exports.createMachineGoal = function (req, res) {
         .catch((err) => {
           console.log(err);
         });
-    } else {
-      res.send("Under 7 days");
-    }
-  })
 };
