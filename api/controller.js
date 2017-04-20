@@ -3,6 +3,7 @@ const db = require('./schema');
 var fs = require('fs');
 var json2csv = require('json2csv');
 const AWS = require('aws-sdk');
+var ml = require('machine_learning');
 
 const s3 = new AWS.S3({
   accessKeyId: process.env.S3_ACCESS_KEY,
@@ -339,6 +340,12 @@ exports.getBestThree = function (req, res) {
 };
 
 exports.createMachineGoal = function (req, res) {
+      // k-nearest neighbor = time of day
+      //polynomial regression -> elevation, change, time of day to time .. leave out distance ?
+      // if you can get the loss function then calc factors
+      // CAN get weight matrix
+      //logistic regression -> factors that impact run
+
 
       db.RunHistories.findAll({where: { UserId : req.body.UserId }})
         .then((result) => {
@@ -364,8 +371,52 @@ exports.createMachineGoal = function (req, res) {
               tmp.changeAltitude = result[i].changeAltitude;
               formatted.push(tmp);
             }
+            var x = []
+            var y = []
+            for (var i=0; i<formatted.length; i++) {
+              var tmp = [formatted[i].absAltitude, formatted[i].changeAltitude, formatted[i].distance]
+              x.push(tmp);
+              var rate = formatted[i].distance / (formatted[i].duration)
+              y.push([rate])
+            }
+            var classifier = new ml.LogisticRegression({
+                'input' : x,
+                'label' : y,
+                'n_in' : 3,
+                'n_out' : 1
+            });
 
-            
+            classifier.train({
+                'lr' : 0.6,
+                'epochs' : 2000
+            });
+
+
+          //  var mlp = new ml.MLP({
+          //    'input' : x,
+          //    'label' : y,
+          //    'n_ins' : 2,
+          //    'n_outs' : 1,
+          //    'hidden_layer_sizes' : [2, 2, 2]
+          //   });
+          //   mlp.train({
+          //       'lr' : 0.6,
+          //       'epochs' : 20000
+          //   });
+          //   console.log("Entropy : "+mlp.getReconstructionCrossEntropy());
+
+          //   for(var i=0; i < mlp.sigmoidLayers.length; i++) {
+          //       if(i !== mlp.sigmoidLayers.length-1) {
+          //           console.log((i+1)+"th hidden layer W : ", mlp.sigmoidLayers[i].W);
+          //           console.log((i+1)+"th hidden layer b : ", mlp.sigmoidLayers[i].b);
+          //       } else {
+          //           console.log("output layer W : " + mlp.sigmoidLayers[i].W);
+          //           console.log("output layer b : " + mlp.sigmoidLayers[i].b);
+          //       }
+          //   }
+
+            // console.log("Result : ",classifier.predict(test_x));
+            // ----------------- function below exports csv to s3 and triggers lambda to read CSV 
             // var csvdata = json2csv({ data: formatted, fields: ['distance', 'duration', 'dayOfWeek', 'timeOfDay', 'absAltitude', 'changeAltitude'] });
             // s3.upload({
             //   Bucket: 'csvbucketforml',
