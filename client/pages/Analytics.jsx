@@ -144,53 +144,12 @@ class Analytics extends React.Component {
         if (this.props.userdata.history.length > 0) {
             var idx = this.props.userdata.history.length - 1;
             var miles = Math.round(this.props.userdata.history[idx].distance * 10) / 10;
-
-            var converter = function secondsToHms(d) {
-              d = Number(d);
-              var h = Math.floor(d / 3600);
-              var m = Math.floor(d % 3600 / 60);
-              var s = Math.floor(d % 3600 % 60);
-              s < 10 ? s = '0'+s : null;
-              m < 10 && h > 0 ? m = '0'+m : null;
-              var hDisplay = h > 0 ? h + ':' : "";
-              return hDisplay + m + ':' + s;
-            }
-            var duration = converter(this.props.userdata.history[idx].duration);
+            var duration = this.converter(this.props.userdata.history[idx].duration);
             var date = this.getDate();
             return ("You ran " + miles + " miles in " + duration + " about " + date + ".");
         } else {
             return ("Can't find recent run data.");
         }
-    }
-    machineGoal() {
-        axios.post('/api/machineGoal', {
-            UserId: this.props.userdata.DBID,
-            customInput: "TBD",
-        })
-        .then((res) => {
-            if (res.data === 'Under 7 days') {
-                this.setState({
-                    showTimeError: true
-                })
-                setTimeout(() => {
-                    this.setState({
-                        showTimeError: false
-                    })
-                }, 10000);
-            } else {
-                console.log(res.data)
-            }
-        })
-        .catch(err => console.log(err))
-    }
-
-    bestTimeOfDay () {
-      var time // = "afternoon";
-      if (time !== undefined) {
-        return "Your best runs are in the " + time;
-      } else {
-        return "Can't find recent run data.";
-      }
     }
 
     render() {
@@ -240,17 +199,6 @@ class Analytics extends React.Component {
                         </Feed.Summary>
                     </Feed.Content>
                     </Feed.Event>
-                    <br/>
-                    
-                    <Feed.Event>
-                    <Feed.Content>
-                    <Feed.Date />
-                        <Feed.Summary>   
-                            {this.bestTimeOfDay()}   
-                            <br />                  
-                        </Feed.Summary>
-                    </Feed.Content>
-                    </Feed.Event>
                     </Feed>
                     <br />
                     <div>Get a customized goal! </div>
@@ -261,16 +209,7 @@ class Analytics extends React.Component {
                     </div>
                 <br />
                 <br />
-                <Button className="small" color="teal" onClick={() => this.machineGoal()}> Don't Click </Button>
-                <br /><br />
-                  { this.state.showTimeError ? (<Message
-                    error
-                    header='Unable to process request'
-                    list={[
-                    'You must have at least five saved runs to generate a customized goal.',
-                    ]}
-                />) : null }
-                <br />
+              
 
                 </div>
 

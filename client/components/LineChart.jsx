@@ -147,15 +147,17 @@ class LineChart extends React.Component {
     render() {
         return (
               <Card color="teal" style={{marginLeft: 32, marginRight: -10, width: '46%', fontFamily: 'avenir'}}>
-                <Card.Content header='Predicts the time it will take you to run a number of miles based on your history' />
+                <Card.Content header='Time Per Mile Trend' />
+                <Card.Content>
                 { this.props.userdata.loading === true ? (<Segment>
                     <Dimmer active inverted>
                         <Loader size='small'>Loading</Loader>
                     </Dimmer><br /><br /><br /><br />
                     </Segment>) :  (
-                        <div>
+                  <div>
                  <Line data={this.getData([])} />
                 </div>)}
+                    </Card.Content>
                 </Card>
         );
     }
