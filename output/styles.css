@@ -61,16 +61,6 @@
   opacity: .75;
 }
 
-#blueSquare {
-  width: 100px;
-  height: 100px;
-  background-color: #3fafff;
-  z-index: 3;
-  background-position: 97% top;
-  opacity: .75;
-  position: absolute;
-}
-
 .topLogin {
   position: absolute;
   z-index: 30;
@@ -272,11 +262,25 @@ h3 {
   width: 100vw;
   height: 400vw;
   position: fixed;
-  background-repeat: no-repeat;
   z-index: -10;
-  background-position: center center;
   margin-top: -120px;
   opacity: .75;
+}
+
+.tealBG {
+  background: linear-gradient(to right, #29beac, #86cead, #29beac);
+}
+
+.blueBG {
+  background: linear-gradient(to right, #238ce3, #22aecc, #238ce3);
+}
+
+.salmonBG {
+  background: linear-gradient(to right, #ff8c69, #ffb769, #ff8c69);
+}
+
+.yellowBG {
+  background: linear-gradient(to right, #ffb263, #ffdd87, #ffb263);
 }
 
 .pageCont {

@@ -29,7 +29,7 @@ export default class Leaderboard extends React.Component {
     return (
       <div className="pageCont">
       <img className="yellowCircle" src="assets/circle.png"/>
-      <img className="pageBG" src="assets/teal.png"/>
+      <div className="pageBG tealBG" ></div>
       <TopPacksCard />
       <TopSoloCard />
       </div>

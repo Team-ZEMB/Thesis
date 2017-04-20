@@ -68,7 +68,7 @@ class WeeklyChart extends React.Component {
 
 
         return (
-              <Card color="teal">
+              <Card color="teal" style={{marginRight: 25, marginLeft: 32, width: '46%'}}>
                 <Card.Content header='Weekly Activity Summary' />
                 <Card.Content description='10 Week Rolling Average' />
                 { this.props.userdata.loading === true ? (<Segment>

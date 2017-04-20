@@ -146,7 +146,7 @@ class LineChart extends React.Component {
 
     render() {
         return (
-              <Card color="teal">
+              <Card color="teal" style={{marginLeft: 32, marginRight: -10, width: '46%'}}>
                 <Card.Content header='Predicts the time it will take you to run a number of miles based on your history' />
                 { this.props.userdata.loading === true ? (<Segment>
                     <Dimmer active inverted>

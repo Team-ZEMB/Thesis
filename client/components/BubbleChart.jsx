@@ -63,7 +63,7 @@ class BubbleChart extends React.Component {
 
     render() {
         return (
-            <Card color="teal">
+            <Card color="teal" style={{marginLeft: 32, width: '46%'}}>
                 <Card.Content header='Tracks your past runs by date and predicts future progress' />
                 <Card.Content>
                  { this.props.userdata.loading === true ? (<Segment>
