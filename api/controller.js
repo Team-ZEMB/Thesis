@@ -339,58 +339,71 @@ exports.getBestThree = function (req, res) {
 };
 
 exports.createMachineGoal = function (req, res) {
-  db.RunHistories.findAll({where: { UserId : req.body.UserId }})
-    .then((result) => {
-      var formatted = [];
-      for (var i = 0; i < result.length; i++) {
-        var d = result[i].date;
-        var n = new Date(d).toString();
-        var hour = n.substring(16, 18);
-        if (hour < 12) {
-          hour = "Morning";
-        } else if (hour < 17) {
-          hour = "Afternoon";
-        } else {
-          hour = "Evening";
-        }
-        var tmp = {};
-        tmp.duration = result[i].duration;
-        tmp.distance = result[i].distance;
-        tmp.dayOfWeek = new Date(n).getDay();
-        tmp.timeOfDay = hour;
-        tmp.absAltitude = result[i].absAltitude;
-        tmp.changeAltitude = result[i].changeAltitude;
-        formatted.push(tmp);
-      }
-      var csvdata = json2csv({ data: formatted, fields: ['distance', 'duration', 'dayOfWeek', 'timeOfDay', 'absAltitude', 'changeAltitude'] });
-      s3.upload({
-        Bucket: 'csvbucketforml',
-        accessKeyId: process.env.S3_ACCESS_KEY,
-        secretAccessKey: process.env.S3_SECRET,
-        subregion: 'us-west-2',
-        Key: 'testCSV.csv',
-        Body: csvdata,
-        ACL: 'public-read-write',  
-      }, (err, data) => {
-        if (err) {
-          console.log(err);
-        } 
-        console.log("succcess: ", data);
 
-        var params = {
-          ClientContext: "prod", 
-          FunctionName: "new", 
-          InvocationType: "Event"
-        }; 
-        lambda.invoke(params, function(err, data) {
-          if (err) console.log(err, err.stack); // an error occurred
-          else {
-            console.log(data);
-          }     
+      db.RunHistories.findAll({where: { UserId : req.body.UserId }})
+        .then((result) => {
+          if (result.length > 4) {
+            var formatted = [];
+            for (var i = 0; i < result.length; i++) {
+              var d = result[i].date;
+              var n = new Date(d).toString();
+              var hour = n.substring(16, 18);
+              if (hour < 12) {
+                hour = "Morning";
+              } else if (hour < 17) {
+                hour = "Afternoon";
+              } else {
+                hour = "Evening";
+              }
+              var tmp = {};
+              tmp.duration = result[i].duration;
+              tmp.distance = result[i].distance;
+              tmp.dayOfWeek = new Date(n).getDay();
+              tmp.timeOfDay = hour;
+              tmp.absAltitude = result[i].absAltitude;
+              tmp.changeAltitude = result[i].changeAltitude;
+              formatted.push(tmp);
+            }
+
+            
+            // var csvdata = json2csv({ data: formatted, fields: ['distance', 'duration', 'dayOfWeek', 'timeOfDay', 'absAltitude', 'changeAltitude'] });
+            // s3.upload({
+            //   Bucket: 'csvbucketforml',
+            //   accessKeyId: process.env.S3_ACCESS_KEY,
+            //   secretAccessKey: process.env.S3_SECRET,
+            //   subregion: 'us-west-2',
+            //   Key: 'testCSV.csv',
+            //   Body: csvdata,
+            //   ACL: 'public-read-write',  
+            // }, (err, data) => {
+              // if (err) {
+              //   console.log(err);
+              // } 
+              // console.log("succcess: ", data);
+
+              // var params = {
+              //   ClientContext: "prod", 
+              //   FunctionName: "new", 
+              //   InvocationType: "Event"
+              // }; 
+              // lambda.invoke(params, function(err, data) {
+              //   if (err) console.log(err, err.stack); // an error occurred
+              //   else {
+              //     console.log(data);
+              //     db.Users.update({
+              //       lastMachineGoal: Date.now()},
+              //       { where: {
+              //         id: req.body.UserId
+              //       }
+              //     })
+              //   }     
+              // });
+            // });
+          } else {
+            res.send("Under 7 days");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
         });
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
 };
