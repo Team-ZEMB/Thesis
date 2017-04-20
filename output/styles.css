@@ -225,6 +225,26 @@ h3 {
   max-height: 550px;
 }
 
+#profDemo {
+  margin-left: 5vw;
+  margin-top: 80px;
+  max-height: 450px; 
+  float: left; 
+  border-radius: 12px;
+  border: solid #545454 5px;
+
+}
+
+#statsDemo {
+  margin-right: 5vw; 
+  margin-top: 72px; 
+  max-height: 450px;
+  float: right;
+  border-radius: 12px;
+  border: solid #545454 5px;
+
+}
+
 #profilePic {
  max-height: 40px;
  border-radius: 20px;

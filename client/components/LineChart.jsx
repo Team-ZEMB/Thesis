@@ -32,14 +32,14 @@ class LineChart extends React.Component {
     }
     
     converter (d) {
-        d = Number(d);
-        var h = Math.floor(d / 3600);
-        var m = Math.floor(d % 3600 / 60);
-        var s = Math.floor(d % 3600 % 60);
-
-        var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
-        var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes") : "";
-        return hDisplay + mDisplay + sDisplay; 
+      d = Number(d);
+      var h = Math.floor(d / 3600);
+      var m = Math.floor(d % 3600 / 60);
+      var s = Math.floor(d % 3600 % 60);
+      s < 10 ? s = '0'+s : null
+      m < 10 && h > 0 ? m = '0'+m : null;
+      var hDisplay = h > 0 ? h + ':' : "";
+      return hDisplay + m + ':' + s; 
     }
 
     getData(input) {
@@ -146,7 +146,7 @@ class LineChart extends React.Component {
 
     render() {
         return (
-              <Card color="teal" style={{marginLeft: 32, marginRight: -10, width: '46%'}}>
+              <Card color="teal" style={{marginLeft: 32, marginRight: -10, width: '46%', fontFamily: 'avenir'}}>
                 <Card.Content header='Predicts the time it will take you to run a number of miles based on your history' />
                 { this.props.userdata.loading === true ? (<Segment>
                     <Dimmer active inverted>
