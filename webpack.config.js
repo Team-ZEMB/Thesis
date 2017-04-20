@@ -21,6 +21,11 @@ const config = {
         presets: ['react', 'es2015'],
         plugins: ['transform-runtime', 'transform-decorators-legacy', 'transform-class-properties', 'transform-object-rest-spread'],
       },
+    },
+    {
+      test: /\.png$/,
+      loader: "url-loader",
+      query: { mimetype: "image/png" }
     }],
   },
   resolve: {
