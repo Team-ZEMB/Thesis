@@ -189,7 +189,7 @@ export default class Login extends React.Component {
         <div className="childEl sq blueBG"> </div>
         <div className="childEl" style={{width: '100vw'}}>
         <h2 id="manage">Manage profile on web app</h2>
-          <img style={{marginLeft: '5vw', marginTop: 80, maxHeight: 450, float: 'left'}} src='assets/profilePage.gif' />
+          <img id="profDemo" src='assets/profilePage.gif' />
           <h3 className="profDescr first"> Create packs with your friends <br/></h3>
           <h3 className="profDescr"> Challenge packmates <br/> and create goals <br/></h3>
           <h3 className="profDescr"> Earn badges <br/></h3>
@@ -201,7 +201,7 @@ export default class Login extends React.Component {
         <div className="childEl sq salmonBG"> </div>
         <div className="childEl" style={{width: '100vw'}}>
           <h2 id="viewStats"> View running statistics<br/><br/></h2>
-          <img src="assets/analyticsPage.gif" style={{marginRight: '5vw', marginTop: 72, maxHeight: 450, float: 'right'}}></img>
+          <img src="assets/analyticsPage.gif" id="statsDemo"></img>
 
           <br/>
           <h3 className="statsDescr first"> Track progress <br/>and running habits<br/></h3>

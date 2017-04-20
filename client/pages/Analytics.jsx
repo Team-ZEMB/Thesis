@@ -6,7 +6,7 @@ import LineChart from '../components/LineChart';
 import BubbleChart from '../components/BubbleChart';
 import WeeklyChart from '../components/WeeklyChart';
 import { Chart } from 'chart.js'
-import { Card, Grid, Feed } from 'semantic-ui-react';
+import { Card, Grid, Feed, Button } from 'semantic-ui-react';
 import axios from 'axios';
 import moment from 'moment';
 
@@ -66,21 +66,19 @@ class Analytics extends React.Component {
         // var hard = expectedTime * 0.60;
 
         var converter = function secondsToHms(d) {
-            d = Number(d);
-            var h = Math.floor(d / 3600);
-            var m = Math.floor(d % 3600 / 60);
-            var s = Math.floor(d % 3600 % 60);
-
-            var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
-            var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
-            var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-            return hDisplay + mDisplay + sDisplay; 
+          d = Number(d);
+          var h = Math.floor(d / 3600);
+          var m = Math.floor(d % 3600 / 60);
+          var s = Math.floor(d % 3600 % 60);
+          s < 10 ? s = '0'+s : null
+          m < 10 && h > 0 ? m = '0'+m : null;
+          var hDisplay = h > 0 ? h + ':' : "";
+          return hDisplay + m + ':' + s; 
         }
-        var duration = converter(expectedTime*60)
-
-
-        var goalInput = "Run " + miles + " miles in " + duration;
-
+        var duration = converter(expectedTime*60);
+        let mi;
+        miles === 1 ? mi = ' mile' : mi = ' miles';
+        var goalInput = 'Run ' + miles + mi + ' in ' + duration;
         this.addGoal(this.props.userdata.DBID, goalInput);
     }
 
@@ -134,16 +132,16 @@ class Analytics extends React.Component {
         if (this.props.userdata.history.length > 0) {
             var idx = this.props.userdata.history.length - 1;
             var miles = Math.round(this.props.userdata.history[idx].distance * 10) / 10;
-            var converter = function secondsToHms(d) {
-                d = Number(d);
-                var h = Math.floor(d / 3600);
-                var m = Math.floor(d % 3600 / 60);
-                var s = Math.floor(d % 3600 % 60);
 
-                var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
-                var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
-                var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-                return hDisplay + mDisplay + sDisplay; 
+            var converter = function secondsToHms(d) {
+              d = Number(d);
+              var h = Math.floor(d / 3600);
+              var m = Math.floor(d % 3600 / 60);
+              var s = Math.floor(d % 3600 % 60);
+              s < 10 ? s = '0'+s : null;
+              m < 10 && h > 0 ? m = '0'+m : null;
+              var hDisplay = h > 0 ? h + ':' : "";
+              return hDisplay + m + ':' + s;
             }
             var duration = converter(this.props.userdata.history[idx].duration);
             var date = this.getDate();
@@ -172,7 +170,7 @@ class Analytics extends React.Component {
               <Card.Group itemsPerRow={2} >
                 <Card color="teal" style={{marginLeft: 32, marginRight: -10, width: '46%'}}>
                 <Card.Content header='Goal Planner' />
-                <Card.Content >
+                <Card.Content>
                     <Feed>
                     <Feed.Event>
                     <Feed.Content>
@@ -203,16 +201,16 @@ class Analytics extends React.Component {
                     </Feed.Event>
                     </Feed>
                     <br />
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Set a goal (miles): <br />
-                        <input type="number" name="mileGoal" value={this.state.value} onChange={this.handleChange}/>
-                    </label>
-                    <input type="submit" value="Submit" />
-                </form>
+
+                     <div>Get a customized goal! </div>
+                    <div className="ui small icon input"> 
+      <input type="text" placeholder="Enter miles to run" value={this.state.value} onChange={this.handleChange}/>
+      <div className="ui small button teal" onClick={() => {console.log(this.state.value); this.handleSubmit(this.state.value)}}>Submit</div>
+    </div>
+
                 <br />
                 <br />
-                <button onClick={() => this.machineGoal()}> Don't Click </button>
+                <Button className="small" color="teal" onClick={() => this.machineGoal()}> Don't Click </Button>
                 <br /><br /><br />
                 </Card.Content>
                 </Card>
