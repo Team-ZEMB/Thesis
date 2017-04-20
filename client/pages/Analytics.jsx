@@ -6,7 +6,7 @@ import LineChart from '../components/LineChart';
 import BubbleChart from '../components/BubbleChart';
 import WeeklyChart from '../components/WeeklyChart';
 import { Chart } from 'chart.js'
-import { Card, Grid, Feed } from 'semantic-ui-react';
+import { Card, Grid, Message, Feed } from 'semantic-ui-react';
 import axios from 'axios';
 import moment from 'moment';
 
@@ -22,7 +22,8 @@ class Analytics extends React.Component {
     constructor() {
         super()
         this.state = {
-            value: ''
+            value: '',
+            showTimeError: false,
         }
     
         this.handleChange = this.handleChange.bind(this);
@@ -100,12 +101,35 @@ class Analytics extends React.Component {
     }
 
     getWeekAverage() {
-        if (this.props.userdata.history.length > 0) {
-            //pull last 7 runs
-            //standardize distance to 1 mile
-            //total times and divide by 7
-            var time;
-            return ("Recently you've averaged " + time + " per mile.")
+      if (this.props.userdata.history.length > 0) {
+        var hist = this.props.userdata.history;
+        var time = 0;
+        var count = 0;
+        var dist = 0;
+        for (var i=hist.length-1; i>=0; i--) {
+            time += hist[i].duration
+            dist += hist[i].distance
+            count++
+            if (count === 7) {
+                break;
+            }
+        }
+        var converter = function secondsToHms(d) {
+            d = Number(d);
+            var h = Math.floor(d / 3600);
+            var m = Math.floor(d % 3600 / 60);
+            var s = Math.floor(d % 3600 % 60);
+
+            var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+            var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+            var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+            return hDisplay + mDisplay + sDisplay; 
+        }
+        time = time / count
+        dist = dist / count
+        var avg = time / dist
+        avg = converter(avg);
+            return ("Recently you've averaged " + avg + " per mile.")
         } else {
             return ("Can't find average data.")
         }
@@ -158,7 +182,16 @@ class Analytics extends React.Component {
             customInput: "TBD",
         })
         .then((res) => {
-            console.log(res)
+            if (res.data === 'Under 7 days') {
+                this.setState({
+                    showTimeError: true
+                })
+                setTimeout(() => {
+                    this.setState({
+                        showTimeError: false
+                    })
+                }, 10000);
+            }
         })
         .catch(err => console.log(err))
     }
@@ -213,7 +246,16 @@ class Analytics extends React.Component {
                 <br />
                 <br />
                 <button onClick={() => this.machineGoal()}> Don't Click </button>
-                <br /><br /><br />
+                <br /><br />
+                  { this.state.showTimeError ? (<Message
+                    error
+                    header='Unable to process request'
+                    list={[
+                    'You must have at least 5 saved runs to generate a customized goal.',
+                    'Limit: 1 customized goal per week.',
+                    ]}
+                />) : null }
+                <br />
                 </Card.Content>
                 </Card>
                 <BubbleChart />
