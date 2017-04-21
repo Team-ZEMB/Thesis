@@ -156,7 +156,7 @@ export default class StatsCard extends React.Component {
         }
 
 
-       return (<div>Keep Going! Run {milesRemaining} miles to earn a new badge.</div>)
+       return (<div>Run {milesRemaining} miles to earn a new badge!</div>)
 
     }
 

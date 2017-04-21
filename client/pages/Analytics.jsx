@@ -23,6 +23,7 @@ class Analytics extends React.Component {
         super()
         this.state = {
             value: '',
+            error: '',
         }
     
         this.handleChange = this.handleChange.bind(this);
@@ -31,11 +32,18 @@ class Analytics extends React.Component {
 
     handleChange(event) {
         this.setState({value: event.target.value});
+        this.setState({error: ''});
     }
 
     handleSubmit(value) {
+      var miles = parseInt(this.state.value)
+      if (this.props.userdata.history.length > 0 && miles !== NaN) {
         this.setGoal(this.state.value);
-        //success
+      } else if (this.state.value >= 0) {
+         this.setState({error: "You must complete at least one run to get a customized goal."});
+      } else if (!miles) {
+         this.setState({error: "Unable to process request. Please make sure to enter a number."});
+      }
     }
 
   componentWillMount() { 
@@ -210,6 +218,9 @@ class Analytics extends React.Component {
                     </div>
                 <br />
                 <br />
+
+                <div style={{color: 'red', fontSize: 12}}>{this.state.error}</div>
+
               
 
                 </div>

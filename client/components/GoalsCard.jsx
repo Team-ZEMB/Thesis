@@ -57,7 +57,7 @@ class GoalsCard extends React.Component {
         });
         that.setState({goals: goalsCopy, userInput: ''});
       })
-      .catch(err => console.log("Unable to process request"))
+      .catch(err => console.log(err));
     }
   }
 
