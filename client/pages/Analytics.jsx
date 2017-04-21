@@ -208,6 +208,16 @@ class Analytics extends React.Component {
                       onClick={() => {console.log(this.state.value); this.handleSubmit(this.state.value)}}>Submit</div>
                     </div>
                 <br />
+                <Button className="small" color="teal" onClick={() => this.machineGoal()}> Don't Click </Button>
+                <br /><br />
+                  { this.state.showTimeError ? (<Message
+                    error
+                    header='Unable to process request'
+                    list={[
+                    'You must have at least 5 saved runs to generate a customized goal.',
+                    'Limit: 1 customized goal per week.',
+                    ]}
+                />) : null }
                 <br />
               
 
