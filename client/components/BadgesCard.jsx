@@ -23,12 +23,21 @@ class BadgesCard extends React.Component {
       {image: '100hrs.png', description: 'Ran for 100 hours'}
     ],
     totalMiles: '',
-    totalGoals: '',
-    totalHours: 0
+    totalGoals: null,
+    totalHours: 0,
+    test: false
   };
 
+  componentWillMount() {
+    this.setUp();
+  }
+
   componentDidUpdate() {
-    if (this.props.userdata) {
+    this.setUp();
+  }
+
+  setUp() {
+    if (!!this.props.userdata.DBID) {
       var totalMiles = 0;
       var totalGoals = 0;
       var totalSecs = 0;
@@ -59,7 +68,7 @@ class BadgesCard extends React.Component {
       </Card.Header>
       </Card.Content>
       <Card.Content>
-        { !this.props.userdata.DBID ? (<Segment>
+        { this.state.totalGoals === null ? (<Segment>
           <Dimmer active inverted>
           <Loader size="small">Loading</Loader>
           </Dimmer><br /><br /><br /><br />
