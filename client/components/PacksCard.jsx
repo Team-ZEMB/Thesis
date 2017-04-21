@@ -5,7 +5,6 @@ import axios from 'axios';
 import * as UserActions from '../actions';
 import _ from 'lodash'
 
-
 @connect((store) => {
   return {
     userdata: store.userdata,
@@ -260,6 +259,7 @@ export default class PacksCard extends React.Component {
         <Loader size='small'>Loading</Loader>
       </Dimmer><br /><br /><br /><br />
     </Segment>) :  (this.state.packs.map((pack, idx) => {
+      if (pack.Users_Packs.confirmed === "TRUE") {
             return (
                 <Accordion key={idx}>
                     <Accordion.Title>
@@ -289,7 +289,6 @@ export default class PacksCard extends React.Component {
                             )
                           }
                         })}
-
                         <Modal open={this.state.challengeModalOpen} onClose={this.handleChallengeClose} closeIcon='close'>
                         <Header icon='users' content='Send a challenge' />
                         <Modal.Content>
@@ -313,7 +312,7 @@ export default class PacksCard extends React.Component {
                         </p>
                     </Accordion.Content>
                 </Accordion>
-            )
+            )}
         }))}
         </Card.Content>
     </Card>

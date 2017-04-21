@@ -120,29 +120,27 @@ export default class StatsCard extends React.Component {
     }
 
     renderGoalMessages() {
-        let noGoal = true;
-        this.state.goals.map((goal, idx) => {
+        return this.state.goals.map((goal, idx) => {
             if (goal.source !== null && goal.status === 'pending') {
-                noGoal = false;
-                return (<div key={idx}><Feed.Summary>Challenge from <a>{goal.source}</a>{": " + goal.description + " "}<Feed.Meta>(<a onClick={() => this.acceptChallenge(goal.id, idx)}>Accept</a> | <a onClick={() => this.decChallenge(goal.id, idx)}>Decline</a>)</Feed.Meta></Feed.Summary></div>)
+                return (<div key={idx}><Feed.Summary>Challenge from <a>{goal.source}</a>{": " + goal.description + " "}
+                  <Feed.Meta><a onClick={() => this.acceptChallenge(goal.id, idx)}>{'Accept '}</a>|<a onClick={() => this.decChallenge(goal.id, idx)}>{'Decline'}</a>
+                  </Feed.Meta></Feed.Summary></div>)
             }
         })
-        if (noGoal) {
-            return (<div>You don't have any pending challenges! Challenge a friend instead.</div>)
-        }
     }
 
     renderPackMessages() {
-        let noPack = true;
-        this.state.packs.map((pack, idx) => {
+        return this.state.packs.map((pack, idx) => {
             if (pack.Users_Packs.confirmed === "FALSE") {
-                noPack = false;
-                return (<div key={idx}><Feed.Summary>You've been invited by to join <a>{pack.name} </a><Feed.Meta>(<a onClick={() => this.acceptPack(pack.id, idx)}>Accept</a> | <a onClick={() => this.declinePack(pack.id, idx)}>Decline</a>)</Feed.Meta></Feed.Summary></div>)
-            }
+                return (
+                  <div key={idx}>
+                  <Feed.Summary>You were invited to join <a>{pack.name}</a>
+                  <Feed.Meta><a onClick={() => this.acceptPack(pack.id, idx)}>{'Accept '}</a>|<a onClick={() => this.declinePack(pack.id, idx)}>{'Decline'}</a>
+                  </Feed.Meta>
+                  </Feed.Summary>
+                  </div>)
+            } 
         })
-        if (noPack) {
-            return (<div>You don't have any pending pack invites! Try creating your own.</div>)
-        }
     }
 
     renderBadgeMessage() {
@@ -158,17 +156,8 @@ export default class StatsCard extends React.Component {
         }
 
 
-       return (<div>Keep Going! Only {milesRemaining} miles to earn a new badge.</div>)
-        // let noPack = true;
-        // this.state.packs.map((pack, idx) => {
-        //     if (pack.Users_Packs.confirmed === "FALSE") {
-        //         noPack = false;
-        //         return (<div key={idx}><Feed.Summary>You've been invited by to join <a>{pack.name} </a><Feed.Meta>(<a onClick={() => this.acceptPack(pack.id, idx)}>Accept</a> | <a onClick={() => this.declinePack(pack.id, idx)}>Decline</a>)</Feed.Meta></Feed.Summary></div>)
-        //     }
-        // })
-        // if (noPack) {
-        //     return (<div>You don't have any pending pack invites! Try creating your own.</div>)
-        // }
+       return (<div>Keep Going! Run {milesRemaining} miles to earn a new badge.</div>)
+
     }
 
     render() {
