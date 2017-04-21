@@ -46,18 +46,17 @@ class Analytics extends React.Component {
       }
     }
 
-  componentWillMount() { 
-    if (!!localStorage.getItem("profile")) {
-        if (!this.props.userdata.DBID) {
-            this.props.dispatch(UserActions.signIn());
-        }
-    }
-  } 
-      setGoal(miles) {
+    componentWillMount() { 
+      if (!!localStorage.getItem("profile")) {
+          if (!this.props.userdata.DBID) {
+              this.props.dispatch(UserActions.signIn());
+          }
+      }
+    } 
+
+    setGoal(miles) {
         var input = [[miles, null]];
-
         var hist = this.props.userdata.history;
-
         for (var k = 0; k < hist.length; k++) {
             var tuple = [];
             var minutes = this.props.userdata.history[k].duration / 60;
@@ -65,13 +64,8 @@ class Analytics extends React.Component {
             tuple.push(minutes);
             input.push(tuple);
         }
-
         var result = regression('linear', input);
-
         var expectedTime = Math.ceil(result.points[0][1]);
-        // var easy = expectedTime;
-        // var medium = expectedTime * 0.85;
-        // var hard = expectedTime * 0.60;
         var duration = this.converter(expectedTime*60);
         let mi;
         miles == 1 ? mi = ' mile' : mi = ' miles';
@@ -218,13 +212,8 @@ class Analytics extends React.Component {
                     </div>
                 <br />
                 <br />
-
                 <div style={{color: 'red', fontSize: 12}}>{this.state.error}</div>
-
-              
-
                 </div>
-
                 )}
 
                 </Card.Content>
