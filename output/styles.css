@@ -70,11 +70,12 @@
 
 #rabbit {
   margin-left: 32vw;
+  margin-top: 25px;
 }
 
 #welcome {
   margin-left: 29vw;
-  margin-top: 100px;
+  margin-top: 90px;
   text-shadow: 2px 2px rgba(100,100,100,.5); 
 }
 
@@ -148,7 +149,7 @@ h3 {
 }
 
 .statsDescr.first {
-  margin-top: 100px;
+  margin-top: 115px;
 }
 
 .bottomLogin {
@@ -200,7 +201,7 @@ h3 {
 
 .bgr1 {
   opacity: .75;
-  height: 154px;
+  height: 148px;
   position: relative;
   z-index: 20;
   width: 100vw;
@@ -231,7 +232,7 @@ h3 {
   max-height: 450px; 
   float: left; 
   border-radius: 12px;
-  border: solid #545454 5px;
+  border: solid #212121 5px;
 
 }
 
@@ -241,7 +242,7 @@ h3 {
   max-height: 450px;
   float: right;
   border-radius: 12px;
-  border: solid #545454 5px;
+  border: solid #212121 5px;
 
 }
 

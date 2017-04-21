@@ -33,7 +33,7 @@ class About extends React.Component {
                         </span>
                     </Card.Meta>
                     <Card.Description>
-                        "I cried 3 times during 'Ferris Bueller's Day Off.' No one has even come close to matching the ambition and vision of John Hughes' 1986 feel-good masterpiece in 31 years of cinema since then, and the only way I've found to cope with the fact that I've already seen the only truly great work of art out there is to clear my mind through running."
+                        "I cried three times during <span style={{fontStyle: 'italic'}}>Ferris Bueller's Day Off</span>. In the past 31 years of cinema, no one has even come close to matching the ambition and vision of John Hughes' feel-good masterpiece. I've already seen the only truly great work of art out there, and the only way I can deal with this fact is to clear my mind through running."
                     </Card.Description>
                 </Card.Content>
             </Card>

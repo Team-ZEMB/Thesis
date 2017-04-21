@@ -25,14 +25,11 @@ class BubbleChart extends React.Component {
 
             triple.x = i;
             triple.y = this.props.userdata.history[i].duration / 60;
-            triple.r = Math.ceil(this.props.userdata.history[i].distance * 5);
+            triple.r = Math.ceil(this.props.userdata.history[i].distance);
 
             datesArray.push(this.props.userdata.history[i].date)
             resultsArray.push(triple);
         }
-        
-
-        console.log(datesArray[9] - datesArray[0]);
         return {
             xLabels: datesArray,
             datasets: [
@@ -64,7 +61,7 @@ class BubbleChart extends React.Component {
     render() {
         return (
             <Card color="teal" style={{marginLeft: 32, width: '46%', fontFamily: 'avenir'}}>
-                <Card.Content header='Tracks your past runs by date and predicts future progress' />
+                <Card.Content header='Summary of Previous Runs' />
                 <Card.Content>
                  { this.props.userdata.loading === true ? (<Segment>
                     <Dimmer active inverted>

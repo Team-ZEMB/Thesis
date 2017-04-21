@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/BrandonKleiman/Thesis#readme",
   "dependencies": {
-    "array-to-csv": "^1.0.1",
     "auth0-lock": "^10.14.0",
     "aws-sdk": "^2.41.0",
     "axios": "^0.16.0",
@@ -35,6 +34,7 @@
     "history": "^4.6.1",
     "json2csv": "^3.7.3",
     "lodash": "^4.17.4",
+    "machine_learning": "^0.1.1",
     "moment": "^2.18.1",
     "morgan": "^1.8.1",
     "mysql": "^2.13.0",

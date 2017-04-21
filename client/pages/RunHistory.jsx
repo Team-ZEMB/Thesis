@@ -29,6 +29,7 @@ export default class RunHistory extends React.Component {
       this.props.dispatch(UserActions.signIn());
     }
   }
+
   componentDidMount() {
     // create the map, marker and infoWindow after the component has
     // been rendered because we need to manipulate the DOM for Google =(
@@ -39,8 +40,11 @@ export default class RunHistory extends React.Component {
     window.markerBounds = new google.maps.LatLngBounds();
   }
 
-
   render() {
+    if (!!localStorage.getItem("profile") === false){
+      window.location.href= "/#/login"
+      return false;
+    } else {
     var histArray = this.props.userdata.history.slice().reverse();
 
   var showOnMap = (histItem) => {
@@ -64,7 +68,7 @@ export default class RunHistory extends React.Component {
         path: tmpPath,
       })
     }
-
+  }
 
   return (
     <div className="pageCont">

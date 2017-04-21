@@ -3,6 +3,7 @@ const db = require('./schema');
 var fs = require('fs');
 var json2csv = require('json2csv');
 const AWS = require('aws-sdk');
+var ml = require('machine_learning');
 
 const s3 = new AWS.S3({
   accessKeyId: process.env.S3_ACCESS_KEY,
@@ -339,58 +340,97 @@ exports.getBestThree = function (req, res) {
 };
 
 exports.createMachineGoal = function (req, res) {
-  db.RunHistories.findAll({where: { UserId : req.body.UserId }})
-    .then((result) => {
-      var formatted = [];
-      for (var i = 0; i < result.length; i++) {
-        var d = result[i].date;
-        var n = new Date(d).toString();
-        var hour = n.substring(16, 18);
-        if (hour < 12) {
-          hour = "Morning";
-        } else if (hour < 17) {
-          hour = "Afternoon";
-        } else {
-          hour = "Evening";
-        }
-        var tmp = {};
-        tmp.duration = result[i].duration;
-        tmp.distance = result[i].distance;
-        tmp.dayOfWeek = new Date(n).getDay();
-        tmp.timeOfDay = hour;
-        tmp.absAltitude = result[i].absAltitude;
-        tmp.changeAltitude = result[i].changeAltitude;
-        formatted.push(tmp);
-      }
-      var csvdata = json2csv({ data: formatted, fields: ['distance', 'duration', 'dayOfWeek', 'timeOfDay', 'absAltitude', 'changeAltitude'] });
-      s3.upload({
-        Bucket: 'csvbucketforml',
-        accessKeyId: process.env.S3_ACCESS_KEY,
-        secretAccessKey: process.env.S3_SECRET,
-        subregion: 'us-west-2',
-        Key: 'testCSV.csv',
-        Body: csvdata,
-        ACL: 'public-read-write',  
-      }, (err, data) => {
-        if (err) {
-          console.log(err);
-        } 
-        console.log("succcess: ", data);
+  db.Users.findOne({
+    where: { 
+      id: req.body.UserId 
+    }
+  })
+  .then((result) => {
+    console.log(result.lastMachineGoal)
+    if ((Date.now() - result.lastMachineGoal) / (1000 * 60 * 60 * 24) > 7 || result.lastMachineGoal === null) {
+      db.RunHistories.findAll({where: { UserId : req.body.UserId }})
+        .then((result) => {
+          if (result.length > 4) {
+            var formatted = [];
+            for (var i = 0; i < result.length; i++) {
+              var d = result[i].date;
+              var n = new Date(d).toString();
+              var hour = n.substring(16, 18);
+              if (hour < 12) {
+                hour = "Morning";
+              } else if (hour < 17) {
+                hour = "Afternoon";
+              } else {
+                hour = "Evening";
+              }
+              var tmp = {};
+              tmp.duration = result[i].duration;
+              tmp.distance = result[i].distance;
+              tmp.dayOfWeek = new Date(n).getDay();
+              tmp.timeOfDay = hour;
+              tmp.absAltitude = result[i].absAltitude;
+              tmp.changeAltitude = result[i].changeAltitude;
+              formatted.push(tmp);
+            }
+            // var x = []
+            // var y = []
+            // for (var i=0; i<formatted.length; i++) {
+            //   var tmp = [formatted[i].absAltitude, formatted[i].changeAltitude, formatted[i].distance]
+            //   var rate = formatted[i].distance / (formatted[i].duration)
+            //   x.push([rate, formatted[i].distance]);
+            //   y.push(formatted[i].timeOfDay)
+            // }
+            // var dt = new ml.DecisionTree({
+            //     data: x,
+            //     result: y
+            // });
+            // dt.build();
+            // dt.print();
+            // var tree = dt.getTree();
+            // while (tree.results === undefined) {
+            //   tree = tree.tb
+            // }
+            // res.send(Object.keys(tree.results))
 
-        var params = {
-          ClientContext: "prod", 
-          FunctionName: "new", 
-          InvocationType: "Event"
-        }; 
-        lambda.invoke(params, function(err, data) {
-          if (err) console.log(err, err.stack); // an error occurred
-          else {
-            console.log(data);
-          }     
+            var csvdata = json2csv({ data: formatted, fields: ['distance', 'duration', 'dayOfWeek', 'timeOfDay', 'absAltitude', 'changeAltitude'] });
+            s3.upload({
+              Bucket: 'csvbucketforml',
+              accessKeyId: process.env.S3_ACCESS_KEY,
+              secretAccessKey: process.env.S3_SECRET,
+              subregion: 'us-west-2',
+              Key: 'testCSV.csv',
+              Body: csvdata,
+              ACL: 'public-read-write',  
+            }, (err, data) => {
+              if (err) {
+                console.log(err);
+              } 
+              var params = {
+                FunctionName: "createRabbitGoal", 
+                InvocationType: "RequestResponse"
+              }; 
+              lambda.invoke(params, function(err, data) {
+                if (err) console.log(err, err.stack); // an error occurred
+                else {
+                  res.send(JSON.parse(data.Payload).result);
+                  db.Users.update({
+                    lastMachineGoal: Date.now()},
+                    { where: {
+                      id: req.body.UserId
+                    }
+                  })
+                }     
+              });
+            });
+          } else {
+            res.send("Under 7 days");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
         });
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    } else {
+      res.send("Under 7 days");
+    }
+  })
 };
