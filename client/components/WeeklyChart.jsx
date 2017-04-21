@@ -68,7 +68,7 @@ class WeeklyChart extends React.Component {
              </div>
         )
         } else {
-            return (<div>Nah</div>)
+            return (<div style={{color: 'red', fontSize: 12}}>Performance analytics are available after five runs.</div>)
         }
     }
 
