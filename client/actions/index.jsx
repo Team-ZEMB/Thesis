@@ -73,7 +73,6 @@ export function updateMlGoal(results) {
         .catch(err => console.log(err))
 
     } else {
-      console.log("actions 73")
       // Not necessary to update machine goal
     }
   };
@@ -90,10 +89,7 @@ export function signIn() {
       profile,
     } })
     .then((result) => {
-      console.log("actions 93")
-      console.log(result.data)
       dispatch(signInSuccess(result.data));
-      console.log("actions 95")
       dispatch(updateMlGoal(result.data));
     });
   };
