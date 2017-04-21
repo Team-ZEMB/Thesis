@@ -124,8 +124,8 @@ export default class Login extends React.Component {
       var eyes = function () { return that.setState({ blinkOpacity: 0, eyeOpacity: 1}); };
       setTimeout(blinky, 900);
       setTimeout(eyes, 1025);
-      setTimeout(blinky, 1450);
-      setTimeout(eyes, 1550);
+      setTimeout(blinky, 1460);
+      setTimeout(eyes, 1578);
     };
 
   render() {

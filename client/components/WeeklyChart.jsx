@@ -17,6 +17,7 @@ class WeeklyChart extends React.Component {
     constructor() {
         super()
         this.state = {
+            showTimeError: false,
             data : [
                 {
                     key: "dataSource1",
