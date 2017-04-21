@@ -14,7 +14,7 @@ class TopSoloCard extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      userdata: '',
+      userdata: null,
       topSolo: null
     }
   }
@@ -54,7 +54,7 @@ class TopSoloCard extends React.Component {
           </Card.Content>
 
           <Card.Content>
-            {this.props.userdata.loading === true ? (<Segment>
+            {this.state.topSolo === null ? (<Segment>
               <Dimmer active inverted>
                 <Loader size="small">Loading</Loader>
               </Dimmer><br /><br /><br /><br />

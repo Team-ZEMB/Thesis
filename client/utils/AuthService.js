@@ -1,8 +1,7 @@
 import Auth0Lock from 'auth0-lock';
 import config from '../../environment';
 import { connect } from 'react-redux';
-import rabbitLogo from '/Users/emily/hackreactor/Thesis/output/assets/rabbitlogo.png';
-// var rabbitLogo = require("url-loader?mimetype=image/png!/Users/emily/hackreactor/Thesis/output/assets/rabbitlogo.png");
+import rabbitLogo from '../../output/assets/rabbitlogo.png';
 
 
 class AuthService {

@@ -15,7 +15,7 @@ class TopPacksCard extends React.Component {
     super();
     this.state = {
       userdata: '',
-      packs: '',
+      packs: null,
       topPacks: [1,2,3]
     }
   }
@@ -105,7 +105,7 @@ class TopPacksCard extends React.Component {
           </Card.Content>
 
           <Card.Content>
-            {this.props.userdata.loading === true ? (<Segment>
+            {this.state.packs === null ? (<Segment>
               <Dimmer active inverted>
                 <Loader size="small">Loading</Loader>
               </Dimmer><br /><br /><br /><br />

@@ -59,7 +59,7 @@ class BadgesCard extends React.Component {
       </Card.Header>
       </Card.Content>
       <Card.Content>
-        {this.props.userdata.loading === true ? (<Segment>
+        { !this.props.userdata.DBID ? (<Segment>
           <Dimmer active inverted>
           <Loader size="small">Loading</Loader>
           </Dimmer><br /><br /><br /><br />

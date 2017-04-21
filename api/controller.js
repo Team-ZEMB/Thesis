@@ -412,7 +412,7 @@ exports.createMachineGoal = function (req, res) {
               lambda.invoke(params, function(err, data) {
                 if (err) console.log(err, err.stack); // an error occurred
                 else {
-                  res.send(JSON.parse(data.Payload).result);
+                  res.send(JSON.parse(data.Payload).knc); //knbest
                   db.Users.update({
                     lastMachineGoal: Date.now()},
                     { where: {

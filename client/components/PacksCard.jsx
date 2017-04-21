@@ -29,12 +29,18 @@ export default class PacksCard extends React.Component {
       challengee: '',
       challengeModalOpen: false,
       challengeeName: '',
-      packs: '',
+      packs: null,
       packIndex: ''
     }
 
   componentWillReceiveProps(props) {
     this.setState({packs: props.userdata.myPacks})
+  }
+  componentWillMount() {
+    
+    if (!!this.props.userdata.DBID) {
+      this.setState({packs: this.props.userdata.myPacks})
+    }
   }
 
   handleOpen = (e) => this.setState({
@@ -254,7 +260,7 @@ export default class PacksCard extends React.Component {
                 </form>
                 </Modal.Content>
             </Modal>
-        { this.props.userdata.loading === true ? (<Segment>
+        { !this.state.packs ? (<Segment>
       <Dimmer active inverted>
         <Loader size='small'>Loading</Loader>
       </Dimmer><br /><br /><br /><br />
