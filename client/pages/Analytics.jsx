@@ -40,7 +40,9 @@ class Analytics extends React.Component {
 
   componentWillMount() { 
     if (!!localStorage.getItem("profile")) {
-      this.props.dispatch(UserActions.signIn());
+        if (!this.props.userdata.DBID) {
+            this.props.dispatch(UserActions.signIn());
+        }
     }
   } 
       setGoal(miles) {

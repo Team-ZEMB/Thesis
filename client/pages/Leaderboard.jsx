@@ -18,7 +18,7 @@ export default class Leaderboard extends React.Component {
 
   componentWillMount() {
     if (!!localStorage.getItem("profile")) {
-      this.props.dispatch(UserActions.signIn());
+      // this.props.dispatch(UserActions.signIn());
     }
   }
 

@@ -14,7 +14,7 @@ class GoalsCard extends React.Component {
     super();
     this.state = {
       userInput: '',
-      goals: ''
+      goals: null
     }
     this.handleChange = this.handleChange.bind(this);
     this.completedGoal = this.completedGoal.bind(this);
@@ -25,6 +25,12 @@ class GoalsCard extends React.Component {
 
   componentWillReceiveProps(props) {
     this.setState({goals: props.userdata.goals})
+  }
+
+  componentWillMount() {
+    if (!!this.props.userdata.DBID) {
+      this.setState({goals: this.props.userdata.goals})
+    }
   }
 
   handleChange(event) {
@@ -122,7 +128,7 @@ class GoalsCard extends React.Component {
       </Card.Content>
 
       <Card.Content>
-      {this.props.userdata.loading === true ? (<Segment>
+      { !this.state.goals ? (<Segment>
                 <Dimmer active inverted>
                 <Loader size="small">Loading</Loader>
                 </Dimmer><br /><br /><br /><br />
@@ -158,13 +164,13 @@ class GoalsCard extends React.Component {
       }
       }) 
     )}
-    {this.props.userdata.loading === true ? (<div></div>) : (
+    { !this.state.goals ? (<div></div>) : (
     <div className="ui small icon input">
       <input type="text" placeholder="Add new goal" value={this.state.userInput} onChange={this.handleChange}/>
       <div className="ui small button" onClick={() => {this.addGoal(this.props.userdata.DBID, this.state.userInput)}}>Submit</div>
     </div>
     )}
-    {this.props.userdata.loading === true ? (<div></div>) : (
+    { !this.state.goals ? (<div></div>) : (
     <Accordion className="completedGoals">
 
       <Accordion.Title>
