@@ -93,7 +93,7 @@ class WeeklyChart extends React.Component {
                     </Segment>) :  (
                         <div> 
 
-                        <Button className="small" color="teal" onClick={() => this.machineGoal()}> Don't Click </Button>
+                    {/**    <Button className="small" color="teal" onClick={() => this.machineGoal()}> Don't Click </Button> 
                         { this.state.showTimeError ? (<Message
                         error
                         header='Unable to process request'
@@ -102,6 +102,7 @@ class WeeklyChart extends React.Component {
                         ]}
                         />) : null }
                         <br />
+                    **/}
                     <C3Chart data={this.state.data} type="multiBar" options={options}/>
                   </div>
                 )}

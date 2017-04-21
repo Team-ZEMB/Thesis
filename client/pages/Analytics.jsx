@@ -91,7 +91,7 @@ class Analytics extends React.Component {
                 status: 'generated'
             })
             .then((res) => {
-                console.log('Generated goal: ', input)
+                this.setState({value: ''});
             })
             .catch(err => console.log(err))
         }
@@ -206,7 +206,7 @@ class Analytics extends React.Component {
                     <div className="ui small icon input"> 
                       <input type="text" placeholder="Enter miles to run" value={this.state.value} onChange={this.handleChange}/>
                       <div className="ui small button teal" 
-                      onClick={() => {console.log(this.state.value); this.handleSubmit(this.state.value)}}>Submit</div>
+                      onClick={() => {this.handleSubmit(this.state.value)}}>Submit</div>
                     </div>
                 <br />
                 <br />
