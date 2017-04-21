@@ -5,7 +5,6 @@ import { Card, Grid } from 'semantic-ui-react'
 import * as UserActions from '../actions';
 import {GoogleMapLoader, GoogleMap, Marker} from "react-google-maps";
 
-
 @connect((store) => {
   return {
     userdata: store.userdata,
