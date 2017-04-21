@@ -85,6 +85,7 @@ export default class StatsCard extends React.Component {
     }
 
     renderGoalMessages() {
+        if (this.state.goals) {
         return this.state.goals.map((goal, idx) => {
             if (goal.source !== null && goal.status === 'pending') {
                 return (<div key={idx}><Feed.Summary>Challenge from <a>{goal.source}</a>{": " + goal.description + " "}
@@ -92,9 +93,13 @@ export default class StatsCard extends React.Component {
                   </Feed.Meta></Feed.Summary></div>)
             }
         })
+        } else {
+            return (<div></div>)
+        }
     }
 
     renderPackMessages() {
+    if (this.state.packs) {
         return this.state.packs.map((pack, idx) => {
             if (pack.Users_Packs.confirmed === "FALSE") {
                 return (
@@ -106,6 +111,9 @@ export default class StatsCard extends React.Component {
                   </div>)
             } 
         })
+    } else {
+        return (<div></div>)
+    }
     }
 
     renderBadgeMessage() {
@@ -154,14 +162,13 @@ export default class StatsCard extends React.Component {
                                     <br />
                             </Feed.Content>
                         </Feed.Event>
-                        {this.state.packs.length === 0 ? (<div></div>) : (
                             <Feed.Event>
                             <Feed.Content>
                                 <Feed.Date />
                                     {this.renderPackMessages()}
                                     <br />
                             </Feed.Content>
-                        </Feed.Event>) }
+                        </Feed.Event>
                     </Feed>
                 )}
                 </Card.Content>
