@@ -202,7 +202,7 @@ export default class Login extends React.Component {
         <div className="childEl sq salmonBG"> </div>
         <div className="childEl" style={{width: '100vw'}}>
           <h2 id="viewStats"> View running statistics<br/><br/></h2>
-          <img src="assets/analyticsPage.gif" id="statsDemo"></img>
+          <img src="assets/analyticsPage.png" id="statsDemo"></img>
 
           <br/>
           <h3 className="statsDescr first"> Track progress <br/>and running habits<br/></h3>
