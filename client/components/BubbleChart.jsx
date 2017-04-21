@@ -19,7 +19,7 @@ class BubbleChart extends React.Component {
 
         for (var i = 0; i < this.props.userdata.history.length; i++) {
 
-            var triple = {};
+            var triple = {}
 
             //this.props.userdata.history[i].distance / this.props.userdata.history[i].duration
 
