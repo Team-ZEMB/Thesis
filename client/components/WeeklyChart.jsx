@@ -64,7 +64,6 @@ class WeeklyChart extends React.Component {
             <div>
                 <p>Your best runs tend to occur in the <a>{bestTime}</a></p>
              <Pie data={data} />
-             Come back soon! Personalized results are updated weekly.
              </div>
         )
         } else {
