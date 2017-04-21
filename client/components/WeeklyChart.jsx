@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Line } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
 import regression from 'regression';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -18,22 +18,6 @@ class WeeklyChart extends React.Component {
         super()
         this.state = {
             showTimeError: false,
-            data : [
-                {
-                    key: "dataSource1",
-                    values: [
-                    {label: "A", value: 3},
-                    {label: "B", value: 4}
-                    ]
-                },
-                {
-                    key: "dataSource2",
-                    values: [
-                    {label: "X", value: 7},
-                    {label: "Y", value: 8}
-                    ]
-                }
-            ],
         }
     }
     machineGoal() {
@@ -60,37 +44,42 @@ class WeeklyChart extends React.Component {
     
     render() {
 
-        let options = {
-            padding: {
-                top: 20,
-                bottom: 20,
-                left: 40,
-                right: 10
-            },
-            zoom: true,
-            grid: {
-                x: false,
-                y: true
-            },
-            labels: true,
-            axisLabel: {
-                x: "product",
-                y: "quantity"
-            },
-            onClick: function(d) {
-                let categories = this.categories(); //c3 function, get categorical labels
-                console.log("you clicked {" + d.name + ": " + categories[d.x] + ": " + d.value + "}");
-            }
+        const data = {
+            labels: [
+                'Time of Day',
+                'Day of Week',
+                'Distance',
+                'Elevation',
+                'Path Incline'
+            ],
+            datasets: [{
+                data: [300, 200, 200, 200, 200],
+                backgroundColor: [
+                '#FF8C69',
+                '#fae2b4',
+                '#008080',
+                '#FFD769',
+                '#3581c6'
+                ],
+                hoverBackgroundColor: [
+                '#FF8C69',
+                '#fae2b4',
+                '#008080',
+                '#FFD769',
+                '#3581c6'
+                ]
+            }]
         };
+
         return (
               <Card color="teal" style={{ marginLeft: 32, width: '46%', fontFamily: 'avenir'}}>
                 <Card.Content header='Customized Performance Analysis' />
                 <Card.Content>
-                { this.props.userdata.loading === true ? (<Segment>
+                {/*{ this.props.userdata.loading === true ? (<Segment>
                     <Dimmer active inverted>
                         <Loader size='small'>Loading</Loader>
                     </Dimmer><br /><br /><br /><br />
-                    </Segment>) :  (
+                    </Segment>) :  (*/}
                         <div> 
 
                     {/**    <Button className="small" color="teal" onClick={() => this.machineGoal()}> Don't Click </Button> 
@@ -103,9 +92,9 @@ class WeeklyChart extends React.Component {
                         />) : null }
                         <br />
                     **/}
-                    <C3Chart data={this.state.data} type="multiBar" options={options}/>
+                    <Pie data={data} />
                   </div>
-                )}
+                {/*)}*/}
                 </Card.Content>
                 </Card>
         );
