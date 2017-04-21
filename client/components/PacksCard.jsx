@@ -34,7 +34,9 @@ export default class PacksCard extends React.Component {
     }
 
   componentWillReceiveProps(props) {
-    this.setState({packs: props.userdata.myPacks})
+    setTimeout(() => {
+      this.setState({packs: props.userdata.myPacks})
+    }, 0);
   }
   componentWillMount() {
     

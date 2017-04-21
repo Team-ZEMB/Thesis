@@ -5,7 +5,9 @@ import regression from 'regression';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Button, Card, Grid, Message, Feed, Segment, Dimmer, Loader } from 'semantic-ui-react';
-import C3Chart from 'c3-react'
+import * as UserActions from '../actions';
+
+// import C3Chart from 'c3-react'
 
 @connect((store) => {
     return {
@@ -20,30 +22,18 @@ class WeeklyChart extends React.Component {
             showTimeError: false,
         }
     }
-    machineGoal() {
-        axios.post('/api/machineGoal', {
-            UserId: this.props.userdata.DBID,
-            customInput: "TBD",
-        })
-        .then((res) => {
-            if (res.data === 'Under 7 days') {
-                this.setState({
-                    showTimeError: true
-                })
-                setTimeout(() => {
-                    this.setState({
-                        showTimeError: false
-                    })
-                }, 10000);
-            } else {
-                console.log(res.data)
-            }
-        })
-        .catch(err => console.log(err))
+    componentWillMount() {
+        this.props.dispatch(UserActions.updateMlGoal(this.props.userdata))
     }
-    
-    render() {
 
+    renderPie() {
+        console.log(this.props.userdata)
+        console.log(this.props.userdata.machineGoal)
+        if ( !!this.props.userdata.machineGoal) {
+            // {"knc": "Afternoon", "skb": {"dayOfWeek": 10, "distance": 35, "altitude": 10, "timeOfDay": 25, "altitudeChange": 20}}
+            console.log(this.props.userdata.machineGoal)
+            var goal = JSON.parse(this.props.userdata.machineGoal).skb
+            var bestTime = JSON.parse(this.props.userdata.machineGoal).knc 
         const data = {
             labels: [
                 'Time of Day',
@@ -53,7 +43,7 @@ class WeeklyChart extends React.Component {
                 'Path Incline'
             ],
             datasets: [{
-                data: [300, 200, 200, 200, 200],
+                data: [goal.timeOfDay, goal.dayOfWeek, goal.distance, goal.altitude, goal.altitudeChange],
                 backgroundColor: [
                 '#FF8C69',
                 '#fae2b4',
@@ -70,19 +60,31 @@ class WeeklyChart extends React.Component {
                 ]
             }]
         };
+        return (
+            <div>
+                <p>Your best runs tend to occur in the <a>{bestTime}</a></p>
+             <Pie data={data} />
+             Come back soon! Personalized results are updated weekly.
+             </div>
+        )
+        } else {
+            return (<div>Nah</div>)
+        }
+    }
 
+    render() {
         return (
               <Card color="teal" style={{ marginLeft: 32, width: '46%', fontFamily: 'avenir'}}>
                 <Card.Content header='Customized Performance Analysis' />
                 <Card.Content>
-                {/*{ this.props.userdata.loading === true ? (<Segment>
+                { this.props.userdata.loading === true ? (<Segment>
                     <Dimmer active inverted>
                         <Loader size='small'>Loading</Loader>
                     </Dimmer><br /><br /><br /><br />
-                    </Segment>) :  (*/}
+                    </Segment>) :  (
                         <div> 
 
-                    {/**    <Button className="small" color="teal" onClick={() => this.machineGoal()}> Don't Click </Button> 
+                     {/*<Button className="small" color="teal" onClick={() => this.machineGoal()}> Don't Click </Button> */}
                         { this.state.showTimeError ? (<Message
                         error
                         header='Unable to process request'
@@ -90,11 +92,9 @@ class WeeklyChart extends React.Component {
                         'You must have at least five saved runs to generate a customized goal.',
                         ]}
                         />) : null }
-                        <br />
-                    **/}
-                    <Pie data={data} />
+                   {this.renderPie()}
                   </div>
-                {/*)}*/}
+                )}
                 </Card.Content>
                 </Card>
         );

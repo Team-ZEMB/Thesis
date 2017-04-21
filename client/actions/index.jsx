@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as types from '../constants/ActionTypes.jsx';
 
 export function signInSuccess(userinfo) {
-  let userObj = {
+  const userObj = {
     firstName: userinfo.firstName,
     lastName: userinfo.lastName,
     username: userinfo.username,
@@ -13,6 +13,7 @@ export function signInSuccess(userinfo) {
     myPacks: userinfo.Packs,
     history: userinfo.RunHistories,
     DBID: userinfo.id,
+    machineGoal: userinfo.machineGoal,
   };
   return {
     type: types.SIGN_IN,
@@ -45,18 +46,55 @@ export function hideNavbar() {
   };
 }
 
+export function newMLGoal(goal) {
+  console.log("GOAL",goal)
+  return {
+    type: types.NEW_ML,
+    goal,
+  };
+}
+
+export function updateMlGoal(results) {
+  return (dispatch) => {
+    if ((((Date.now() - new Date(results.lastMachineGoal)) / (1000 * 60 * 60 * 24) > 7) || results.lastMachineGoal === null) && results.RunHistories.length >= 5) {
+      console.log('action 60')
+        axios.post('/api/machineGoal', {
+            UserId: results.id,
+        })
+        .then((res)  => {
+          console.log('action 65')
+            if (res.data === 'Under 7 days') {
+              // do nothing
+            } else {
+              console.log('action 69')
+                dispatch(newMLGoal(res.data))
+            }
+        })
+        .catch(err => console.log(err))
+
+    } else {
+      console.log("actions 73")
+      // Not necessary to update machine goal
+    }
+  };
+}
+
 export function signIn() {
   return (dispatch) => {
     dispatch(loading());
-    let profile = JSON.parse(localStorage.getItem('profile'));
+    const profile = JSON.parse(localStorage.getItem('profile'));
     dispatch(storeProfile(profile));
-    let userID = profile.user_id;
+    const userID = profile.user_id;
     axios.post('/api/users', { params: {
       userID,
       profile,
     } })
     .then((result) => {
+      console.log("actions 93")
+      console.log(result.data)
       dispatch(signInSuccess(result.data));
+      console.log("actions 95")
+      dispatch(updateMlGoal(result.data));
     });
   };
 }

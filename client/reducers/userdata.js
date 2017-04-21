@@ -15,7 +15,8 @@ const initialState = {
   goals: [],
   history: [],
   DBID: null,
-  menu: ''
+  menu: '',
+  machineGoal: null,
 };
 
 export default function groups(state = initialState, action) {
@@ -35,7 +36,8 @@ export default function groups(state = initialState, action) {
         history: action.userObj.history,
         DBID: action.userObj.DBID,
         loading: false,
-        menu: 'visible'
+        menu: 'visible',
+        machineGoal: action.userObj.machineGoal,
       };
 
     case types.STORE_PROFILE:
@@ -48,6 +50,11 @@ export default function groups(state = initialState, action) {
       return {
         ...state,
         loading: true,
+      };
+    case types.NEW_ML:
+      return {
+        ...state,
+        machineGoal: action.goal,
       };
     case types.DONE_LOADING:
       return {

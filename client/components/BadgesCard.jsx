@@ -29,11 +29,14 @@ class BadgesCard extends React.Component {
   };
 
   componentWillMount() {
-    this.setUp();
+    var setUp = this.setUp.bind(this)
+    setTimeout(setUp, 0)
   }
 
-  componentDidUpdate() {
-    this.setUp();
+
+  componentWillReceiveProps() {
+    var setUp = this.setUp.bind(this)
+    setTimeout(setUp, 0)
   }
 
   setUp() {
