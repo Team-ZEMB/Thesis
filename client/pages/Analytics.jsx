@@ -23,7 +23,6 @@ class Analytics extends React.Component {
         super()
         this.state = {
             value: '',
-            showTimeError: false,
         }
     
         this.handleChange = this.handleChange.bind(this);
