@@ -36,13 +36,13 @@ class Analytics extends React.Component {
     }
 
     handleSubmit(value) {
-      var miles = parseInt(this.state.value)
-      if (this.props.userdata.history.length > 0 && miles !== NaN) {
-        this.setGoal(this.state.value);
-      } else if (this.state.value >= 0) {
+      var miles = parseInt(this.state.value);
+      if (this.props.userdata.history.length > 0 && miles) {
+        this.setGoal(miles);
+      } else if (this.props.userdata.history.length <= 0) {
          this.setState({error: "You must complete at least one run to get a customized goal."});
       } else if (!miles) {
-         this.setState({error: "Unable to process request. Please make sure to enter a number."});
+         this.setState({error: "Unable to process request. Please enter a whole number."});
       }
     }
 
