@@ -82,9 +82,11 @@ class TopPacksCard extends React.Component {
   getPackNames(topPacks) {
     var leaders = [];
     for (var i = 0; i < topPacks.length; i++) {
-      for (var j = 0; j < this.state.packs.length; j++) {
-        if (topPacks[i].PackId == this.state.packs[j].id) {
-          leaders.push({name: this.state.packs[j].name, avgTime: topPacks[i].avgThreeMile})
+      if (this.state.packs) {
+        for (var j = 0; j < this.state.packs.length; j++) {
+          if (topPacks[i].PackId == this.state.packs[j].id) {
+            leaders.push({name: this.state.packs[j].name, avgTime: topPacks[i].avgThreeMile})
+          }
         }
       }
     }
